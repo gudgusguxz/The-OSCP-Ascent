@@ -1,3 +1,9 @@
+All the lab lists used as the initial data for this application were curated and maintained by Tj Null. A huge thank you for this invaluable resource.
+
+**Ref:** https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview
+
+----
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
@@ -36,3 +42,7 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+----
+# Demo:
+![Screenshot 2568-07-02 at 23 10 32](https://github.com/user-attachments/assets/96fb68bf-9da8-451e-a052-5bdd797a1834)
