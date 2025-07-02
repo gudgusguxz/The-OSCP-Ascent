@@ -1,0 +1,96 @@
+{
+  "listName": "Hack The Box",
+  "categories": [
+    {
+      "name": "Linux Boxes",
+      "labs": [
+        { "name": "Busqueda", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "UpDown", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "Sau", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "Broker", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Intentions", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Soccer", "os": "Linux", "difficulty": "Medium", "avatar": "" },
+        { "name": "Keeper", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Monitored", "os": "Linux", "difficulty": "Medium", "avatar": "" },
+        { "name": "BoardLight", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+        { "name": "Networked", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "CozyHosting", "os": "Linux", "difficulty": "Medium", "avatar": "" },
+        { "name": "Editorial", "os": "Windows", "difficulty": "Easy", "avatar": "" },
+        { "name": "Magic", "os": "Windows", "difficulty": "Easy", "avatar": "" },
+        { "name": "Pandora", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Builder", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "LinkVortex", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+        { "name": "Dog", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "Markup", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "Usage", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "Artificial", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "nocturnal", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "titanic", "os": "Linux", "difficulty": "Easy", "avatar": "" },
+        { "name": "Underpass", "os": "Linux", "difficulty": "Easy", "avatar": "" }
+      ]
+    },
+    {
+      "name": "Windows Boxes",
+      "labs": [
+        { "name": "Help", "os": "Windows", "difficulty": "Easy", "avatar": "" },
+        { "name": "Escape", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Servmon", "os": "Windows", "difficulty": "Easy", "avatar": "" },
+        { "name": "Support", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "StreamIO", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Blackfield", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Intelligence", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Jeeves", "os": "Windows", "difficulty": "Easy", "avatar": "" },
+        { "name": "Manager", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Access", "os": "Windows", "difficulty": "Easy", "avatar": "" },
+        { "name": "Aero", "os": "Windows", "difficulty": "Medium", "avatar": "" },
+        { "name": "Mailing", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Administrator", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Certified", "os": "Windows", "difficulty": "Medium", "avatar": "" }
+      ]
+    },
+    {
+      "name": "Windows Active Directory Boxes",
+      "labs": [
+        { "name": "Active", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/5837ac5e28291146a9f2a8a015540c28.png" },
+        { "name": "Forest", "os": "Active Directory", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/7dedecb452597150647e73c2dd6c24c7.png" },
+        { "name": "Sauna", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/f31d5d0264fadc267e7f38a9d7729d14.png" },
+        { "name": "Monteverde", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/00ceebe5dbef1106ce4390365cd787b4.png" },
+        { "name": "Timelapse", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/bae443f73a706fc8eebc6fb740128295.png" },
+        { "name": "Return", "os": "Active Directory", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/defa149ea7e259a4709a03a5825e970d.png" },
+        { "name": "Cascade", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/64fef851357b8de1c4834093bf3426f2.png" },
+        { "name": "Flight", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/a7af9035e5089332dfbfeb328d663f3e.png" },
+        { "name": "Cicada", "os": "Active Directory", "difficulty": "Hard", "avatar": "https://labs.hackthebox.com/storage/avatars/79616a32a057e5e672dadb51bb96dd04.png" },
+        { "name": "TheFrizz", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/c91ef1b641cf88156c7a9d3793d54216.png" },
+        { "name": "Puppy", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/6a127b39657062e42c1a8dfdcd23475d.png" },
+        { "name": "TombWatcher", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/59c74a969b4fec16cd8072d253ca9917.png" }
+      ]
+    },
+    {
+      "name": "Post OSCP Section. Challenging yourself",
+      "labs": [
+        { "name": "Mentor", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "Absolute", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Outdated", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Atom", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "APT", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Cerberus", "os": "Windows/Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "Multimaster", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Cereal", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "Quick", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "Authority", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Clicker", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "Rebound", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Vintage", "os": "Windows", "difficulty": "Hard", "avatar": "" }
+      ]
+    },
+    {
+      "name": "ProLabs",
+      "labs": [
+        { "name": "Dante", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "RastaLabs", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+        { "name": "Zephyr", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+        { "name": "Alchemy", "os": "Windows", "difficulty": "Hard", "avatar": "" }
+      ]
+    }
+  ]
+}
