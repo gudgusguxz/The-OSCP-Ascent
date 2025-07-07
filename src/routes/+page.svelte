@@ -159,22 +159,29 @@
             </nav>
 
             <div class="mt-6 pt-4 border-t border-slate-200">
-                <h2 class="text-lg font-bold mb-4 text-slate-800">Scoreboard</h2>
+                <h2 class="text-xl  font-bold mb-4 text-slate-800">Scoreboard</h2>
                 <div class="space-y-3 text-sm">
                     <div class="flex justify-between items-center font-semibold">
-                        <span class="text-emerald-600 flex items-center gap-2">Total Owned</span>
+                        <span class="text-base text-emerald-600 flex items-center gap-2">Total Owned</span>
                         <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">{$labsStore.filter(l => l.completed).length}</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-sky-600 flex items-center gap-2"><Bird size=16/> Linux</span>
+                        <span class="flex items-center gap-2">
+                        <img src="https://img.icons8.com/?size=100&id=HF4xGsjDERHf&format=png&color=000000" alt="Linux Icon" width="25" height="50" /> Linux</span>
+                        <!-- <span class="text-sky-600 flex items-center gap-2"><Bird size=16/> Linux</span> -->
                         <span class="font-medium">{osStats['Linux'] || 0}</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-blue-600 flex items-center gap-2"><Computer size=16/> Windows</span>
+                        <span class="flex items-center gap-2">
+                        <img src="https://img.icons8.com/?size=100&id=9Upks1A4mqpl&format=png&color=000000" alt="Windows Icon" width="25" height="50" /> Windows</span>
+                        <!-- <span class="text-blue-600 flex items-center gap-2"><Computer size=16/> Windows</span> -->
                         <span class="font-medium">{osStats['Windows'] || 0}</span>
                     </div>
                      <div class="flex justify-between items-center">
-                        <span class="text-violet-600 flex items-center gap-2"><Bot size=16/> Active Directory</span>
+                        <span class="flex items-center gap-2">
+                        <img src="https://img.icons8.com/?size=100&id=XNsUnRhsQAzH&format=png&color=000000" alt="AD Icon" width="25" height="50" /> Active Directory
+                        </span>
+                        <!-- <span class="text-violet-600 flex items-center gap-2"><Bot size=16/> Active Directory</span> -->
                         <span class="font-medium">{osStats['Active Directory'] || 0}</span>
                     </div>
                 </div>
