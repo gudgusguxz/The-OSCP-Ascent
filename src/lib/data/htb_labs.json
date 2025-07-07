@@ -24,8 +24,8 @@
         { "name": "Markup", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/619fa91801ba0956c435db03ab267118.png" },
         { "name": "Usage", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/23e804513a47e8f20bc865d0419946e1.png" },
         { "name": "Artificial", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/e6633d6c2b1d824c3756eb21aeed7590.png" },
-        { "name": "nocturnal", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/f6a56cec6e9826b4ed124fb4155abc66.png" },
-        { "name": "titanic", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/eb5942ec56dd9b6feb06dcf8af8aefc6.png" },
+        { "name": "Nocturnal", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/f6a56cec6e9826b4ed124fb4155abc66.png" },
+        { "name": "Titanic", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/eb5942ec56dd9b6feb06dcf8af8aefc6.png" },
         { "name": "Underpass", "os": "Linux", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/456a4d2e52f182847fb0a2dba0420a44.png" }
       ]
     },
@@ -51,7 +51,7 @@
     {
       "name": "Windows Active Directory Boxes",
       "labs": [
-        { "name": "Active", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/5837ac5e28291146a9f2a8a015540c28.png" },
+        { "name": "Active", "os": "Active Directory", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/5837ac5e28291146a9f2a8a015540c28.png" },
         { "name": "Forest", "os": "Active Directory", "difficulty": "Easy", "avatar": "https://labs.hackthebox.com/storage/avatars/7dedecb452597150647e73c2dd6c24c7.png" },
         { "name": "Sauna", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/f31d5d0264fadc267e7f38a9d7729d14.png" },
         { "name": "Monteverde", "os": "Active Directory", "difficulty": "Medium", "avatar": "https://labs.hackthebox.com/storage/avatars/00ceebe5dbef1106ce4390365cd787b4.png" },
