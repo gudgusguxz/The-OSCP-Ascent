@@ -14,7 +14,7 @@
   <div class="container mx-auto p-4 md:p-8 flex flex-col flex-grow w-full">
     <header class="flex flex-col sm:flex-row justify-between items-center p-6 rounded-xl bg-white/70 backdrop-blur-lg border border-white/30 shadow-md mb-8">
       <h1 class="text-3xl font-bold text-slate-900 mb-4 sm:mb-0">
-        <a href="/">🏆 Root Quest 🛡️</a>
+        <a href="/">🏆 Root Quest V0.9 🛡️</a>
       </h1>
       <nav>
         <button on:click={resetData} title="Reset All Data" class="text-slate-500 font-semibold hover:text-red-500 transition-colors flex items-center gap-2 p-2 rounded-md hover:bg-red-50">
