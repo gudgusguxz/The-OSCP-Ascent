@@ -1,6 +1,6 @@
 <script>
   import "../app.css";
-  import { RotateCw } from 'lucide-svelte';
+  import { RotateCw, Github } from 'lucide-svelte';
 
   function resetData() {
     if (confirm('Are you sure you want to reset all data?')) {
@@ -29,7 +29,17 @@
     </main>
   </div>
 
-  <footer class="text-center py-4 text-slate-400 text-sm w-full bg-slate-100 border-t border-slate-200 mt-8">
-    <p>Powered by gudgusguz</p>
+  <footer class="text-center py-4 text-slate-500 text-sm w-full bg-slate-100 border-t border-slate-200 mt-8 flex justify-center items-center gap-4">
+    <span>Powered by gudgusguz</span>
+    <span class="text-slate-300">|</span>
+    
+    <a href="https://github.com/gudgusguxz/The-OSCP-Ascent" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-1"
+       aria-label="View source on GitHub">
+        <Github size={16} />
+        <span>View Source</span>
+    </a>
   </footer>
 </div>
