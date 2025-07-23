@@ -1,6 +1,6 @@
 <script>
   import "../app.css";
-  import { RotateCw, Github } from 'lucide-svelte';
+  import { RotateCw } from 'lucide-svelte';
 
   function resetData() {
     if (confirm('Are you sure you want to reset all data?')) {
@@ -14,7 +14,7 @@
   <div class="container mx-auto p-4 md:p-8 flex flex-col flex-grow w-full">
     <header class="flex flex-col sm:flex-row justify-between items-center p-6 rounded-xl bg-white/70 backdrop-blur-lg border border-white/30 shadow-md mb-8">
       <h1 class="text-3xl font-bold text-slate-900 mb-4 sm:mb-0">
-        <a href="/">🏆 Root Quest V0.9 🛡️</a>
+        <a href="/">🏆 Root Quest V1.0 🛡️</a>
       </h1>
       <nav>
         <button on:click={resetData} title="Reset All Data" class="text-slate-500 font-semibold hover:text-red-500 transition-colors flex items-center gap-2 p-2 rounded-md hover:bg-red-50">
@@ -29,17 +29,7 @@
     </main>
   </div>
 
-  <footer class="text-center py-4 text-slate-500 text-sm w-full bg-slate-100 border-t border-slate-200 mt-8 flex justify-center items-center gap-4">
-    <span>Powered by gudgusguz</span>
-    <span class="text-slate-300">|</span>
-    
-    <a href="https://github.com/gudgusguxz/The-OSCP-Ascent" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-1"
-       aria-label="View source on GitHub">
-        <Github size={16} />
-        <span>View Source</span>
-    </a>
+  <footer class="text-center py-4 text-slate-400 text-sm w-full bg-slate-100 border-t border-slate-200 mt-8">
+    <p>Powered by gudgusguz</p>
   </footer>
 </div>
