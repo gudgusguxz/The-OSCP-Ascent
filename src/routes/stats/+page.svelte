@@ -2,7 +2,16 @@
 	import { labs } from '$lib/stores.js';
 	import { preferences } from '$lib/preferencesStore.js';
 	import { filterForExamPrep, renderMarkdown } from '$lib/markdown.js';
-	import { CalendarRange, Activity, Target, NotebookPen } from 'lucide-svelte';
+	import {
+		CalendarRange,
+		Activity,
+		Target,
+		NotebookPen,
+		Bird,
+		Computer,
+		Bot,
+		Circle as CircleIcon
+	} from 'lucide-svelte';
 
 	const TIMELINE_WIDTH = 960;
 	const TIMELINE_HEIGHT = 360;
@@ -36,6 +45,14 @@
 		if (event.type === 'note_edit') return '#60a5fa';
 		if (event.type === 'note_delete') return '#f87171';
 		return '#94a3b8';
+	};
+
+	const deriveOsKey = (os) => {
+		const value = (os || '').toLowerCase();
+		if (value.includes('linux')) return 'linux';
+		if (value.includes('window')) return 'windows';
+		if (value.includes('directory') || value === 'ad') return 'ad';
+		return 'generic';
 	};
 
 	$: categorySummary = $labs.reduce((acc, lab) => {
@@ -100,7 +117,9 @@
 					status: event.status || lab.status,
 					noteId: event.noteId || null,
 					noteContent: noteLookup.get(event.noteId) || '',
-					summary: event.summary || ''
+					summary: event.summary || '',
+					os: lab.os || 'Unknown',
+					osIcon: deriveOsKey(lab.os)
 				}));
 		})
 		.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
@@ -121,6 +140,13 @@
 
 	const TIME_GRANULARITY_THRESHOLD = 48 * 60 * 60 * 1000;
 
+ codex/update-tickmarks-for-time-formatting-6j61vl
+	const isEventFocused = (event) => focusedEvent && focusedEvent.id === event.id;
+	const eventRadius = (event) => (isEventFocused(event) ? 11 : 9);
+	const eventIconSize = (event) => (isEventFocused(event) ? 18 : 14);
+
+
+ main
 	const formatTickLabel = (date) => {
 		const value = date instanceof Date ? date : new Date(date);
 		if (timeSpan <= TIME_GRANULARITY_THRESHOLD) {
@@ -368,14 +394,43 @@
 							<circle
 								cx={toX(event.timestamp)}
 								cy={toY(event.category)}
-								r={focusedEvent && focusedEvent.id === event.id ? 7 : 5}
+								r={eventRadius(event)}
 								fill={eventColor(event)}
 								opacity={selectedDate && toDay(event.timestamp) !== selectedDate ? 0.4 : 0.9}
 							/>
+							<foreignObject
+								x={toX(event.timestamp) - eventIconSize(event) / 2}
+								y={toY(event.category) - eventIconSize(event) / 2}
+								width={eventIconSize(event)}
+								height={eventIconSize(event)}
+								pointer-events="none"
+							>
+								<div
+									xmlns="http://www.w3.org/1999/xhtml"
+									class="flex h-full w-full items-center justify-center text-white"
+								>
+									{#if event.osIcon === 'linux'}
+										<Bird size={eventIconSize(event) - 4} strokeWidth={2.5} class="text-white" />
+									{:else if event.osIcon === 'windows'}
+										<Computer
+											size={eventIconSize(event) - 4}
+											strokeWidth={2.5}
+											class="text-white"
+										/>
+									{:else if event.osIcon === 'ad'}
+										<Bot size={eventIconSize(event) - 4} strokeWidth={2.5} class="text-white" />
+									{:else}
+										<CircleIcon
+											size={eventIconSize(event) - 4}
+											strokeWidth={2.5}
+											class="text-white"
+										/>
+									{/if}
+								</div>
+							</foreignObject>
 							<title
-								>{event.labName} — {event.summary || event.type} ({formatDisplay(
-									event.timestamp
-								)})</title
+								>{event.labName} — {event.summary || event.type} ({formatDisplay(event.timestamp)})
+								• {event.os}</title
 							>
 						</g>
 					{/each}
