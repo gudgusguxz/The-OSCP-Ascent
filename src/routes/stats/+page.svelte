@@ -116,8 +116,26 @@
 
 	$: rowHeight = (TIMELINE_HEIGHT - PADDING_Y * 2) / categoriesForTimeline.length;
 
+	const normalizeToTime = (timestamp) =>
+		timestamp instanceof Date ? timestamp.getTime() : new Date(timestamp).getTime();
+
+	const TIME_GRANULARITY_THRESHOLD = 48 * 60 * 60 * 1000;
+
+	const formatTickLabel = (date) => {
+		const value = date instanceof Date ? date : new Date(date);
+		if (timeSpan <= TIME_GRANULARITY_THRESHOLD) {
+			return value.toLocaleString([], {
+				month: 'short',
+				day: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit'
+			});
+		}
+		return value.toLocaleDateString();
+	};
+
 	const toX = (timestamp) => {
-		const time = new Date(timestamp).getTime();
+		const time = normalizeToTime(timestamp);
 		const ratio = (time - minTime) / timeSpan;
 		return PADDING_X + ratio * (TIMELINE_WIDTH - PADDING_X * 2);
 	};
@@ -129,10 +147,11 @@
 
 	$: tickMarks = timelineEvents.length
 		? Array.from({ length: 5 }, (_, index) => {
-				const value = minTime + (timeSpan * index) / 4;
+				const value = new Date(minTime + (timeSpan * index) / 4);
 				return {
+					value,
 					x: toX(value),
-					label: new Date(value).toLocaleDateString()
+					label: formatTickLabel(value)
 				};
 			})
 		: [];
@@ -322,7 +341,7 @@
 					/>
 
 					<!-- Tick marks -->
-					{#each tickMarks as tick (tick.label)}
+					{#each tickMarks as tick (tick.value.toISOString())}
 						<g>
 							<line
 								x1={tick.x}
