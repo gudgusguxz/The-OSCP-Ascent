@@ -370,7 +370,7 @@
 					/>
 
 					<!-- Tick marks -->
-					{#each tickMarks as tick (tick.value.toISOString())}
+					{#each tickMarks as tick (tick.value.getTime())}
 						<g>
 							<line
 								x1={tick.x}
