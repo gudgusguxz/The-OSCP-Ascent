@@ -140,10 +140,13 @@
 
 	const TIME_GRANULARITY_THRESHOLD = 48 * 60 * 60 * 1000;
 
+ codex/update-tickmarks-for-time-formatting-6j61vl
 	const isEventFocused = (event) => focusedEvent && focusedEvent.id === event.id;
 	const eventRadius = (event) => (isEventFocused(event) ? 11 : 9);
 	const eventIconSize = (event) => (isEventFocused(event) ? 18 : 14);
 
+
+ main
 	const formatTickLabel = (date) => {
 		const value = date instanceof Date ? date : new Date(date);
 		if (timeSpan <= TIME_GRANULARITY_THRESHOLD) {
