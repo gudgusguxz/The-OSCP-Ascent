@@ -1,6 +1,6 @@
  (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/src/routes/stats/+page.svelte b/src/routes/stats/+page.svelte
-index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..d59700df114e0eb7d4e69e48b97aaf60d913f645 100644
+index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..046beb2eb53adcc6b8303ab0d85dde56970e5276 100644
 --- a/src/routes/stats/+page.svelte
 +++ b/src/routes/stats/+page.svelte
 @@ -1,65 +1,83 @@
@@ -90,10 +90,10 @@ index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..d59700df114e0eb7d4e69e48b97aaf60
  		.map((lab) => ({
  			timestamp: lab.completedAt,
 diff --git a/src/routes/stats/+page.svelte b/src/routes/stats/+page.svelte
-index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..d59700df114e0eb7d4e69e48b97aaf60d913f645 100644
+index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..046beb2eb53adcc6b8303ab0d85dde56970e5276 100644
 --- a/src/routes/stats/+page.svelte
 +++ b/src/routes/stats/+page.svelte
-@@ -78,83 +96,108 @@
+@@ -78,83 +96,115 @@
  			return acc;
  		}, new Map());
  
@@ -147,17 +147,24 @@ index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..d59700df114e0eb7d4e69e48b97aaf60
 +	const eventRadius = (event) => (isEventFocused(event) ? 11 : 9);
 +	const eventIconSize = (event) => (isEventFocused(event) ? 18 : 14);
 +
++	const shortTickFormatter = new Intl.DateTimeFormat(undefined, {
++		month: 'short',
++		day: 'numeric',
++		hour: '2-digit',
++		minute: '2-digit'
++	});
++
++	const longTickFormatter = new Intl.DateTimeFormat(undefined, {
++		year: 'numeric',
++		month: 'short',
++		day: 'numeric'
++	});
++
 +	const formatTickLabel = (date) => {
 +		const value = date instanceof Date ? date : new Date(date);
-+		if (timeSpan <= TIME_GRANULARITY_THRESHOLD) {
-+			return value.toLocaleString([], {
-+				month: 'short',
-+				day: 'numeric',
-+				hour: '2-digit',
-+				minute: '2-digit'
-+			});
-+		}
-+		return value.toLocaleDateString();
++		return timeSpan <= TIME_GRANULARITY_THRESHOLD
++			? shortTickFormatter.format(value)
++			: longTickFormatter.format(value);
 +	};
 +
  	const toX = (timestamp) => {
@@ -207,10 +214,10 @@ index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..d59700df114e0eb7d4e69e48b97aaf60
  	<title>Root Quest 2.0 — Timeline & Graphs</title>
  </svelte:head>
 diff --git a/src/routes/stats/+page.svelte b/src/routes/stats/+page.svelte
-index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..d59700df114e0eb7d4e69e48b97aaf60d913f645 100644
+index 847b06bf8f05e6a940ef2ae450ea9b2fb9c9fa36..046beb2eb53adcc6b8303ab0d85dde56970e5276 100644
 --- a/src/routes/stats/+page.svelte
 +++ b/src/routes/stats/+page.svelte
-@@ -278,107 +321,141 @@
+@@ -278,107 +328,141 @@
  				Hover and click points to inspect note drops, status changes, and owned completions.
  				Categories are separated vertically while time flows left to right.
  			</p>
