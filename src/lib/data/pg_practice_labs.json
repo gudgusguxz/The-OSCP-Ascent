@@ -1,87 +1,87 @@
 {
-  "listName": "Proving Grounds Practice",
-  "categories": [
-    {
-      "name": "Linux Boxes",
-      "labs": [
-        { "name": "Twiggy", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Exfiltrated", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Pelican", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Astronaut", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Blackgate", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Boolean", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Clue", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Cockpit", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Codo", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Crane", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Levram", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Extplorer", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Hub", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Image", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "law", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Lavita", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "PC", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Fired", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Press", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Scrutiny", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "RubyDome", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Zipper", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Flu", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Ochima", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "PyLoader", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Plum", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "SPX", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Jordak", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "BitForge", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Vmdak", "os": "Linux", "difficulty": "Intermediate", "avatar": "" }
-      ]
-    },
-    {
-      "name": "Windows Boxes",
-      "labs": [
-        { "name": "Helpdesk", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Algernon", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Authby", "os": "Windows", "difficulty": "Easy", "avatar": "" },
-        { "name": "Craft", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Hutch", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Internal", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Jacko", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Kevin", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Resourced", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Squid", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "DVR4", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Hepet", "os": "Windows", "difficulty": "Active Directory", "avatar": "" },
-        { "name": "Shenzi", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Nickel", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "Slort", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
-        { "name": "MedJed", "os": "Windows", "difficulty": "Intermediate", "avatar": "" }
-      ]
-    },
-    {
-      "name": "Windows Active Directory Boxes",
-      "labs": [
-        { "name": "Access", "os": "AD", "difficulty": "Easy", "avatar": "" },
-        { "name": "Heist", "os": "AD", "difficulty": "Medium", "avatar": "" },
-        { "name": "Vault", "os": "AD", "difficulty": "Medium", "avatar": "" },
-        { "name": "Nagoya", "os": "AD", "difficulty": "Medium", "avatar": "" },
-        { "name": "Hokkaido (Retired for now)", "os": "AD", "difficulty": "Medium", "avatar": "" }
-      ]
-    },
-    {
-      "name": "Post OSCP Section. Challenging yourself",
-      "labs": [
-        { "name": "Osaka", "os": "Windows", "difficulty": "Hard", "avatar": "" },
-        { "name": "ProStore", "os": "Linux", "difficulty": "Hard", "avatar": "" },
-        { "name": "RPC1", "os": "Linux", "difficulty": "Hard", "avatar": "" },
-        { "name": "Symbolic", "os": "Windows", "difficulty": "Hard", "avatar": "" },
-        { "name": "Upsploit", "os": "Linux", "difficulty": "Hard", "avatar": "" },
-        { "name": "Validator", "os": "Linux", "difficulty": "Hard", "avatar": "" },
-        { "name": "GLPI", "os": "Linux", "difficulty": "Hard", "avatar": "" },
-        { "name": "Marshalled", "os": "Linux", "difficulty": "Hard", "avatar": "" },
-        { "name": "Educated", "os": "Linux", "difficulty": "Hard", "avatar": "" },
-        { "name": "Kyoto", "os": "Windows", "difficulty": "Buffer Overflow", "avatar": "" },
-        { "name": "Nara", "os": "AD", "difficulty": "Hard", "avatar": "" }
-      ]
-    }
-  ]
+	"listName": "Proving Grounds Practice",
+	"categories": [
+		{
+			"name": "Linux Boxes",
+			"labs": [
+				{ "name": "Twiggy", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Exfiltrated", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Pelican", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Astronaut", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Blackgate", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Boolean", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Clue", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Cockpit", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Codo", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Crane", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Levram", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Extplorer", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Hub", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Image", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "law", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Lavita", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "PC", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Fired", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Press", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Scrutiny", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "RubyDome", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Zipper", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Flu", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Ochima", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "PyLoader", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Plum", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "SPX", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Jordak", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "BitForge", "os": "Linux", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Vmdak", "os": "Linux", "difficulty": "Intermediate", "avatar": "" }
+			]
+		},
+		{
+			"name": "Windows Boxes",
+			"labs": [
+				{ "name": "Helpdesk", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Algernon", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Authby", "os": "Windows", "difficulty": "Easy", "avatar": "" },
+				{ "name": "Craft", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Hutch", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Internal", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Jacko", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Kevin", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Resourced", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Squid", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "DVR4", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Hepet", "os": "Windows", "difficulty": "Active Directory", "avatar": "" },
+				{ "name": "Shenzi", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Nickel", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "Slort", "os": "Windows", "difficulty": "Intermediate", "avatar": "" },
+				{ "name": "MedJed", "os": "Windows", "difficulty": "Intermediate", "avatar": "" }
+			]
+		},
+		{
+			"name": "Windows Active Directory Boxes",
+			"labs": [
+				{ "name": "Access", "os": "AD", "difficulty": "Easy", "avatar": "" },
+				{ "name": "Heist", "os": "AD", "difficulty": "Medium", "avatar": "" },
+				{ "name": "Vault", "os": "AD", "difficulty": "Medium", "avatar": "" },
+				{ "name": "Nagoya", "os": "AD", "difficulty": "Medium", "avatar": "" },
+				{ "name": "Hokkaido (Retired for now)", "os": "AD", "difficulty": "Medium", "avatar": "" }
+			]
+		},
+		{
+			"name": "Post OSCP Section. Challenging yourself",
+			"labs": [
+				{ "name": "Osaka", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+				{ "name": "ProStore", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+				{ "name": "RPC1", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+				{ "name": "Symbolic", "os": "Windows", "difficulty": "Hard", "avatar": "" },
+				{ "name": "Upsploit", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+				{ "name": "Validator", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+				{ "name": "GLPI", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+				{ "name": "Marshalled", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+				{ "name": "Educated", "os": "Linux", "difficulty": "Hard", "avatar": "" },
+				{ "name": "Kyoto", "os": "Windows", "difficulty": "Buffer Overflow", "avatar": "" },
+				{ "name": "Nara", "os": "AD", "difficulty": "Hard", "avatar": "" }
+			]
+		}
+	]
 }

@@ -1,0 +1,61 @@
+{
+	"listName": "OSCP Labs",
+	"description": "Core PWK, ProLabs, and post-exam lab targets for Root Quest 2.0",
+	"categories": [
+		{
+			"name": "PWK Core",
+			"labs": [
+				{
+					"name": "Alpha",
+					"difficulty": "Easy",
+					"os": "Linux",
+					"services": ["http", "ssh"],
+					"cves": ["CVE-2019-11043"],
+					"tags": ["web", "buffer overflow"]
+				},
+				{
+					"name": "Beta",
+					"difficulty": "Medium",
+					"os": "Windows",
+					"services": ["smb", "rdp"],
+					"cves": [],
+					"tags": ["active directory", "kerberoasting"]
+				}
+			]
+		},
+		{
+			"name": "ProLabs",
+			"labs": [
+				{
+					"name": "Rastamouse",
+					"difficulty": "Hard",
+					"os": "Active Directory",
+					"services": ["ad", "ldap"],
+					"cves": ["CVE-2021-42278"],
+					"tags": ["bloodhound", "ad cs"]
+				},
+				{
+					"name": "Medtech",
+					"difficulty": "Hard",
+					"os": "Windows",
+					"services": ["web", "winrm"],
+					"cves": [],
+					"tags": ["prolab", "pivoting"]
+				}
+			]
+		},
+		{
+			"name": "Post-OSCP",
+			"labs": [
+				{
+					"name": "Awakened",
+					"difficulty": "Intermediate",
+					"os": "Linux",
+					"services": ["http", "mysql"],
+					"cves": ["CVE-2020-1472"],
+					"tags": ["research", "writeup"]
+				}
+			]
+		}
+	]
+}

@@ -2,7 +2,7 @@ All the lab lists used as the initial data for this application were curated and
 
 **Ref:** https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview
 
-----
+---
 
 # sv
 
@@ -43,8 +43,9 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
-----
+---
+
 # Demo:
+
 https://rootquest.vercel.app/
 <img width="1494" alt="Screenshot 2568-07-07 at 11 57 58" src="https://github.com/user-attachments/assets/731f94a8-375e-4830-b769-b4f9858a4aaa" />
-
