@@ -6,8 +6,8 @@ const STORAGE_KEY = 'rootquest-preferences';
 const THEME_STORAGE_KEY = 'theme';
 
 const defaultPreferences = {
-	darkMode: false,
-	theme: 'light',
+	darkMode: true,
+	theme: 'dark',
 	examPrepMode: false
 };
 
@@ -18,16 +18,15 @@ function applyTheme(theme) {
 
 	const resolvedTheme = VALID_THEMES.has(theme) ? theme : defaultPreferences.theme;
 	const root = document.documentElement;
-	root.classList.toggle('dark', resolvedTheme === 'dark');
-	root.style.colorScheme = resolvedTheme;
-}
 
-function getSystemTheme() {
-	if (!browser || typeof window.matchMedia !== 'function') {
-		return null;
+	if (resolvedTheme === 'dark') {
+		root.classList.add('dark');
+	} else {
+		root.classList.remove('dark');
 	}
 
-	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	root.dataset.theme = resolvedTheme;
+	root.style.colorScheme = resolvedTheme;
 }
 
 function resolveStoredTheme(savedPreferences, storedTheme) {
@@ -43,18 +42,17 @@ function resolveStoredTheme(savedPreferences, storedTheme) {
 		if (savedPreferences.darkMode === true) {
 			return 'dark';
 		}
-	}
 
-	const systemTheme = getSystemTheme();
-	if (systemTheme && VALID_THEMES.has(systemTheme)) {
-		return systemTheme;
+		if (savedPreferences.darkMode === false) {
+			return 'light';
+		}
 	}
 
 	return defaultPreferences.theme;
 }
 
 function loadInitialPreferences() {
-	if (!browser) return defaultPreferences;
+	if (!browser) return { ...defaultPreferences };
 
 	try {
 		const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
@@ -75,7 +73,7 @@ function loadInitialPreferences() {
 	}
 
 	applyTheme(defaultPreferences.theme);
-	return defaultPreferences;
+	return { ...defaultPreferences };
 }
 
 export const preferences = writable(loadInitialPreferences());
