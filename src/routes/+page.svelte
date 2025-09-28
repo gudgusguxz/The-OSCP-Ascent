@@ -718,16 +718,20 @@
 				<h2 class="flex items-center gap-2 text-lg font-bold text-slate-100">
 					<ShieldCheck size={18} /> Scoreboard
 				</h2>
-				<div class="grid grid-cols-3 gap-3 text-center">
-					{#each Object.entries(overallStatus) as [status, count] (status)}
-						<div class="glass-surface rounded-xl p-3">
-							<p class="text-[0.7rem] font-semibold tracking-[0.18em] text-slate-400 uppercase">
-								{STATUS_META[status].label}
-							</p>
-							<p class="text-2xl font-bold text-slate-100">{count}</p>
-						</div>
-					{/each}
-				</div>
+                                <div class="grid grid-cols-3 gap-3 text-center">
+                                        {#each Object.entries(overallStatus) as [status, count] (status)}
+                                                <div class="glass-surface rounded-xl p-3">
+                                                        <p
+                                                                class="mb-1 text-xl"
+                                                                aria-hidden="true"
+                                                        >
+                                                                {STATUS_META[status].icon}
+                                                        </p>
+                                                        <span class="sr-only">{STATUS_META[status].label}</span>
+                                                        <p class="text-2xl font-bold text-slate-100">{count}</p>
+                                                </div>
+                                        {/each}
+                                </div>
 				<div class="space-y-3">
 					<h3 class="text-sm font-semibold tracking-[0.3em] text-slate-400 uppercase">
 						Owned by Category
@@ -747,13 +751,13 @@
 										style={`width: ${category.total === 0 ? 0 : Math.min(100, (category.owned / category.total) * 100)}%;`}
 									></div>
 								</div>
-								<p class="mt-1 text-xs text-slate-400">
-									⏳ {category.inProgress} in progress • ❌ {category.notStarted} remaining
-								</p>
-							</div>
-						{/each}
-					</div>
-				</div>
+                                                                <p class="sr-only">
+                                                                        In progress: {category.inProgress}. Not started: {category.notStarted}.
+                                                                </p>
+                                                        </div>
+                                                {/each}
+                                        </div>
+                                </div>
 			</div>
 		</aside>
 
