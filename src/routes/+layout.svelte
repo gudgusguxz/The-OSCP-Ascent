@@ -199,7 +199,7 @@
 	<footer
 		class="mt-8 w-full border-t border-white/5 bg-[rgba(7,15,32,0.85)] py-4 text-center text-sm text-slate-400 backdrop-blur-xl"
 	>
-		<p>Powered by Root Quest 2.0</p>
+<p>Powered by gudgusguz</p>
 	</footer>
 
 	<input
