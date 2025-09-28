@@ -103,7 +103,7 @@
 		if (!markdownWriteup) return;
 		const content =
 			format === 'html'
-				? `<!doctype html><html><head><meta charset="utf-8"><title>${lab.name} — Root Quest Writeup</title></head><body>${htmlWriteup}</body></html>`
+                            ? `<!doctype html><html><head><meta charset="utf-8"><title>${lab.name} — Hack Ascent HQ Writeup</title></head><body>${htmlWriteup}</body></html>`
 				: markdownWriteup;
 		const blob = new Blob([content], { type: format === 'html' ? 'text/html' : 'text/markdown' });
 		const url = URL.createObjectURL(blob);
@@ -123,7 +123,7 @@
 </script>
 
 <svelte:head>
-	<title>{lab ? `${lab.name} — Root Quest Blog Mode` : 'Writeup not found'}</title>
+    <title>{lab ? `${lab.name} — Hack Ascent HQ Blog Mode` : 'Writeup not found'}</title>
 </svelte:head>
 
 {#if !lab}

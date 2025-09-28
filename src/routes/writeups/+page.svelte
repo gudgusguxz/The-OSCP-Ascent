@@ -33,7 +33,7 @@
 </script>
 
 <svelte:head>
-	<title>Root Quest 2.0 — Blog Mode</title>
+     <title>Hack Ascent HQ — Blog Mode</title>
 </svelte:head>
 
 <section class="space-y-6">
