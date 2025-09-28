@@ -1,5 +1,20 @@
 @import 'tailwindcss';
 
+body {
+	margin: 0;
+	min-height: 100vh;
+	background-color: theme('colors.slate.50');
+	color: theme('colors.slate.800');
+	transition:
+		background-color 150ms ease,
+		color 150ms ease;
+}
+
+.dark body {
+	background-color: theme('colors.slate.950');
+	color: theme('colors.slate.100');
+}
+
 @layer components {
 	.note-screenshot {
 		@apply my-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/50;
