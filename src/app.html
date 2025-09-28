@@ -8,9 +8,13 @@
 			(() => {
 				try {
 					const storedTheme = localStorage.getItem('theme');
-					const prefersDark =
-						window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-					const theme = storedTheme === 'dark' || (!storedTheme && prefersDark) ? 'dark' : 'light';
+					let theme = 'dark';
+
+					if (storedTheme === 'light') {
+						theme = 'light';
+					} else if (storedTheme === 'dark') {
+						theme = 'dark';
+					}
 					const root = document.documentElement;
 					root.classList.toggle('dark', theme === 'dark');
 					root.style.colorScheme = theme;
