@@ -56,6 +56,18 @@
 	);
 
 	const initialData = { htb: htbData, pg: pgPracticeData, oscp: oscpData };
+	const osOptions = Array.from(
+		new Set(
+			Object.values(initialData || {}).flatMap(
+				(source) =>
+					source?.categories?.flatMap(
+						(category) => category?.labs?.map((lab) => lab?.os).filter(Boolean) || []
+					) || []
+			)
+		)
+	)
+		.filter(Boolean)
+		.sort((a, b) => a.localeCompare(b));
 
 	let activeListKey = 'htb';
 	let activeCategoryName = '';
@@ -66,7 +78,7 @@
 	let showAddForm = false;
 	let newLabName = '';
 	let newLabDifficulty = 'Easy';
-	let newLabOs = '';
+	let newLabOs = osOptions[0] || '';
 	let newLabServices = '';
 	let newLabTags = '';
 	let newLabCves = '';
@@ -286,7 +298,7 @@
 
 		newLabName = '';
 		newLabDifficulty = 'Easy';
-		newLabOs = '';
+		newLabOs = osOptions[0] || '';
 		newLabServices = '';
 		newLabTags = '';
 		newLabCves = '';
@@ -614,13 +626,15 @@
 										class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 										>OS</label
 									>
-									<input
+									<select
 										id="new-lab-os"
-										type="text"
-										placeholder="Linux / Windows / AD"
 										bind:value={newLabOs}
 										class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
-									/>
+									>
+										{#each osOptions as option (option)}
+											<option value={option}>{option}</option>
+										{/each}
+									</select>
 								</div>
 							</div>
 							<div class="space-y-2">
@@ -718,7 +732,7 @@
 				<div class="grid grid-cols-3 gap-3 text-center">
 					{#each Object.entries(overallStatus) as [status, count] (status)}
 						<div class="glass-surface rounded-xl p-3">
-							<p class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase">
+							<p class="text-[0.7rem] font-semibold tracking-[0.18em] text-slate-400 uppercase">
 								{STATUS_META[status].label}
 							</p>
 							<p class="text-2xl font-bold text-slate-100">{count}</p>
