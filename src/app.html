@@ -4,6 +4,41 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			(() => {
+				try {
+					const storedTheme = localStorage.getItem('theme');
+					const prefersDark =
+						window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+					const theme = storedTheme === 'dark' || (!storedTheme && prefersDark) ? 'dark' : 'light';
+					const isDark = theme === 'dark';
+					const root = document.documentElement;
+
+					const applyToBody = (target) => {
+						if (!target) return;
+						target.classList.toggle('dark', isDark);
+						target.dataset.theme = theme;
+						target.style.colorScheme = theme;
+					};
+
+					applyToBody(root);
+
+					if (document.body) {
+						applyToBody(document.body);
+					} else {
+						document.addEventListener(
+							'DOMContentLoaded',
+							() => {
+								applyToBody(document.body);
+							},
+							{ once: true }
+						);
+					}
+				} catch (error) {
+					console.warn('Unable to apply saved theme preference', error);
+				}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

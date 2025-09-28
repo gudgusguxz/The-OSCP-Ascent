@@ -10,14 +10,12 @@
 		Upload,
 		Download
 	} from 'lucide-svelte';
-	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { browser } from '$app/environment';
 	import clsx from 'clsx';
 
-	import { preferences } from '$lib/preferencesStore.js';
+	import { preferences, toggleTheme } from '$lib/preferencesStore.js';
 	import { labs, normalizeLabsCollection } from '$lib/stores.js';
 
 	let filePicker;
@@ -28,26 +26,6 @@
 		{ href: '/writeups', label: 'Blog Mode', icon: NotebookPen }
 	];
 
-	onMount(() => {
-		if (browser) {
-			const storedTheme = localStorage.getItem('theme');
-			const currentPreferences = get(preferences);
-			const isDark = storedTheme
-				? storedTheme === 'dark'
-				: Boolean(currentPreferences.theme === 'dark' || currentPreferences.darkMode);
-
-			document.documentElement.classList.toggle('dark', isDark);
-
-			if (Boolean(currentPreferences.theme === 'dark') !== isDark) {
-				preferences.set({
-					...currentPreferences,
-					theme: isDark ? 'dark' : 'light',
-					darkMode: isDark
-				});
-			}
-		}
-	});
-
 	function resetData() {
 		if (confirm('Are you sure you want to reset all data?')) {
 			localStorage.removeItem('my-advanced-labs');
@@ -56,11 +34,7 @@
 	}
 
 	function toggleDarkMode() {
-		preferences.update((current) => {
-			const currentlyDark = current.theme === 'dark' || current.darkMode;
-			const nextTheme = currentlyDark ? 'light' : 'dark';
-			return { ...current, theme: nextTheme, darkMode: nextTheme === 'dark' };
-		});
+		toggleTheme();
 	}
 
 	function toggleExamPrepMode() {
