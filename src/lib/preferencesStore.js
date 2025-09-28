@@ -6,8 +6,8 @@ const STORAGE_KEY = 'rootquest-preferences';
 const THEME_STORAGE_KEY = 'theme';
 
 const defaultPreferences = {
-	darkMode: false,
-	theme: 'light',
+	darkMode: true,
+	theme: 'dark',
 	examPrepMode: false
 };
 
@@ -54,7 +54,7 @@ function resolveStoredTheme(savedPreferences, storedTheme) {
 }
 
 function loadInitialPreferences() {
-	if (!browser) return defaultPreferences;
+	if (!browser) return { ...defaultPreferences };
 
 	try {
 		const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
@@ -75,7 +75,7 @@ function loadInitialPreferences() {
 	}
 
 	applyTheme(defaultPreferences.theme);
-	return defaultPreferences;
+	return { ...defaultPreferences };
 }
 
 export const preferences = writable(loadInitialPreferences());
