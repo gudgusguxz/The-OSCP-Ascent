@@ -507,7 +507,7 @@
 </script>
 
 <svelte:head>
-	<title>Root Quest 2.0 Dashboard</title>
+    <title>Hack Ascent HQ Dashboard</title>
 </svelte:head>
 
 <section class="space-y-6">

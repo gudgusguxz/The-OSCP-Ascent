@@ -114,8 +114,8 @@
 						class="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl"
 					></div>
 				</div>
-				<h1 class="text-3xl font-bold tracking-tight text-slate-100">
-					<a href="/">🏆 Root Quest 2.0 🛡️</a>
+                                <h1 class="text-3xl font-bold tracking-tight text-slate-100">
+                                        <a href="/">🏆 Hack Ascent HQ 🛡️</a>
 				</h1>
 				<p class="mt-2 text-sm text-slate-300">
 					Track every Hack The Box, Proving Grounds, and OSCP lab with a hacker-grade dashboard.

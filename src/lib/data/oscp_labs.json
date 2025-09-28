@@ -1,6 +1,6 @@
 {
 	"listName": "OSCP Labs",
-	"description": "Core PWK, ProLabs, and post-exam lab targets for Root Quest 2.0",
+        "description": "Core PWK, ProLabs, and post-exam lab targets for Hack Ascent HQ",
 	"categories": [
 		{
 			"name": "PWK Core",

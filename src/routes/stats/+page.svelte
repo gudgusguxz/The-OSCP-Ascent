@@ -149,7 +149,7 @@
 </script>
 
 <svelte:head>
-	<title>Root Quest 2.0 — Timeline & Graphs</title>
+        <title>Hack Ascent HQ — Timeline & Graphs</title>
 </svelte:head>
 
 <section class="space-y-8">
