@@ -38,8 +38,8 @@
 
 <section class="space-y-6">
 	<header class="space-y-2">
-		<h1 class="text-3xl font-bold text-slate-900 dark:text-slate-50">Blog Mode Writeups</h1>
-		<p class="max-w-2xl text-slate-500 dark:text-slate-400">
+		<h1 class="text-3xl font-bold text-slate-100">Blog Mode Writeups</h1>
+		<p class="max-w-2xl text-slate-300/80">
 			Generate clean writeups for HTB, Proving Grounds, and OSCP labs. Pick a lab to auto-build
 			Intro, General Understanding, Walkthrough, and Screenshot sections. Exam Prep Mode removes
 			spoiler-heavy sections.
@@ -48,7 +48,7 @@
 
 	<div>
 		<label
-			class="mb-2 block text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+			class="mb-2 block text-xs font-semibold tracking-[0.3em] text-slate-400 uppercase"
 			for="writeup-search">Search writeups</label
 		>
 		<div class="relative">
@@ -58,7 +58,7 @@
 				type="search"
 				placeholder="Search by name, service, tag, CVE"
 				bind:value={query}
-				class="w-full rounded-xl border border-slate-200 bg-white py-2 pr-4 pl-10 text-slate-700 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+				class="input-elevated w-full py-2 pr-4 pl-11"
 			/>
 		</div>
 	</div>
@@ -66,15 +66,15 @@
 	<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
 		{#each $labs.filter(matches) as lab (lab.id)}
 			<article
-				class="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:border-emerald-400/60 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
+				class="glass-surface space-y-3 rounded-2xl p-5 transition-all hover:-translate-y-1 hover:border-emerald-400/60 hover:shadow-[0_30px_90px_rgba(16,185,129,0.4)]"
 			>
 				<header class="flex items-start justify-between gap-4">
 					<div>
-						<h2 class="text-xl font-semibold text-slate-800 dark:text-slate-100">{lab.name}</h2>
-						<p class="text-sm text-slate-500 dark:text-slate-400">{lab.category} • {lab.os}</p>
+						<h2 class="text-xl font-semibold text-slate-100">{lab.name}</h2>
+						<p class="text-sm text-slate-300/80">{lab.category} • {lab.os}</p>
 					</div>
 					<span
-						class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-2 py-1 text-xs font-semibold text-emerald-500"
+						class="inline-flex items-center gap-2 rounded-full border border-emerald-400/60 bg-emerald-500/10 px-2 py-1 text-xs font-semibold text-emerald-200"
 					>
 						<PenLine size={14} />
 						{(lab.notes || []).length} notes
@@ -82,19 +82,19 @@
 				</header>
 				{#if lab.notes?.length}
 					<div
-						class="prose prose-sm dark:prose-invert prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-code:text-emerald-500 max-h-32 max-w-none overflow-hidden"
+						class="prose prose-sm prose-invert prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-code:text-emerald-400 max-h-32 max-w-none overflow-hidden"
 					>
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						{@html notePreview(lab)}
 					</div>
 				{:else}
-					<p class="text-sm text-slate-500 dark:text-slate-400">
+					<p class="text-sm text-slate-300/80">
 						No notes yet — add content from the dashboard to unlock a writeup.
 					</p>
 				{/if}
 				<footer class="flex justify-end">
 					<a
-						class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-emerald-500 hover:text-emerald-400"
+						class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/60 bg-emerald-500/10 px-3 py-2 text-sm font-semibold text-emerald-200 transition-colors hover:bg-emerald-500/20"
 						href={`/writeups/${lab.id}`}
 					>
 						Open writeup <ArrowUpRight size={16} />
@@ -102,7 +102,7 @@
 				</footer>
 			</article>
 		{:else}
-			<p class="text-slate-500 dark:text-slate-400">No labs match your query.</p>
+			<p class="text-slate-300/80">No labs match your query.</p>
 		{/each}
 	</div>
 </section>
