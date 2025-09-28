@@ -32,20 +32,20 @@
 	const STATUS_META = {
 		owned: {
 			label: 'Owned',
-			badge: 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-300',
-			pill: 'bg-emerald-500 text-white',
+			badge: 'border border-emerald-400/60 bg-emerald-500/15 text-emerald-200',
+			pill: 'border border-emerald-400/70 bg-emerald-500/20 text-emerald-100',
 			icon: '✅'
 		},
 		in_progress: {
 			label: 'In Progress',
-			badge: 'bg-amber-500/10 text-amber-500 dark:text-amber-300',
-			pill: 'bg-amber-500 text-white',
+			badge: 'border border-amber-400/60 bg-amber-500/15 text-amber-200',
+			pill: 'border border-amber-400/70 bg-amber-500/20 text-amber-100',
 			icon: '⏳'
 		},
 		not_started: {
 			label: 'Not Started',
-			badge: 'bg-slate-500/10 text-slate-500 dark:text-slate-300',
-			pill: 'bg-slate-500 text-white',
+			badge: 'border border-slate-500/50 bg-slate-800/70 text-slate-300',
+			pill: 'border border-slate-600/60 bg-slate-900/70 text-slate-300',
 			icon: '❌'
 		}
 	};
@@ -514,21 +514,21 @@
 		<div class="flex-1">
 			<label
 				for="list-select"
-				class="mb-2 block text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400"
+				class="mb-2 block text-xs font-semibold tracking-[0.3em] text-slate-400 uppercase"
 				>Target List</label
 			>
 			<div class="relative">
 				<select
 					id="list-select"
 					bind:value={activeListKey}
-					class="w-full appearance-none rounded-xl border border-slate-200 bg-white px-4 py-2 pr-8 font-semibold text-slate-800 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:outline-none md:w-64 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+					class="input-elevated w-full appearance-none px-4 py-2 pr-10 font-semibold md:w-64"
 				>
 					{#each Object.entries(initialData) as [key, data] (key)}
 						<option value={key}>{data.listName}</option>
 					{/each}
 				</select>
 				<div
-					class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-500"
+					class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400"
 				>
 					<ChevronDown size={20} />
 				</div>
@@ -537,7 +537,7 @@
 
 		<div class="flex-1">
 			<label
-				class="mb-2 block text-sm font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400"
+				class="mb-2 block text-xs font-semibold tracking-[0.3em] text-slate-400 uppercase"
 				for="search"
 			>
 				Search Labs / CVE / Service
@@ -549,7 +549,7 @@
 					type="search"
 					placeholder="e.g. Active Directory, CVE-2021-42278, WinRM"
 					bind:value={searchTerm}
-					class="w-full rounded-xl border border-slate-200 bg-white py-2 pr-4 pl-10 text-slate-700 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+					class="input-elevated w-full py-2 pr-4 pl-11"
 				/>
 			</div>
 		</div>
@@ -557,14 +557,12 @@
 
 	<div class="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
 		<aside class="space-y-6">
-			<div
-				class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
-			>
-				<div class="mb-4 flex items-center justify-between">
-					<h2 class="text-lg font-bold text-slate-800 dark:text-slate-100">Categories</h2>
+			<div class="glass-panel space-y-5 p-5">
+				<div class="flex items-center justify-between">
+					<h2 class="text-lg font-bold text-slate-100">Categories</h2>
 					<button
 						on:click={() => (showAddForm = !showAddForm)}
-						class="rounded-full p-2 text-emerald-500 transition-colors hover:bg-emerald-500/10 hover:text-emerald-400"
+						class="rounded-full border border-emerald-500/30 bg-emerald-500/10 p-2 text-emerald-300 transition-all hover:border-emerald-400/60 hover:bg-emerald-500/20 hover:text-emerald-200"
 						aria-label="Add lab"
 					>
 						<PlusCircle size={22} />
@@ -572,15 +570,15 @@
 				</div>
 
 				{#if showAddForm}
-					<div class="mb-5 space-y-4 border-t border-slate-200 pt-4 dark:border-slate-800">
-						<h3 class="text-sm font-semibold text-slate-600 uppercase dark:text-slate-400">
+					<div class="space-y-4 border-t border-white/10 pt-4">
+						<h3 class="text-sm font-semibold tracking-[0.3em] text-slate-400 uppercase">
 							Quick Add Lab
 						</h3>
 						<form on:submit|preventDefault={handleAddLab} class="space-y-4">
 							<div class="space-y-2">
 								<label
 									for="new-lab-name"
-									class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+									class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 									>Lab Name</label
 								>
 								<input
@@ -589,20 +587,20 @@
 									placeholder={`Add to "${activeCategoryName}"...`}
 									bind:value={newLabName}
 									required
-									class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800"
+									class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
 								/>
 							</div>
 							<div class="grid grid-cols-2 gap-3">
 								<div class="space-y-2">
 									<label
 										for="new-lab-difficulty"
-										class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+										class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 										>Difficulty</label
 									>
 									<select
 										id="new-lab-difficulty"
 										bind:value={newLabDifficulty}
-										class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800"
+										class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
 									>
 										<option value="Easy">Easy</option>
 										<option value="Medium">Medium</option>
@@ -613,7 +611,7 @@
 								<div class="space-y-2">
 									<label
 										for="new-lab-os"
-										class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+										class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 										>OS</label
 									>
 									<input
@@ -621,14 +619,14 @@
 										type="text"
 										placeholder="Linux / Windows / AD"
 										bind:value={newLabOs}
-										class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800"
+										class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
 									/>
 								</div>
 							</div>
 							<div class="space-y-2">
 								<label
 									for="new-lab-services"
-									class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+									class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 									>Services (comma separated)</label
 								>
 								<input
@@ -636,13 +634,13 @@
 									type="text"
 									bind:value={newLabServices}
 									placeholder="http, smb, winrm"
-									class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800"
+									class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
 								/>
 							</div>
 							<div class="space-y-2">
 								<label
 									for="new-lab-cves"
-									class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+									class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 									>CVEs (comma separated)</label
 								>
 								<input
@@ -650,13 +648,13 @@
 									type="text"
 									bind:value={newLabCves}
 									placeholder="CVE-2023-xxxx"
-									class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800"
+									class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
 								/>
 							</div>
 							<div class="space-y-2">
 								<label
 									for="new-lab-tags"
-									class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+									class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 									>Tags (comma separated)</label
 								>
 								<input
@@ -664,13 +662,13 @@
 									type="text"
 									bind:value={newLabTags}
 									placeholder="pivoting, bloodhound"
-									class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800"
+									class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
 								/>
 							</div>
 							<div class="space-y-2">
 								<label
 									for="new-lab-avatar"
-									class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400"
+									class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase"
 									>Avatar URL (optional)</label
 								>
 								<input
@@ -678,12 +676,12 @@
 									type="url"
 									bind:value={newLabAvatar}
 									placeholder="https://..."
-									class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-700 dark:bg-slate-800"
+									class="input-elevated w-full rounded-lg px-3 py-2 text-sm"
 								/>
 							</div>
 							<button
 								type="submit"
-								class="w-full rounded-lg bg-emerald-500 py-2 font-bold text-white shadow-sm transition-colors hover:bg-emerald-600"
+								class="w-full rounded-lg border border-emerald-500/50 bg-emerald-500/20 py-2 font-bold text-emerald-100 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-colors hover:border-emerald-400/60 hover:bg-emerald-500/30"
 							>
 								Add Lab
 							</button>
@@ -698,14 +696,12 @@
 							class={clsx(
 								'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-colors',
 								activeCategoryName === category.name
-									? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300'
-									: 'text-slate-600 hover:bg-slate-100/70 dark:text-slate-300 dark:hover:bg-slate-800/70'
+									? 'border border-emerald-400/60 bg-[rgba(16,185,129,0.18)] text-emerald-200 shadow-[0_18px_45px_rgba(16,185,129,0.4)]'
+									: 'border border-transparent text-slate-300 hover:border-emerald-400/30 hover:bg-[rgba(8,19,38,0.6)]'
 							)}
 						>
 							<span>{category.name}</span>
-							<span
-								class="rounded-full bg-slate-200 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300"
-							>
+							<span class="pill-counter">
 								{$labsStore.filter(
 									(lab) => lab.source === activeListKey && lab.category === category.name
 								).length}
@@ -715,40 +711,40 @@
 				</nav>
 			</div>
 
-			<div
-				class="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
-			>
-				<h2 class="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-slate-100">
+			<div class="glass-panel space-y-4 p-5">
+				<h2 class="flex items-center gap-2 text-lg font-bold text-slate-100">
 					<ShieldCheck size={18} /> Scoreboard
 				</h2>
 				<div class="grid grid-cols-3 gap-3 text-center">
 					{#each Object.entries(overallStatus) as [status, count] (status)}
-						<div class="rounded-xl border border-slate-200 p-3 dark:border-slate-800">
-							<p class="text-xs font-semibold text-slate-500 uppercase dark:text-slate-400">
+						<div class="glass-surface rounded-xl p-3">
+							<p class="text-xs font-semibold tracking-[0.25em] text-slate-400 uppercase">
 								{STATUS_META[status].label}
 							</p>
-							<p class="text-2xl font-bold text-slate-800 dark:text-slate-100">{count}</p>
+							<p class="text-2xl font-bold text-slate-100">{count}</p>
 						</div>
 					{/each}
 				</div>
 				<div class="space-y-3">
-					<h3 class="text-sm font-semibold text-slate-600 uppercase dark:text-slate-400">
+					<h3 class="text-sm font-semibold tracking-[0.3em] text-slate-400 uppercase">
 						Owned by Category
 					</h3>
 					<div class="space-y-3">
 						{#each ownedByCategory as category (category.name)}
 							<div>
-								<div class="mb-1 flex justify-between text-xs text-slate-500 dark:text-slate-400">
+								<div class="mb-1 flex justify-between text-xs text-slate-400">
 									<span>{category.name}</span>
 									<span>{category.owned}/{category.total}</span>
 								</div>
-								<div class="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+								<div
+									class="h-2 overflow-hidden rounded-full border border-white/10 bg-[rgba(9,19,38,0.72)]"
+								>
 									<div
-										class="h-full bg-emerald-500 transition-all"
+										class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400 transition-all"
 										style={`width: ${category.total === 0 ? 0 : Math.min(100, (category.owned / category.total) * 100)}%;`}
 									></div>
 								</div>
-								<p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
+								<p class="mt-1 text-xs text-slate-400">
 									⏳ {category.inProgress} in progress • ❌ {category.notStarted} remaining
 								</p>
 							</div>
@@ -787,17 +783,17 @@
 						{#if currentlyPlayingLabs.length > 0}
 							{#each currentlyPlayingLabs as lab (lab.id)}
 								<article
-									class="flex flex-col gap-4 rounded-2xl border border-emerald-400/80 bg-white p-5 shadow-[0_0_30px_rgba(52,211,153,0.35)] transition-shadow hover:shadow-[0_0_40px_rgba(52,211,153,0.45)] dark:border-emerald-400/60 dark:bg-slate-900"
+									class="flex flex-col gap-4 rounded-2xl border border-emerald-400/60 bg-gradient-to-br from-emerald-500/15 via-slate-900/70 to-slate-950/80 p-5 shadow-[0_35px_80px_rgba(16,185,129,0.35)] transition-shadow hover:shadow-[0_45px_100px_rgba(16,185,129,0.45)]"
 								>
 									<div class="flex items-start justify-between gap-4">
 										<div class="space-y-1">
 											<p class="text-xs font-semibold tracking-wide text-emerald-500 uppercase">
 												In Progress Spotlight
 											</p>
-											<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+											<h3 class="text-xl font-bold text-slate-100">
 												{lab.name}
 											</h3>
-											<p class="text-xs text-slate-500 dark:text-slate-400">
+											<p class="text-xs text-slate-300/80">
 												{getSourceLabel(lab)} • {lab.category}
 											</p>
 										</div>
@@ -808,35 +804,37 @@
 											{STATUS_META[lab.status].label}
 										</span>
 									</div>
-									<div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+									<div class="flex flex-wrap gap-2 text-xs text-slate-300/80">
 										{#if lab.difficulty}
 											<span
-												class="rounded-full bg-emerald-500/10 px-2 py-0.5 font-semibold text-emerald-600 dark:text-emerald-300"
+												class="rounded-full border border-emerald-400/60 bg-emerald-500/10 px-2 py-0.5 font-semibold text-emerald-200"
 											>
 												{lab.difficulty}
 											</span>
 										{/if}
 										{#each lab.services || [] as service (service)}
-											<span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
-												>{service}</span
+											<span
+												class="rounded-full border border-white/15 bg-[rgba(8,19,38,0.68)] px-2 py-0.5"
 											>
+												{service}
+											</span>
 										{/each}
 										{#each lab.cves || [] as cve (cve)}
 											<span
-												class="rounded-full bg-emerald-500/10 px-2 py-0.5 text-emerald-600 dark:text-emerald-300"
+												class="rounded-full border border-emerald-400/50 bg-emerald-500/10 px-2 py-0.5 text-emerald-200"
 											>
 												{cve}
 											</span>
 										{/each}
 									</div>
 									<div
-										class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400"
+										class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300/70"
 									>
 										<span>Last update: {formatTimestamp(getLatestActivityTimestamp(lab))}</span>
 										<div class="flex items-center gap-2">
 											<button
 												on:click={() => openNoteModal(lab)}
-												class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 px-3 py-1 text-xs font-semibold text-emerald-600 transition-colors hover:bg-emerald-500/10 dark:text-emerald-300"
+												class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-200 transition-colors hover:bg-emerald-500/20"
 											>
 												Notes
 											</button>
@@ -846,7 +844,7 @@
 														'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
 														lab.status === statusKey
 															? `${meta.pill} border-transparent`
-															: 'border-slate-200 text-slate-500 hover:border-emerald-400 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-300'
+															: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.15)] hover:text-emerald-200'
 													)}
 													on:click={() => setLabStatus(lab, statusKey)}
 													type="button"
@@ -863,17 +861,17 @@
 						{#if lastPlayedLab}
 							<article
 								aria-labelledby="lastPlayedHeading"
-								class="flex flex-col gap-4 rounded-2xl border border-sky-400/80 bg-white p-5 shadow-[0_0_30px_rgba(56,189,248,0.35)] transition-shadow hover:shadow-[0_0_40px_rgba(56,189,248,0.45)] dark:border-sky-400/60 dark:bg-slate-900"
+								class="flex flex-col gap-4 rounded-2xl border border-sky-400/60 bg-gradient-to-br from-sky-500/15 via-slate-900/70 to-slate-950/80 p-5 shadow-[0_35px_80px_rgba(56,189,248,0.35)] transition-shadow hover:shadow-[0_45px_100px_rgba(56,189,248,0.45)]"
 							>
 								<div class="flex items-start justify-between gap-4">
 									<div class="space-y-1">
 										<p class="text-xs font-semibold tracking-wide text-sky-500 uppercase">
 											Highlight
 										</p>
-										<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+										<h3 class="text-xl font-bold text-slate-100">
 											{lastPlayedLab.name}
 										</h3>
-										<p class="text-xs text-slate-500 dark:text-slate-400">
+										<p class="text-xs text-slate-300/80">
 											{getSourceLabel(lastPlayedLab)} • {lastPlayedLab.category}
 										</p>
 									</div>
@@ -884,29 +882,30 @@
 										{STATUS_META[lastPlayedLab.status].label}
 									</span>
 								</div>
-								<div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+								<div class="flex flex-wrap gap-2 text-xs text-slate-300/80">
 									{#if lastPlayedLab.difficulty}
 										<span
-											class="rounded-full bg-sky-500/10 px-2 py-0.5 font-semibold text-sky-600 dark:text-sky-300"
+											class="rounded-full border border-sky-400/60 bg-sky-500/10 px-2 py-0.5 font-semibold text-sky-200"
 										>
 											{lastPlayedLab.difficulty}
 										</span>
 									{/if}
 									{#each lastPlayedLab.services || [] as service (service)}
-										<span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
+										<span
+											class="rounded-full border border-white/15 bg-[rgba(8,19,38,0.68)] px-2 py-0.5"
 											>{service}</span
 										>
 									{/each}
 									{#each lastPlayedLab.cves || [] as cve (cve)}
 										<span
-											class="rounded-full bg-sky-500/10 px-2 py-0.5 text-sky-600 dark:text-sky-300"
+											class="rounded-full border border-sky-400/50 bg-sky-500/10 px-2 py-0.5 text-sky-200"
 										>
 											{cve}
 										</span>
 									{/each}
 								</div>
 								<div
-									class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400"
+									class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300/70"
 								>
 									<span>Last activity: {formatTimestamp(lastPlayedTimestamp)}</span>
 									<div class="flex items-center gap-2">
@@ -914,13 +913,13 @@
 											href={buildLabUrl(lastPlayedLab)}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
+											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 bg-[rgba(8,19,38,0.65)] px-3 py-1 text-xs font-semibold text-sky-200 transition-colors hover:bg-[rgba(56,189,248,0.18)]"
 										>
 											Open Lab
 										</a>
 										<button
 											on:click={() => openNoteModal(lastPlayedLab)}
-											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
+											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 bg-[rgba(8,19,38,0.65)] px-3 py-1 text-xs font-semibold text-sky-200 transition-colors hover:bg-[rgba(56,189,248,0.18)]"
 										>
 											Notes
 										</button>
@@ -930,7 +929,7 @@
 													'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
 													lastPlayedLab.status === statusKey
 														? `${meta.pill} border-transparent`
-														: 'border-slate-200 text-slate-500 hover:border-sky-400 hover:text-sky-500 dark:border-slate-700 dark:text-slate-300'
+														: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-sky-400/55 hover:bg-[rgba(56,189,248,0.16)] hover:text-sky-200'
 												)}
 												on:click={() => setLabStatus(lastPlayedLab, statusKey)}
 												type="button"
@@ -948,12 +947,12 @@
 
 			<header class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
 				<div>
-					<h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">
+					<h2 class="text-2xl font-bold text-slate-100">
 						{activeCategoryName}
 					</h2>
-					<p class="text-sm text-slate-500 dark:text-slate-400">{labsToShow.length} labs matched</p>
+					<p class="text-sm text-slate-300/80">{labsToShow.length} labs matched</p>
 				</div>
-				<p class="text-xs text-slate-400 uppercase dark:text-slate-500">
+				<p class="text-xs text-slate-400/80 uppercase">
 					✅ Owned • ⏳ In Progress • ❌ Not Started — track status and notes with markdown +
 					screenshots
 				</p>
@@ -961,7 +960,7 @@
 
 			{#if labsToShow.length === 0}
 				<div
-					class="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-center text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+					class="glass-surface border border-dashed border-cyan-400/25 p-6 text-center text-slate-300"
 				>
 					No labs matched your search.
 				</div>
@@ -970,13 +969,15 @@
 					{#each labsToShow as lab (lab.id)}
 						<article
 							class={clsx(
-								'group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-xl dark:border-slate-800 dark:bg-slate-900',
-								lab.status === 'owned' ? 'border-emerald-500/50 opacity-80' : ''
+								'group glass-surface flex flex-col overflow-hidden rounded-2xl transition-all hover:-translate-y-1 hover:shadow-[0_35px_100px_rgba(56,189,248,0.38)]',
+								lab.status === 'owned'
+									? 'border-emerald-400/60 shadow-[0_35px_100px_rgba(16,185,129,0.38)]'
+									: ''
 							)}
 						>
 							<div class="flex gap-4 p-4">
 								<div
-									class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800"
+									class="glass-surface flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl shadow-[0_18px_40px_rgba(7,16,38,0.5)]"
 								>
 									{#if labAvatar(lab) === 'linux'}
 										<Bird size={42} class="text-emerald-400/70" />
@@ -996,35 +997,35 @@
 								</div>
 								<div class="flex-1">
 									<div class="flex items-start justify-between gap-2">
-										<h3
-											class="text-lg leading-tight font-semibold text-slate-800 dark:text-slate-100"
-										>
+										<h3 class="text-lg leading-tight font-semibold text-slate-100">
 											{lab.name}
 										</h3>
 										<span
 											class={clsx(
-												'rounded-full px-2 py-1 text-xs font-bold',
+												'rounded-full border px-2 py-1 text-xs font-bold',
 												lab.difficulty?.toLowerCase().includes('easy')
-													? 'bg-emerald-500/10 text-emerald-500'
+													? 'border-emerald-400/60 bg-emerald-500/10 text-emerald-200'
 													: lab.difficulty?.toLowerCase().includes('hard')
-														? 'bg-rose-500/10 text-rose-500'
-														: 'bg-amber-500/10 text-amber-500'
+														? 'border-rose-400/60 bg-rose-500/10 text-rose-200'
+														: 'border-amber-400/60 bg-amber-500/10 text-amber-200'
 											)}
 										>
 											{lab.difficulty || 'N/A'}
 										</span>
 									</div>
-									<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+									<p class="mt-1 text-sm text-slate-300/80">
 										{lab.os || 'Unknown OS'}
 									</p>
-									<div class="mt-2 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+									<div class="mt-2 flex flex-wrap gap-2 text-xs text-slate-300/70">
 										{#each lab.services || [] as service (service)}
-											<span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
+											<span
+												class="rounded-full border border-white/15 bg-[rgba(8,19,38,0.68)] px-2 py-0.5"
 												>{service}</span
 											>
 										{/each}
 										{#each lab.cves || [] as cve (cve)}
-											<span class="rounded-full bg-rose-500/10 px-2 py-0.5 text-rose-500"
+											<span
+												class="rounded-full border border-rose-400/50 bg-rose-500/10 px-2 py-0.5 text-rose-200"
 												>{cve}</span
 											>
 										{/each}
@@ -1032,9 +1033,7 @@
 								</div>
 							</div>
 							<div class="flex flex-1 flex-col gap-3 px-4 pb-4">
-								<div
-									class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400"
-								>
+								<div class="flex items-center justify-between text-xs text-slate-300/70">
 									<span
 										class={`inline-flex items-center gap-1 rounded-full px-2 py-1 ${STATUS_META[lab.status].badge}`}
 									>
@@ -1053,7 +1052,7 @@
 											href={buildLabUrl(lab)}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="rounded-full p-2 text-slate-400 transition-colors hover:bg-emerald-500/10 hover:text-emerald-500"
+											class="rounded-full border border-sky-400/30 bg-[rgba(8,19,38,0.65)] p-2 text-slate-200 transition-colors hover:border-sky-400/55 hover:bg-[rgba(56,189,248,0.18)] hover:text-sky-200"
 											title="Open lab portal"
 										>
 											<ExternalLink size={18} />
@@ -1061,10 +1060,10 @@
 										<button
 											on:click={() => openNoteModal(lab)}
 											class={clsx(
-												'rounded-full p-2 transition-colors',
+												'rounded-full border p-2 transition-colors',
 												(lab.notes || []).length > 0
-													? 'text-emerald-500 hover:bg-emerald-500/10'
-													: 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+													? 'border-emerald-400/60 bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20'
+													: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.14)] hover:text-emerald-200'
 											)}
 											title={(lab.notes || []).length > 0 ? 'Manage notes' : 'Add notes'}
 										>
@@ -1072,7 +1071,7 @@
 										</button>
 										<a
 											href={`/writeups/${lab.id}`}
-											class="rounded-full p-2 text-slate-400 transition-colors hover:bg-emerald-500/10 hover:text-emerald-500"
+											class="rounded-full border border-emerald-400/30 bg-[rgba(8,19,38,0.65)] p-2 text-slate-200 transition-colors hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
 											title="Open blog mode"
 										>
 											<ShieldCheck size={18} />
@@ -1085,7 +1084,7 @@
 													'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
 													lab.status === statusKey
 														? `${meta.pill} border-transparent`
-														: 'border-slate-200 text-slate-500 hover:border-emerald-400 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-300'
+														: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.15)] hover:text-emerald-200'
 												)}
 												on:click={() => setLabStatus(lab, statusKey)}
 												type="button"
@@ -1107,51 +1106,45 @@
 {#if showNoteModal && activeNoteLab}
 	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
 		<div
-			class="flex max-h-[90vh] w-full max-w-3xl flex-col rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-950"
+			class="flex max-h-[90vh] w-full max-w-3xl flex-col rounded-3xl border border-white/10 bg-slate-950/70 shadow-[0_45px_120px_rgba(2,8,23,0.75)] backdrop-blur-2xl"
 		>
-			<header
-				class="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800"
-			>
+			<header class="flex items-center justify-between border-b border-white/10 px-6 py-4">
 				<div>
-					<h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">
+					<h3 class="text-xl font-bold text-slate-100">
 						{activeNoteLab.name} — Notes
 					</h3>
-					<p class="text-xs text-slate-500 dark:text-slate-400">
+					<p class="text-xs text-slate-300/80">
 						Markdown supported. Use `![[Screenshot path]]` for screenshot embeds. Exam Prep Mode
 						hides walkthrough spoilers.
 					</p>
 				</div>
 				<button
 					on:click={closeNoteModal}
-					class="rounded-full p-2 text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-500"
+					class="rounded-full border border-red-400/60 bg-red-500/10 p-2 text-red-300 transition-colors hover:bg-red-500/20"
 				>
 					<X size={18} />
 				</button>
 			</header>
 
-			<div class="flex-1 space-y-4 overflow-y-auto bg-slate-50/60 p-6 dark:bg-slate-900/40">
+			<div class="flex-1 space-y-4 overflow-y-auto bg-[rgba(4,12,28,0.65)] p-6">
 				{#if activeNoteLab.notes && activeNoteLab.notes.length > 0}
 					{#each activeNoteLab.notes as note (note.id)}
-						<div
-							class="space-y-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
-						>
-							<div
-								class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400"
-							>
+						<div class="glass-surface space-y-3 rounded-2xl p-4">
+							<div class="flex items-center justify-between text-xs text-slate-300/70">
 								<span class="inline-flex items-center gap-2"
 									><GripVertical size={14} /> {formatTimestamp(note.timestamp)}</span
 								>
 								<div class="flex items-center gap-2">
 									<button
 										on:click={() => startEditIndividualNote(note)}
-										class="rounded-full p-2 text-slate-400 transition-colors hover:bg-emerald-500/10 hover:text-emerald-500"
+										class="rounded-full border border-emerald-400/60 bg-emerald-500/10 p-2 text-emerald-200 transition-colors hover:bg-emerald-500/20"
 										title="Edit note"
 									>
 										<Edit2 size={16} />
 									</button>
 									<button
 										on:click={() => deleteIndividualNote(note.id)}
-										class="rounded-full p-2 text-slate-400 transition-colors hover:bg-rose-500/10 hover:text-rose-500"
+										class="rounded-full border border-rose-400/60 bg-rose-500/10 p-2 text-rose-200 transition-colors hover:bg-rose-500/20"
 										title="Delete note"
 									>
 										<Trash2 size={16} />
@@ -1163,20 +1156,20 @@
 								<textarea
 									bind:value={editingIndividualNoteContent}
 									on:input={checkEditingNoteContent}
-									class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-800 dark:bg-slate-900"
+									class="input-elevated w-full rounded-xl px-3 py-2 font-mono text-sm"
 									rows="6"
 									maxlength={MAX_NOTE_CHARS}
 								></textarea>
 								<div class="flex justify-end gap-2">
 									<button
 										on:click={saveIndividualNote}
-										class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-600"
+										class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 bg-emerald-500/20 px-3 py-2 text-sm font-semibold text-emerald-100 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-colors hover:bg-emerald-500/30"
 									>
 										<Save size={16} /> Save
 									</button>
 									<button
 										on:click={cancelEditIndividualNote}
-										class="inline-flex items-center gap-2 rounded-lg bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+										class="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:border-slate-400/50 hover:bg-[rgba(15,23,42,0.75)]"
 									>
 										<X size={16} /> Cancel
 									</button>
@@ -1192,16 +1185,14 @@
 						</div>
 					{/each}
 				{:else}
-					<div
-						class="rounded-2xl border border-slate-200 bg-white p-6 text-center text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400"
-					>
+					<div class="glass-surface rounded-2xl p-6 text-center text-slate-300">
 						No notes yet. Use the composer below to add recon, foothold, and privesc notes.
 					</div>
 				{/if}
 			</div>
 
-			<footer class="space-y-3 border-t border-slate-200 p-6 dark:border-slate-800">
-				<h4 class="text-sm font-semibold text-slate-600 uppercase dark:text-slate-300">
+			<footer class="space-y-3 border-t border-white/10 p-6">
+				<h4 class="text-sm font-semibold tracking-[0.3em] text-slate-400 uppercase">
 					Add New Entry
 				</h4>
 				<textarea
@@ -1210,9 +1201,9 @@
 					rows="4"
 					maxlength={MAX_NOTE_CHARS}
 					placeholder="Map out attack steps, checklist items, commands, or embed screenshots with ![[Screenshot path]]"
-					class="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 font-mono text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-slate-800 dark:bg-slate-900"
+					class="input-elevated w-full rounded-xl px-3 py-3 font-mono text-sm"
 				></textarea>
-				<div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+				<div class="flex items-center justify-between text-xs text-slate-300/70">
 					<span>
 						{newIndividualNoteContent.length}/{MAX_NOTE_CHARS} chars • {Math.min(
 							newIndividualNoteContent.split('\n').length,
@@ -1221,7 +1212,7 @@
 					</span>
 					<button
 						on:click={addIndividualNote}
-						class="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-600"
+						class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-colors hover:bg-emerald-500/30"
 					>
 						<Plus size={16} /> Add Note
 					</button>

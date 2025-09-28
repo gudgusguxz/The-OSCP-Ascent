@@ -2,16 +2,7 @@
 	import { labs } from '$lib/stores.js';
 	import { preferences } from '$lib/preferencesStore.js';
 	import { filterForExamPrep, renderMarkdown } from '$lib/markdown.js';
-	import {
-		CalendarRange,
-		Activity,
-		Target,
-		NotebookPen,
-		Bird,
-		Computer,
-		Bot,
-		Circle as CircleIcon
-	} from 'lucide-svelte';
+	import { Activity, NotebookPen, Bird, Computer, Bot, Circle as CircleIcon } from 'lucide-svelte';
 
 	const TIMELINE_WIDTH = 960;
 	const TIMELINE_HEIGHT = 360;
@@ -55,37 +46,6 @@
 		if (value.includes('directory') || value === 'ad') return 'ad';
 		return 'generic';
 	};
-
-	$: categorySummary = $labs.reduce((acc, lab) => {
-		const key = `${lab.source}::${lab.category}`;
-		if (!acc.has(key)) {
-			acc.set(key, {
-				key,
-				category: lab.category,
-				source: lab.source,
-				owned: 0,
-				inProgress: 0,
-				total: 0
-			});
-		}
-		const entry = acc.get(key);
-		entry.total += 1;
-		if (lab.status === 'owned') entry.owned += 1;
-		if (lab.status === 'in_progress') entry.inProgress += 1;
-		return acc;
-	}, new Map());
-
-	$: categoryCards = Array.from(categorySummary.values()).sort((a, b) => b.owned - a.owned);
-
-	$: monthlyOwned = $labs
-		.filter((lab) => lab.completedAt)
-		.map((lab) => ({
-			timestamp: lab.completedAt
-		}));
-
-	$: monthlyCards = Array.from(monthlyOwned.values()).sort(
-		(a, b) => new Date(a.timestamp) - new Date(b.timestamp)
-	);
 
 	$: timelineEvents = $labs
 		.flatMap((lab) => {
@@ -174,10 +134,6 @@
 			})
 		: [];
 
-	$: selectedEvents = selectedDate
-		? timelineEvents.filter((event) => toDay(event.timestamp) === selectedDate)
-		: [];
-
 	function focusEvent(event) {
 		focusedEvent = event;
 		selectedDate = toDay(event.timestamp);
@@ -198,19 +154,19 @@
 
 <section class="space-y-8">
 	<header>
-		<h2 class="flex items-center gap-2 text-2xl font-bold">
-			<Activity size={20} class="text-emerald-500" /> Timeline of Progress
+		<h2 class="flex items-center gap-2 text-2xl font-bold text-slate-100">
+			<Activity size={20} class="text-sky-400" /> Timeline of Progress
 		</h2>
-		<p class="text-slate-500 dark:text-slate-400 text-sm">
+		<p class="text-sm text-slate-300/80">
 			Interactive timeline of your lab progress. Hover and click points to inspect note drops,
-			status changes, and owned completions. Categories are separated vertically while time
-			flows left to right.
+			status changes, and owned completions. Categories are separated vertically while time flows
+			left to right.
 		</p>
 	</header>
 
 	{#if timelineEvents.length === 0}
 		<div
-			class="rounded-2xl border border-dashed border-slate-300 p-10 text-center text-slate-500 dark:border-slate-700 dark:text-slate-400"
+			class="glass-surface border border-dashed border-sky-400/25 p-10 text-center text-slate-300"
 		>
 			No events captured yet. Update statuses or add notes from the dashboard to populate this view.
 		</div>
@@ -236,7 +192,7 @@
 					>
 						<div
 							xmlns="http://www.w3.org/1999/xhtml"
-							class="flex h-full items-center justify-end pr-2 text-xs text-slate-500 dark:text-slate-400"
+							class="flex h-full items-center justify-end pr-2 text-xs text-slate-400/80"
 						>
 							<span class="truncate" title={category}>{category}</span>
 						</div>
@@ -268,7 +224,8 @@
 							x={tick.x}
 							y={TIMELINE_HEIGHT - PADDING_Y + 22}
 							text-anchor="middle"
-							class="fill-slate-500 text-xs dark:fill-slate-400"
+							fill="rgba(148,163,184,0.85)"
+							class="text-xs"
 						>
 							{tick.label}
 						</text>
@@ -277,7 +234,18 @@
 
 				<!-- Events -->
 				{#each timelineEvents as event (event.id)}
-					<g on:click={() => focusEvent(event)} class="cursor-pointer">
+					<g
+						role="button"
+						tabindex="0"
+						class="cursor-pointer"
+						on:click={() => focusEvent(event)}
+						on:keydown={(eventDetail) => {
+							if (eventDetail.key === 'Enter' || eventDetail.key === ' ') {
+								eventDetail.preventDefault();
+								focusEvent(event);
+							}
+						}}
+					>
 						<circle
 							cx={toX(event.timestamp)}
 							cy={toY(event.category)}
@@ -322,23 +290,22 @@
 </section>
 
 {#if focusedEvent}
-	<section
-		class="space-y-4 rounded-3xl border border-emerald-200 bg-white p-6 dark:border-emerald-900 dark:bg-slate-900"
-	>
+	<section class="glass-surface space-y-4 rounded-3xl p-6">
 		<header class="flex items-center gap-3">
-			<NotebookPen size={24} class="text-emerald-500" />
+			<NotebookPen size={24} class="text-emerald-400" />
 			<div>
-				<h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100">
+				<h3 class="text-xl font-semibold text-slate-100">
 					{focusedEvent.labName}
 				</h3>
-				<p class="text-sm text-slate-500 dark:text-slate-400">
+				<p class="text-sm text-slate-300/80">
 					{focusedEvent.summary || focusedEvent.type} • {formatDisplay(focusedEvent.timestamp)}
 				</p>
 			</div>
 		</header>
 
 		{#if focusedEvent.noteContent}
-			<div class="prose max-w-none dark:prose-invert">
+			<div class="prose prose-invert max-w-none">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html notePreview(focusedEvent)}
 			</div>
 		{/if}

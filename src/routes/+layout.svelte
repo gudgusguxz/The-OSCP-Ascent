@@ -100,18 +100,24 @@
 	}
 </script>
 
-<div
-	class="flex min-h-screen flex-col bg-slate-50 text-slate-800 transition-colors dark:bg-slate-950 dark:text-slate-100"
->
-	<div class="container mx-auto flex w-full flex-grow flex-col p-4 md:p-8">
+<div class="flex min-h-screen flex-col text-slate-200 transition-colors">
+	<div class="container mx-auto flex w-full flex-grow flex-col gap-8 p-4 md:p-8 lg:max-w-7xl">
 		<header
-			class="mb-8 flex flex-col gap-6 rounded-2xl border border-white/30 bg-white/80 p-6 shadow-lg backdrop-blur-lg lg:flex-row lg:items-center lg:justify-between dark:border-slate-800 dark:bg-slate-900/70"
+			class="glass-panel relative flex flex-col gap-6 overflow-hidden p-6 lg:flex-row lg:items-center lg:justify-between"
 		>
 			<div>
-				<h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+				<div class="pointer-events-none absolute inset-0 -z-10 opacity-70">
+					<div
+						class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl"
+					></div>
+					<div
+						class="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl"
+					></div>
+				</div>
+				<h1 class="text-3xl font-bold tracking-tight text-slate-100">
 					<a href="/">🏆 Root Quest 2.0 🛡️</a>
 				</h1>
-				<p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+				<p class="mt-2 text-sm text-slate-300">
 					Track every Hack The Box, Proving Grounds, and OSCP lab with a hacker-grade dashboard.
 				</p>
 			</div>
@@ -121,10 +127,10 @@
 					{#each navLinks as nav (nav.href)}
 						<button
 							class={clsx(
-								'inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold transition-colors',
+								'inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold backdrop-blur-sm transition-colors',
 								$page.url.pathname === nav.href
-									? 'border-emerald-500 bg-emerald-500 text-white shadow-sm'
-									: 'border-transparent text-slate-600 hover:border-emerald-400/60 hover:bg-emerald-500/10 hover:text-emerald-500 dark:text-slate-300 dark:hover:text-emerald-300'
+									? 'border-cyan-400/70 bg-[rgba(12,78,125,0.35)] text-cyan-100 shadow-[0_20px_55px_rgba(8,145,178,0.45)]'
+									: 'border-transparent text-slate-300 hover:border-cyan-400/35 hover:bg-[rgba(8,19,38,0.65)] hover:text-cyan-100'
 							)}
 							on:click={() => navigateTo(nav.href)}
 							type="button"
@@ -138,7 +144,7 @@
 				<div class="flex flex-wrap items-center gap-2 md:ml-auto">
 					<button
 						on:click={toggleExamPrepMode}
-						class="rounded-xl bg-slate-200/80 px-3 py-2 text-xs font-semibold tracking-wide text-slate-700 uppercase transition-colors hover:bg-emerald-500/20 hover:text-emerald-500 dark:bg-slate-800 dark:text-slate-300 dark:hover:text-emerald-300"
+						class="rounded-xl border border-emerald-400/20 bg-[rgba(9,19,35,0.75)] px-3 py-2 text-xs font-semibold tracking-wide text-slate-200 uppercase transition-colors hover:border-emerald-400/45 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
 						type="button"
 					>
 						Exam Prep Mode {#if $preferences.examPrepMode}ON ✅{:else}OFF ❌{/if}
@@ -146,7 +152,7 @@
 
 					<button
 						on:click={toggleDarkMode}
-						class="rounded-xl border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+						class="rounded-xl border border-cyan-400/20 bg-[rgba(9,19,35,0.75)] p-2 text-slate-200 transition-colors hover:border-cyan-400/50 hover:bg-[rgba(8,145,178,0.16)] hover:text-cyan-100"
 						type="button"
 						aria-label="Toggle dark mode"
 					>
@@ -159,7 +165,7 @@
 
 					<button
 						on:click={exportBackup}
-						class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-slate-600 transition-colors hover:border-emerald-300 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-200 dark:hover:text-emerald-300"
+						class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/20 bg-[rgba(9,19,35,0.75)] px-3 py-2 text-slate-200 transition-colors hover:border-emerald-400/45 hover:bg-[rgba(16,185,129,0.14)] hover:text-emerald-200"
 						type="button"
 					>
 						<Download size={16} /> Backup
@@ -167,7 +173,7 @@
 
 					<button
 						on:click={triggerImport}
-						class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-slate-600 transition-colors hover:border-emerald-300 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-200 dark:hover:text-emerald-300"
+						class="inline-flex items-center gap-2 rounded-xl border border-sky-400/20 bg-[rgba(9,19,35,0.75)] px-3 py-2 text-slate-200 transition-colors hover:border-sky-400/45 hover:bg-[rgba(56,189,248,0.14)] hover:text-sky-200"
 						type="button"
 					>
 						<Upload size={16} /> Restore
@@ -176,7 +182,7 @@
 					<button
 						on:click={resetData}
 						title="Reset All Data"
-						class="inline-flex items-center gap-2 rounded-xl border border-red-200/60 px-3 py-2 text-red-500 transition-colors hover:bg-red-500/10"
+						class="inline-flex items-center gap-2 rounded-xl border border-rose-500/40 bg-[rgba(63,12,24,0.42)] px-3 py-2 text-rose-300 transition-colors hover:border-rose-400/60 hover:bg-[rgba(244,63,94,0.16)] hover:text-rose-200"
 						type="button"
 					>
 						<RotateCw size={16} /> Reset
@@ -191,7 +197,7 @@
 	</div>
 
 	<footer
-		class="mt-8 w-full border-t border-slate-200/70 bg-slate-100 py-4 text-center text-sm text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-500"
+		class="mt-8 w-full border-t border-white/5 bg-[rgba(7,15,32,0.85)] py-4 text-center text-sm text-slate-400 backdrop-blur-xl"
 	>
 		<p>Powered by Root Quest 2.0</p>
 	</footer>

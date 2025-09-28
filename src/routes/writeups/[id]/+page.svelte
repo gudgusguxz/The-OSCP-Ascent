@@ -127,7 +127,7 @@
 </svelte:head>
 
 {#if !lab}
-	<section class="p-10 text-center text-slate-500 dark:text-slate-400">
+	<section class="p-10 text-center text-slate-300/80">
 		<p>Writeup not found. Returning to the writeup index…</p>
 	</section>
 {:else}
@@ -135,19 +135,19 @@
 		<header class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
 			<div>
 				<button
-					class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-500 hover:text-emerald-400"
+					class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-200 transition-colors hover:text-emerald-100"
 					on:click={() => goto('/writeups')}
 				>
 					<ArrowLeft size={16} /> Back to list
 				</button>
-				<h1 class="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-50">{lab.name}</h1>
-				<p class="text-slate-500 dark:text-slate-400">
+				<h1 class="mt-2 text-3xl font-bold text-slate-100">{lab.name}</h1>
+				<p class="text-slate-300/80">
 					{lab.category} • {lab.os} • {lab.difficulty}
 				</p>
 			</div>
 			<div class="flex flex-wrap gap-2">
 				<button
-					class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-slate-600 hover:border-emerald-400 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-200"
+					class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
 					on:click={copyMarkdown}
 				>
 					{#if copied}
@@ -157,13 +157,13 @@
 					{/if}
 				</button>
 				<button
-					class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-slate-600 hover:border-emerald-400 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-200"
+					class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
 					on:click={() => exportWriteup('markdown')}
 				>
 					<Download size={16} /> Export .md
 				</button>
 				<button
-					class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-slate-600 hover:border-emerald-400 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-200"
+					class="inline-flex items-center gap-2 rounded-xl border border-sky-400/30 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-sky-400/55 hover:bg-[rgba(56,189,248,0.18)] hover:text-sky-200"
 					on:click={() => exportWriteup('html')}
 				>
 					<Download size={16} /> Export .html
@@ -172,11 +172,9 @@
 		</header>
 
 		<section class="grid grid-cols-1 gap-6 lg:grid-cols-[360px_1fr]">
-			<aside
-				class="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
-			>
-				<h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Lab Snapshot</h2>
-				<dl class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+			<aside class="glass-surface space-y-3 rounded-2xl p-5">
+				<h2 class="text-lg font-semibold text-slate-100">Lab Snapshot</h2>
+				<dl class="space-y-2 text-sm text-slate-300/80">
 					<div class="flex justify-between">
 						<dt>Status</dt>
 						<dd>{lab.status}</dd>
@@ -208,17 +206,14 @@
 				</dl>
 			</aside>
 
-			<article
-				class="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900"
-			>
-				<h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Markdown Source</h2>
-				<textarea
-					class="h-64 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 font-mono text-sm dark:border-slate-800 dark:bg-slate-900"
-					readonly>{markdownWriteup}</textarea
+			<article class="glass-surface space-y-4 rounded-2xl p-6">
+				<h2 class="text-lg font-semibold text-slate-100">Markdown Source</h2>
+				<textarea class="input-elevated h-64 w-full rounded-xl px-3 py-3 font-mono text-sm" readonly
+					>{markdownWriteup}</textarea
 				>
-				<h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Preview</h2>
+				<h2 class="text-lg font-semibold text-slate-100">Preview</h2>
 				<div
-					class="prose prose-base dark:prose-invert prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-code:text-emerald-500 max-w-none"
+					class="prose prose-base prose-invert prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-code:text-emerald-400 max-w-none"
 				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					{@html renderMarkdown(markdownWriteup)}
