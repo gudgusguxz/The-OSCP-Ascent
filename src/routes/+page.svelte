@@ -61,6 +61,8 @@
 	let activeCategoryName = '';
 	let searchTerm = '';
 
+	$: normalizedSearchTerm = searchTerm.trim().toLowerCase();
+
 	let showAddForm = false;
 	let newLabName = '';
 	let newLabDifficulty = 'Easy';
@@ -131,26 +133,75 @@
 	const statusRank = (status) => STATUS_ORDER.indexOf(status ?? 'not_started');
 
 	const matchesSearch = (lab) => {
-		if (!searchTerm.trim()) return true;
-		const term = searchTerm.trim().toLowerCase();
-		const haystack = [
+		if (!normalizedSearchTerm) return true;
+
+		const fields = [
 			lab.name,
 			lab.os,
 			lab.difficulty,
 			...(lab.services || []),
 			...(lab.cves || []),
 			...(lab.tags || []),
-			...(lab.notes || []).map((note) => note.content)
-		]
-			.filter(Boolean)
-			.join(' ')
-			.toLowerCase();
-		return haystack.includes(term);
+			(lab.notes || [])
+				.map((note) => note?.content || '')
+				.filter(Boolean)
+				.join(' ')
+		].filter(Boolean);
+
+		return fields.some((field) => field.toLowerCase().includes(normalizedSearchTerm));
 	};
 
-	$: labsToShow = $labsStore
+	$: labsMatchingSearch = $labsStore.filter(matchesSearch);
+
+	const toMillis = (timestamp) => {
+		if (!timestamp) return 0;
+		const date = new Date(timestamp);
+		return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+	};
+
+	const getLatestActivityTimestamp = (lab) => {
+		const timestamps = [];
+
+		if (lab?.updatedAt) timestamps.push(lab.updatedAt);
+		if (lab?.history?.length) {
+			lab.history.forEach((event) => {
+				if (event?.timestamp) {
+					timestamps.push(event.timestamp);
+				}
+			});
+		}
+		if (lab?.completedAt) timestamps.push(lab.completedAt);
+		if (lab?.startedAt) timestamps.push(lab.startedAt);
+
+		return timestamps.reduce((latest, current) => {
+			if (!current) return latest;
+			if (!latest || toMillis(current) > toMillis(latest)) {
+				return current;
+			}
+			return latest;
+		}, null);
+	};
+
+	const getSourceLabel = (lab) => initialData?.[lab.source]?.listName || lab.source || 'Lab';
+
+	$: currentlyPlayingLabs = labsMatchingSearch
+		.filter((lab) => lab.status === 'in_progress')
+		.sort(
+			(a, b) => toMillis(getLatestActivityTimestamp(b)) - toMillis(getLatestActivityTimestamp(a))
+		);
+
+	$: lastPlayedLab =
+		(
+			labsMatchingSearch
+				.map((lab) => ({ lab, timestamp: getLatestActivityTimestamp(lab) }))
+				.filter((item) => item.timestamp)
+				.sort((a, b) => toMillis(b.timestamp) - toMillis(a.timestamp))?.[0] || null
+		)?.lab || null;
+
+	$: lastPlayedTimestamp = lastPlayedLab ? getLatestActivityTimestamp(lastPlayedLab) : null;
+
+	$: labsToShow = labsMatchingSearch
 		.filter((lab) => lab.source === activeListKey && lab.category === activeCategoryName)
-		.filter(matchesSearch)
 		.sort((a, b) => statusRank(a.status) - statusRank(b.status) || a.name.localeCompare(b.name));
 
 	$: overallStatus = $labsStore.reduce(
@@ -699,6 +750,193 @@
 		</aside>
 
 		<div class="space-y-5">
+			{#if currentlyPlayingLabs.length > 0 || lastPlayedLab}
+				<section class="space-y-4">
+					<div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+						{#if currentlyPlayingLabs.length > 0}
+							<h3
+								id="currentlyPlayingHeading"
+								class="text-sm font-semibold tracking-wide text-emerald-500 uppercase"
+							>
+								Currently Playing
+							</h3>
+						{/if}
+						{#if lastPlayedLab}
+							<h3
+								id="lastPlayedHeading"
+								class="text-sm font-semibold tracking-wide text-sky-500 uppercase md:text-right"
+							>
+								Last Played
+							</h3>
+						{/if}
+					</div>
+
+					{#if currentlyPlayingLabs.length > 0}
+						<div
+							class="grid grid-cols-1 gap-4 xl:grid-cols-2"
+							aria-labelledby="currentlyPlayingHeading"
+						>
+							{#each currentlyPlayingLabs as lab (lab.id)}
+								<article
+									class="flex flex-col gap-4 rounded-2xl border border-emerald-400/80 bg-white p-5 shadow-[0_0_30px_rgba(52,211,153,0.35)] transition-shadow hover:shadow-[0_0_40px_rgba(52,211,153,0.45)] dark:border-emerald-400/60 dark:bg-slate-900"
+								>
+									<div class="flex items-start justify-between gap-4">
+										<div class="space-y-1">
+											<p class="text-xs font-semibold tracking-wide text-emerald-500 uppercase">
+												In Progress Spotlight
+											</p>
+											<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+												{lab.name}
+											</h3>
+											<p class="text-xs text-slate-500 dark:text-slate-400">
+												{getSourceLabel(lab)} • {lab.category}
+											</p>
+										</div>
+										<span
+											class={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_META[lab.status].badge}`}
+										>
+											{STATUS_META[lab.status].icon}
+											{STATUS_META[lab.status].label}
+										</span>
+									</div>
+									<div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+										{#if lab.difficulty}
+											<span
+												class="rounded-full bg-emerald-500/10 px-2 py-0.5 font-semibold text-emerald-600 dark:text-emerald-300"
+											>
+												{lab.difficulty}
+											</span>
+										{/if}
+										{#each lab.services || [] as service (service)}
+											<span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
+												>{service}</span
+											>
+										{/each}
+										{#each lab.cves || [] as cve (cve)}
+											<span
+												class="rounded-full bg-emerald-500/10 px-2 py-0.5 text-emerald-600 dark:text-emerald-300"
+											>
+												{cve}
+											</span>
+										{/each}
+									</div>
+									<div
+										class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400"
+									>
+										<span>Last update: {formatTimestamp(getLatestActivityTimestamp(lab))}</span>
+										<div class="flex items-center gap-2">
+											<button
+												on:click={() => openNoteModal(lab)}
+												class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 px-3 py-1 text-xs font-semibold text-emerald-600 transition-colors hover:bg-emerald-500/10 dark:text-emerald-300"
+											>
+												Notes
+											</button>
+											{#each STATUS_BUTTONS as { key: statusKey, meta } (statusKey)}
+												<button
+													class={clsx(
+														'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
+														lab.status === statusKey
+															? `${meta.pill} border-transparent`
+															: 'border-slate-200 text-slate-500 hover:border-emerald-400 hover:text-emerald-500 dark:border-slate-700 dark:text-slate-300'
+													)}
+													on:click={() => setLabStatus(lab, statusKey)}
+													type="button"
+												>
+													{meta.icon}
+												</button>
+											{/each}
+										</div>
+									</div>
+								</article>
+							{/each}
+						</div>
+					{/if}
+
+					{#if lastPlayedLab}
+						<article
+							aria-labelledby="lastPlayedHeading"
+							class="flex flex-col gap-4 rounded-2xl border border-sky-400/80 bg-white p-5 shadow-[0_0_30px_rgba(56,189,248,0.35)] transition-shadow hover:shadow-[0_0_40px_rgba(56,189,248,0.45)] dark:border-sky-400/60 dark:bg-slate-900"
+						>
+							<div class="flex items-start justify-between gap-4">
+								<div class="space-y-1">
+									<p class="text-xs font-semibold tracking-wide text-sky-500 uppercase">
+										Highlight
+									</p>
+									<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+										{lastPlayedLab.name}
+									</h3>
+									<p class="text-xs text-slate-500 dark:text-slate-400">
+										{getSourceLabel(lastPlayedLab)} • {lastPlayedLab.category}
+									</p>
+								</div>
+								<span
+									class={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_META[lastPlayedLab.status].badge}`}
+								>
+									{STATUS_META[lastPlayedLab.status].icon}
+									{STATUS_META[lastPlayedLab.status].label}
+								</span>
+							</div>
+							<div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+								{#if lastPlayedLab.difficulty}
+									<span
+										class="rounded-full bg-sky-500/10 px-2 py-0.5 font-semibold text-sky-600 dark:text-sky-300"
+									>
+										{lastPlayedLab.difficulty}
+									</span>
+								{/if}
+								{#each lastPlayedLab.services || [] as service (service)}
+									<span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
+										>{service}</span
+									>
+								{/each}
+								{#each lastPlayedLab.cves || [] as cve (cve)}
+									<span
+										class="rounded-full bg-sky-500/10 px-2 py-0.5 text-sky-600 dark:text-sky-300"
+									>
+										{cve}
+									</span>
+								{/each}
+							</div>
+							<div
+								class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400"
+							>
+								<span>Last activity: {formatTimestamp(lastPlayedTimestamp)}</span>
+								<div class="flex items-center gap-2">
+									<a
+										href={buildLabUrl(lastPlayedLab)}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
+									>
+										Open Lab
+									</a>
+									<button
+										on:click={() => openNoteModal(lastPlayedLab)}
+										class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
+									>
+										Notes
+									</button>
+									{#each STATUS_BUTTONS as { key: statusKey, meta } (statusKey)}
+										<button
+											class={clsx(
+												'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
+												lastPlayedLab.status === statusKey
+													? `${meta.pill} border-transparent`
+													: 'border-slate-200 text-slate-500 hover:border-sky-400 hover:text-sky-500 dark:border-slate-700 dark:text-slate-300'
+											)}
+											on:click={() => setLabStatus(lastPlayedLab, statusKey)}
+											type="button"
+										>
+											{meta.icon}
+										</button>
+									{/each}
+								</div>
+							</div>
+						</article>
+					{/if}
+				</section>
+			{/if}
+
 			<header class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
 				<div>
 					<h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">
@@ -716,7 +954,7 @@
 				<div
 					class="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-center text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
 				>
-					No labs found. Try adjusting your search or add a new entry.
+					No labs matched your search.
 				</div>
 			{:else}
 				<div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">

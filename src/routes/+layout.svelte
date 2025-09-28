@@ -30,8 +30,21 @@
 
 	onMount(() => {
 		if (browser) {
+			const storedTheme = localStorage.getItem('theme');
 			const currentPreferences = get(preferences);
-			document.documentElement.classList.toggle('dark', Boolean(currentPreferences.darkMode));
+			const isDark = storedTheme
+				? storedTheme === 'dark'
+				: Boolean(currentPreferences.theme === 'dark' || currentPreferences.darkMode);
+
+			document.documentElement.classList.toggle('dark', isDark);
+
+			if (Boolean(currentPreferences.theme === 'dark') !== isDark) {
+				preferences.set({
+					...currentPreferences,
+					theme: isDark ? 'dark' : 'light',
+					darkMode: isDark
+				});
+			}
 		}
 	});
 
@@ -43,7 +56,11 @@
 	}
 
 	function toggleDarkMode() {
-		preferences.update((current) => ({ ...current, darkMode: !current.darkMode }));
+		preferences.update((current) => {
+			const currentlyDark = current.theme === 'dark' || current.darkMode;
+			const nextTheme = currentlyDark ? 'light' : 'dark';
+			return { ...current, theme: nextTheme, darkMode: nextTheme === 'dark' };
+		});
 	}
 
 	function toggleExamPrepMode() {
@@ -137,7 +154,7 @@
 						type="button"
 						aria-label="Toggle dark mode"
 					>
-						{#if $preferences.darkMode}
+						{#if $preferences.theme === 'dark' || $preferences.darkMode}
 							<Sun size={18} />
 						{:else}
 							<MoonStar size={18} />
