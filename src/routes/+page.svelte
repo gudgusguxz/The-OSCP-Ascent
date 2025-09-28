@@ -188,17 +188,26 @@
 		.filter((lab) => lab.status === 'in_progress')
 		.sort(
 			(a, b) => toMillis(getLatestActivityTimestamp(b)) - toMillis(getLatestActivityTimestamp(a))
-		);
+		)
+		.slice(0, 1);
 
 	$: lastPlayedLab =
 		(
 			labsMatchingSearch
+				.filter((lab) => lab.status === 'owned')
 				.map((lab) => ({ lab, timestamp: getLatestActivityTimestamp(lab) }))
 				.filter((item) => item.timestamp)
 				.sort((a, b) => toMillis(b.timestamp) - toMillis(a.timestamp))?.[0] || null
 		)?.lab || null;
 
 	$: lastPlayedTimestamp = lastPlayedLab ? getLatestActivityTimestamp(lastPlayedLab) : null;
+
+	$: highlightedSectionLabel = [
+		currentlyPlayingLabs.length > 0 ? 'currentlyPlayingHeading' : null,
+		lastPlayedLab ? 'lastPlayedHeading' : null
+	]
+		.filter(Boolean)
+		.join(' ');
 
 	$: labsToShow = labsMatchingSearch
 		.filter((lab) => lab.source === activeListKey && lab.category === activeCategoryName)
@@ -771,11 +780,11 @@
 						{/if}
 					</div>
 
-					{#if currentlyPlayingLabs.length > 0}
-						<div
-							class="grid grid-cols-1 gap-4 xl:grid-cols-2"
-							aria-labelledby="currentlyPlayingHeading"
-						>
+					<div
+						class="grid grid-cols-1 gap-4 xl:grid-cols-2"
+						aria-labelledby={highlightedSectionLabel || undefined}
+					>
+						{#if currentlyPlayingLabs.length > 0}
 							{#each currentlyPlayingLabs as lab (lab.id)}
 								<article
 									class="flex flex-col gap-4 rounded-2xl border border-emerald-400/80 bg-white p-5 shadow-[0_0_30px_rgba(52,211,153,0.35)] transition-shadow hover:shadow-[0_0_40px_rgba(52,211,153,0.45)] dark:border-emerald-400/60 dark:bg-slate-900"
@@ -849,91 +858,91 @@
 									</div>
 								</article>
 							{/each}
-						</div>
-					{/if}
+						{/if}
 
-					{#if lastPlayedLab}
-						<article
-							aria-labelledby="lastPlayedHeading"
-							class="flex flex-col gap-4 rounded-2xl border border-sky-400/80 bg-white p-5 shadow-[0_0_30px_rgba(56,189,248,0.35)] transition-shadow hover:shadow-[0_0_40px_rgba(56,189,248,0.45)] dark:border-sky-400/60 dark:bg-slate-900"
-						>
-							<div class="flex items-start justify-between gap-4">
-								<div class="space-y-1">
-									<p class="text-xs font-semibold tracking-wide text-sky-500 uppercase">
-										Highlight
-									</p>
-									<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
-										{lastPlayedLab.name}
-									</h3>
-									<p class="text-xs text-slate-500 dark:text-slate-400">
-										{getSourceLabel(lastPlayedLab)} • {lastPlayedLab.category}
-									</p>
-								</div>
-								<span
-									class={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_META[lastPlayedLab.status].badge}`}
-								>
-									{STATUS_META[lastPlayedLab.status].icon}
-									{STATUS_META[lastPlayedLab.status].label}
-								</span>
-							</div>
-							<div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
-								{#if lastPlayedLab.difficulty}
-									<span
-										class="rounded-full bg-sky-500/10 px-2 py-0.5 font-semibold text-sky-600 dark:text-sky-300"
-									>
-										{lastPlayedLab.difficulty}
-									</span>
-								{/if}
-								{#each lastPlayedLab.services || [] as service (service)}
-									<span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
-										>{service}</span
-									>
-								{/each}
-								{#each lastPlayedLab.cves || [] as cve (cve)}
-									<span
-										class="rounded-full bg-sky-500/10 px-2 py-0.5 text-sky-600 dark:text-sky-300"
-									>
-										{cve}
-									</span>
-								{/each}
-							</div>
-							<div
-								class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400"
+						{#if lastPlayedLab}
+							<article
+								aria-labelledby="lastPlayedHeading"
+								class="flex flex-col gap-4 rounded-2xl border border-sky-400/80 bg-white p-5 shadow-[0_0_30px_rgba(56,189,248,0.35)] transition-shadow hover:shadow-[0_0_40px_rgba(56,189,248,0.45)] dark:border-sky-400/60 dark:bg-slate-900"
 							>
-								<span>Last activity: {formatTimestamp(lastPlayedTimestamp)}</span>
-								<div class="flex items-center gap-2">
-									<a
-										href={buildLabUrl(lastPlayedLab)}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
+								<div class="flex items-start justify-between gap-4">
+									<div class="space-y-1">
+										<p class="text-xs font-semibold tracking-wide text-sky-500 uppercase">
+											Highlight
+										</p>
+										<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+											{lastPlayedLab.name}
+										</h3>
+										<p class="text-xs text-slate-500 dark:text-slate-400">
+											{getSourceLabel(lastPlayedLab)} • {lastPlayedLab.category}
+										</p>
+									</div>
+									<span
+										class={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_META[lastPlayedLab.status].badge}`}
 									>
-										Open Lab
-									</a>
-									<button
-										on:click={() => openNoteModal(lastPlayedLab)}
-										class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
-									>
-										Notes
-									</button>
-									{#each STATUS_BUTTONS as { key: statusKey, meta } (statusKey)}
-										<button
-											class={clsx(
-												'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
-												lastPlayedLab.status === statusKey
-													? `${meta.pill} border-transparent`
-													: 'border-slate-200 text-slate-500 hover:border-sky-400 hover:text-sky-500 dark:border-slate-700 dark:text-slate-300'
-											)}
-											on:click={() => setLabStatus(lastPlayedLab, statusKey)}
-											type="button"
+										{STATUS_META[lastPlayedLab.status].icon}
+										{STATUS_META[lastPlayedLab.status].label}
+									</span>
+								</div>
+								<div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+									{#if lastPlayedLab.difficulty}
+										<span
+											class="rounded-full bg-sky-500/10 px-2 py-0.5 font-semibold text-sky-600 dark:text-sky-300"
 										>
-											{meta.icon}
-										</button>
+											{lastPlayedLab.difficulty}
+										</span>
+									{/if}
+									{#each lastPlayedLab.services || [] as service (service)}
+										<span class="rounded-full bg-slate-100 px-2 py-0.5 dark:bg-slate-800"
+											>{service}</span
+										>
+									{/each}
+									{#each lastPlayedLab.cves || [] as cve (cve)}
+										<span
+											class="rounded-full bg-sky-500/10 px-2 py-0.5 text-sky-600 dark:text-sky-300"
+										>
+											{cve}
+										</span>
 									{/each}
 								</div>
-							</div>
-						</article>
-					{/if}
+								<div
+									class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400"
+								>
+									<span>Last activity: {formatTimestamp(lastPlayedTimestamp)}</span>
+									<div class="flex items-center gap-2">
+										<a
+											href={buildLabUrl(lastPlayedLab)}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
+										>
+											Open Lab
+										</a>
+										<button
+											on:click={() => openNoteModal(lastPlayedLab)}
+											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 px-3 py-1 text-xs font-semibold text-sky-600 transition-colors hover:bg-sky-500/10 dark:text-sky-300"
+										>
+											Notes
+										</button>
+										{#each STATUS_BUTTONS as { key: statusKey, meta } (statusKey)}
+											<button
+												class={clsx(
+													'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
+													lastPlayedLab.status === statusKey
+														? `${meta.pill} border-transparent`
+														: 'border-slate-200 text-slate-500 hover:border-sky-400 hover:text-sky-500 dark:border-slate-700 dark:text-slate-300'
+												)}
+												on:click={() => setLabStatus(lastPlayedLab, statusKey)}
+												type="button"
+											>
+												{meta.icon}
+											</button>
+										{/each}
+									</div>
+								</div>
+							</article>
+						{/if}
+					</div>
 				</section>
 			{/if}
 
