@@ -17,7 +17,7 @@
 	import { browser } from '$app/environment';
 	import clsx from 'clsx';
 
-	import { preferences } from '$lib/preferencesStore.js';
+	import { preferences, toggleTheme } from '$lib/preferencesStore.js';
 	import { labs, normalizeLabsCollection } from '$lib/stores.js';
 
 	let filePicker;
@@ -56,11 +56,7 @@
 	}
 
 	function toggleDarkMode() {
-		preferences.update((current) => {
-			const currentlyDark = current.theme === 'dark' || current.darkMode;
-			const nextTheme = currentlyDark ? 'light' : 'dark';
-			return { ...current, theme: nextTheme, darkMode: nextTheme === 'dark' };
-		});
+		toggleTheme();
 	}
 
 	function toggleExamPrepMode() {
