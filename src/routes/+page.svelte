@@ -56,18 +56,7 @@
 	);
 
 	const initialData = { htb: htbData, pg: pgPracticeData, oscp: oscpData };
-	const osOptions = Array.from(
-		new Set(
-			Object.values(initialData || {}).flatMap(
-				(source) =>
-					source?.categories?.flatMap(
-						(category) => category?.labs?.map((lab) => lab?.os).filter(Boolean) || []
-					) || []
-			)
-		)
-	)
-		.filter(Boolean)
-		.sort((a, b) => a.localeCompare(b));
+        const osOptions = ['Linux', 'Windows'];
 
 	let activeListKey = 'htb';
 	let activeCategoryName = '';
