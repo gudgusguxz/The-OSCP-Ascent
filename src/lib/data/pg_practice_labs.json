@@ -183,6 +183,24 @@
 					"os": "Linux",
 					"difficulty": "Intermediate",
 					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+				},
+				{
+					"name": "Pebbles",
+					"os": "Linux",
+					"difficulty": "Easy",
+					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+				},
+				{
+					"name": "Nibbles",
+					"os": "Linux",
+					"difficulty": "Intermediate",
+					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+				},
+				{
+					"name": "Sea",
+					"os": "Linux",
+					"difficulty": "Intermediate",
+					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
 				}
 			]
 		},
