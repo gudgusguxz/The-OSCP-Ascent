@@ -115,7 +115,7 @@
 					></div>
 				</div>
                                 <h1 class="text-3xl font-bold tracking-tight text-slate-100">
-                                        <a href="/"> Check LAB </a>
+                                        <a href="/"> Checkmate Labs </a>
 				</h1>
 				<p class="mt-2 text-sm text-slate-300">
 					Track every Hack The Box, Proving Grounds, and OSCP lab with a hacker-grade dashboard.
