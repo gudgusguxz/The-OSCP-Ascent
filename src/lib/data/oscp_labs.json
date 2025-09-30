@@ -41,7 +41,32 @@
 					"services": ["web", "winrm"],
 					"cves": [],
 					"tags": ["prolab", "pivoting"]
+				},
+				{
+					"name": "OSCP A",
+					"difficulty": "Hard",
+					"os": "Windows",
+					"services": ["web", "winrm", "rdp"],
+					"cves": [],
+					"tags": ["prolab", "pivoting"]
+				},
+				{
+					"name": "OSCP B",
+					"difficulty": "Hard",
+					"os": "Windows",
+					"services": ["web", "winrm", "rdp"],
+					"cves": [],
+					"tags": ["prolab", "pivoting"]
+				},
+				{
+					"name": "OSCP C",
+					"difficulty": "Hard",
+					"os": "Windows",
+					"services": ["web", "winrm", "rdp"],
+					"cves": [],
+					"tags": ["prolab", "pivoting"]
 				}
+				
 			]
 		},
 		{
