@@ -1,4 +1,6 @@
 <script>
+	import { onDestroy, onMount } from 'svelte';
+
 	import { labs } from '$lib/stores.js';
 	import { preferences } from '$lib/preferencesStore.js';
 	import { filterForExamPrep, renderMarkdown } from '$lib/markdown.js';
@@ -14,7 +16,7 @@
 		Wand2
 	} from 'lucide-svelte';
 
-	const TIMELINE_WIDTH = 960;
+	const MIN_TIMELINE_WIDTH = 960;
 	const TIMELINE_HEIGHT = 360;
 	const PADDING_X = 160;
 	const PADDING_Y = 50;
@@ -22,6 +24,37 @@
 
 	let selectedDate = '';
 	let focusedEvent = null;
+	let timelineWidth = MIN_TIMELINE_WIDTH;
+	let timelineShell;
+	let resizeObserver;
+
+	onMount(() => {
+		if (!timelineShell) return;
+
+		const updateWidth = (entry) => {
+			const { width } = entry.contentRect;
+			timelineWidth = Math.max(MIN_TIMELINE_WIDTH, Math.round(width));
+		};
+
+		resizeObserver = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				updateWidth(entry);
+			}
+		});
+
+		updateWidth({ contentRect: { width: timelineShell.clientWidth || MIN_TIMELINE_WIDTH } });
+		resizeObserver.observe(timelineShell);
+
+		return () => {
+			resizeObserver?.disconnect();
+			resizeObserver = undefined;
+		};
+	});
+
+	onDestroy(() => {
+		resizeObserver?.disconnect();
+		resizeObserver = undefined;
+	});
 
 	const toDay = (timestamp) => new Date(timestamp).toISOString().split('T')[0];
 	const formatDisplay = (timestamp) =>
@@ -139,7 +172,7 @@
 	const toX = (timestamp) => {
 		const time = normalizeToTime(timestamp);
 		const ratio = (time - minTime) / timeSpan;
-		return PADDING_X + ratio * (TIMELINE_WIDTH - PADDING_X * 2);
+		return PADDING_X + ratio * (timelineWidth - PADDING_X * 2);
 	};
 
 	const toY = (category) => {
@@ -291,15 +324,15 @@
 			No events captured yet. Update statuses or add notes from the dashboard to populate this view.
 		</div>
 	{:else}
-		<div class="timeline-shell">
+		<div class="timeline-shell" bind:this={timelineShell}>
 			<div aria-hidden="true" class="timeline-glow"></div>
-			<svg viewBox={`0 0 ${TIMELINE_WIDTH} ${TIMELINE_HEIGHT}`} class="timeline-canvas">
+			<svg viewBox={`0 0 ${timelineWidth} ${TIMELINE_HEIGHT}`} class="timeline-canvas">
 				<!-- Category grid lines -->
 				{#each categoriesForTimeline as category, index (category)}
 					<line
 						x1={PADDING_X}
 						y1={PADDING_Y + index * rowHeight}
-						x2={TIMELINE_WIDTH - PADDING_X}
+						x2={timelineWidth - PADDING_X}
 						y2={PADDING_Y + index * rowHeight}
 						stroke="rgba(148,163,184,0.25)"
 						stroke-width="1"
@@ -324,7 +357,7 @@
 				<line
 					x1={PADDING_X}
 					y1={TIMELINE_HEIGHT - PADDING_Y}
-					x2={TIMELINE_WIDTH - PADDING_X}
+					x2={timelineWidth - PADDING_X}
 					y2={TIMELINE_HEIGHT - PADDING_Y}
 					stroke="rgba(148,163,184,0.6)"
 					stroke-width="1.5"
@@ -676,7 +709,9 @@
 
 	.timeline-canvas {
 		position: relative;
+		width: 100%;
 		min-width: 100%;
+		height: auto;
 	}
 
 	.event-icon-wrapper {
