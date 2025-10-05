@@ -1,384 +1,625 @@
 {
-	"listName": "Proving Grounds Practice",
-	"categories": [
-		{
-			"name": "Linux Boxes",
-			"labs": [
-				{
-					"name": "Twiggy",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
-				},
-				{
-					"name": "Exfiltrated",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Pelican",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Astronaut",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Blackgate",
-					"os": "Linux",
-					"difficulty": "Hard",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
-				},
-				{
-					"name": "Boolean",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Clue",
-					"os": "Linux",
-					"difficulty": "Hard",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
-				},
-				{
-					"name": "Cockpit",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Codo",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Crane",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Levram",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Extplorer",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Hub",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Image",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "law",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Lavita",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "PC",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Fired",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Press",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Scrutiny",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "RubyDome",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Zipper",
-					"os": "Linux",
-					"difficulty": "Hard",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Flu",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Ochima",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "PyLoader",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Plum",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "SPX",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Jordak",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "BitForge",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Vmdak",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Pebbles",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Nibbles",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Sea",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				}
-			]
-		},
-		{
-			"name": "Windows Boxes",
-			"labs": [
-				{
-					"name": "Algernon",
-					"os": "Windows",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Authby",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Craft",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Hutch",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Active-Directory.svg"
-				},
-				{
-					"name": "Internal",
-					"os": "Windows",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Jacko",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Kevin",
-					"os": "Windows",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Resourced",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Active-Directory.svg"
-				},
-				{
-					"name": "Squid",
-					"os": "Windows",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
-				},
-				{
-					"name": "DVR4",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
-				},
-				{
-					"name": "Hepet",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Shenzi",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "Nickel",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
-				},
-				{
-					"name": "Slort",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
-				},
-				{
-					"name": "MedJed",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
-				}
-			]
-		},
-		{
-			"name": "Windows Active Directory Boxes",
-			"labs": [
-				{ "name": "Access", "os": "AD", "difficulty": "Easy", "avatar": "" },
-				{ "name": "Heist", "os": "AD", "difficulty": "Medium", "avatar": "" },
-				{ "name": "Vault", "os": "AD", "difficulty": "Medium", "avatar": "" },
-				{ "name": "Nagoya", "os": "AD", "difficulty": "Medium", "avatar": "" },
-				{ "name": "Hokkaido (Retired for now)", "os": "AD", "difficulty": "Medium", "avatar": "" }
-			]
-		},
-		{
-			"name": "Post OSCP Section. Challenging yourself",
-			"labs": [
-				{
-					"name": "Osaka",
-					"os": "Windows",
-					"difficulty": "Hard",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/EXP-301-lab.svg"
-				},
-				{
-					"name": "ProStore",
-					"os": "Linux",
-					"difficulty": "Hard",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "RPC1",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Symbolic",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
-				},
-				{
-					"name": "Upsploit",
-					"os": "Linux",
-					"difficulty": "Hard",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Validator",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "GLPI",
-					"os": "Linux",
-					"difficulty": "Easy",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Marshalled",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Educated",
-					"os": "Linux",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
-				},
-				{
-					"name": "Kyoto",
-					"os": "Windows",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/EXP-301-lab.svg"
-				},
-				{
-					"name": "Nara",
-					"os": "AD",
-					"difficulty": "Intermediate",
-					"avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
-				}
-			]
-		}
-	]
+  "listName": "Proving Grounds Practice",
+  "categories": [
+    {
+      "name": "Linux Boxes",
+      "labs": [
+        {
+          "name": "Twiggy",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Exfiltrated",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Pelican",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Astronaut",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Blackgate",
+          "os": "Linux",
+          "difficulty": "Hard",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Boolean",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Clue",
+          "os": "Linux",
+          "difficulty": "Hard",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Cockpit",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Codo",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Crane",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Levram",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Extplorer",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Hub",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Image",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "law",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Lavita",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "PC",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Fired",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Press",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Scrutiny",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "RubyDome",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Zipper",
+          "os": "Linux",
+          "difficulty": "Hard",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Flu",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Ochima",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "PyLoader",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Plum",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "SPX",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Jordak",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "BitForge",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Vmdak",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Pebbles",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Nibbles",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Sea",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "ClamAV",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Payday",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Snookums",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Bratarina",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Hetemit",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "ZenPhoto",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Nukem",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Postfish",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Hawat",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Walla",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Apex",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Sorcerer",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Sybaris",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Peppo",
+          "os": "Linux",
+          "difficulty": "Hard",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Hunit",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Readys",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Bullybox",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Marketing",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Fanatastic",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "QuackerJack",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Wombo",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "Roquefort",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "MZEEAV",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "XposedAPI",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Workaholic",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Mantis",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "WallpaperHub",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Zab",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        },
+        {
+          "name": "SpiderSociety",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/Non-WEB.svg"
+        }
+      ]
+    },
+    {
+      "name": "Windows Boxes",
+      "labs": [
+        {
+          "name": "Algernon",
+          "os": "Windows",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Authby",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Craft",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Hutch",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Active-Directory.svg"
+        },
+        {
+          "name": "Internal",
+          "os": "Windows",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Jacko",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Kevin",
+          "os": "Windows",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Resourced",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Active-Directory.svg"
+        },
+        {
+          "name": "Squid",
+          "os": "Windows",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        },
+        {
+          "name": "DVR4",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        },
+        {
+          "name": "Hepet",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Shenzi",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Nickel",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        },
+        {
+          "name": "Slort",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "MedJed",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        },
+        {
+          "name": "Billyboss",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        },
+        {
+          "name": "Mice",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Monster",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Non-WEB.svg"
+        },
+        {
+          "name": "Fish",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        }
+      ]
+    },
+    {
+      "name": "Windows Active Directory Boxes",
+      "labs": [
+        {
+          "name": "Access",
+          "os": "AD",
+          "difficulty": "Easy",
+          "avatar": ""
+        },
+        {
+          "name": "Heist",
+          "os": "AD",
+          "difficulty": "Medium",
+          "avatar": ""
+        },
+        {
+          "name": "Vault",
+          "os": "AD",
+          "difficulty": "Medium",
+          "avatar": ""
+        },
+        {
+          "name": "Nagoya",
+          "os": "AD",
+          "difficulty": "Medium",
+          "avatar": ""
+        },
+        {
+          "name": "Hokkaido (Retired for now)",
+          "os": "AD",
+          "difficulty": "Medium",
+          "avatar": ""
+        },
+        {
+          "name": "SkillForge",
+          "os": "AD",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Active-Directory.svg"
+        },
+        {
+          "name": "Treat it like a small network",
+          "os": "AD",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Active-Directory.svg"
+        },
+        {
+          "name": "Pathway",
+          "os": "AD",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/Active-Directory.svg"
+        }
+      ]
+    },
+    {
+      "name": "Post OSCP Section. Challenging yourself",
+      "labs": [
+        {
+          "name": "Osaka",
+          "os": "Windows",
+          "difficulty": "Hard",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/EXP-301-lab.svg"
+        },
+        {
+          "name": "ProStore",
+          "os": "Linux",
+          "difficulty": "Hard",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "RPC1",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Symbolic",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        },
+        {
+          "name": "Upsploit",
+          "os": "Linux",
+          "difficulty": "Hard",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Validator",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "GLPI",
+          "os": "Linux",
+          "difficulty": "Easy",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Marshalled",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Educated",
+          "os": "Linux",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/linux/WEB.svg"
+        },
+        {
+          "name": "Kyoto",
+          "os": "Windows",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/EXP-301-lab.svg"
+        },
+        {
+          "name": "Nara",
+          "os": "AD",
+          "difficulty": "Intermediate",
+          "avatar": "https://static.offsec.com/media/lms/content_tags/machines/windows/WEB.svg"
+        }
+      ]
+    }
+  ]
 }
