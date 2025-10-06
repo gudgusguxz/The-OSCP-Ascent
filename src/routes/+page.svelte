@@ -211,7 +211,11 @@
 		.join(' ');
 
 	$: labsToShow = labsMatchingSearch
-		.filter((lab) => lab.source === activeListKey && lab.category === activeCategoryName)
+		.filter(
+			(lab) =>
+				lab.source === activeListKey &&
+				(normalizedSearchTerm ? true : lab.category === activeCategoryName)
+		)
 		.sort((a, b) => statusRank(a.status) - statusRank(b.status) || a.name.localeCompare(b.name));
 
 	$: overallStatus = $labsStore.reduce(
