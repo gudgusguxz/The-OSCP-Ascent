@@ -108,14 +108,14 @@
 			<div>
 				<div class="pointer-events-none absolute inset-0 -z-10 opacity-70">
 					<div
-						class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl"
+						class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-fuchsia-500/20 blur-3xl"
 					></div>
 					<div
-						class="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl"
+						class="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-violet-500/10 blur-3xl"
 					></div>
 				</div>
-                                <h1 class="text-3xl font-bold tracking-tight text-slate-100">
-                                        <a href="/"> Checkmate Labs </a>
+				<h1 class="text-3xl font-bold tracking-tight text-slate-100">
+					<a href="/"> Checkmate Labs </a>
 				</h1>
 				<p class="mt-2 text-sm text-slate-300">
 					Track every Hack The Box, Proving Grounds, and OSCP lab with a hacker-grade dashboard.
@@ -129,8 +129,8 @@
 							class={clsx(
 								'inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold backdrop-blur-sm transition-colors',
 								$page.url.pathname === nav.href
-									? 'border-cyan-400/70 bg-[rgba(12,78,125,0.35)] text-cyan-100 shadow-[0_20px_55px_rgba(8,145,178,0.45)]'
-									: 'border-transparent text-slate-300 hover:border-cyan-400/35 hover:bg-[rgba(8,19,38,0.65)] hover:text-cyan-100'
+									? 'border-fuchsia-400/70 bg-[rgba(74,23,116,0.35)] text-fuchsia-100 shadow-[0_20px_55px_rgba(217,70,239,0.45)]'
+									: 'border-transparent text-slate-300 hover:border-fuchsia-400/35 hover:bg-[rgba(19,8,48,0.65)] hover:text-fuchsia-100'
 							)}
 							on:click={() => navigateTo(nav.href)}
 							type="button"
@@ -144,7 +144,7 @@
 				<div class="flex flex-wrap items-center gap-2 md:ml-auto">
 					<button
 						on:click={toggleExamPrepMode}
-						class="rounded-xl border border-emerald-400/20 bg-[rgba(9,19,35,0.75)] px-3 py-2 text-xs font-semibold tracking-wide text-slate-200 uppercase transition-colors hover:border-emerald-400/45 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
+						class="rounded-xl border border-violet-400/20 bg-[rgba(20,8,40,0.75)] px-3 py-2 text-xs font-semibold tracking-wide text-slate-200 uppercase transition-colors hover:border-violet-400/45 hover:bg-[rgba(168,85,247,0.16)] hover:text-violet-200"
 						type="button"
 					>
 						Exam Prep Mode {#if $preferences.examPrepMode}ON ✅{:else}OFF ❌{/if}
@@ -152,7 +152,7 @@
 
 					<button
 						on:click={toggleDarkMode}
-						class="rounded-xl border border-cyan-400/20 bg-[rgba(9,19,35,0.75)] p-2 text-slate-200 transition-colors hover:border-cyan-400/50 hover:bg-[rgba(8,145,178,0.16)] hover:text-cyan-100"
+						class="rounded-xl border border-fuchsia-400/20 bg-[rgba(20,8,40,0.75)] p-2 text-slate-200 transition-colors hover:border-fuchsia-400/50 hover:bg-[rgba(217,70,239,0.16)] hover:text-fuchsia-100"
 						type="button"
 						aria-label="Toggle dark mode"
 					>
@@ -165,7 +165,7 @@
 
 					<button
 						on:click={exportBackup}
-						class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/20 bg-[rgba(9,19,35,0.75)] px-3 py-2 text-slate-200 transition-colors hover:border-emerald-400/45 hover:bg-[rgba(16,185,129,0.14)] hover:text-emerald-200"
+						class="inline-flex items-center gap-2 rounded-xl border border-violet-400/20 bg-[rgba(20,8,40,0.75)] px-3 py-2 text-slate-200 transition-colors hover:border-violet-400/45 hover:bg-[rgba(168,85,247,0.14)] hover:text-violet-200"
 						type="button"
 					>
 						<Download size={16} /> Backup
@@ -173,7 +173,7 @@
 
 					<button
 						on:click={triggerImport}
-						class="inline-flex items-center gap-2 rounded-xl border border-sky-400/20 bg-[rgba(9,19,35,0.75)] px-3 py-2 text-slate-200 transition-colors hover:border-sky-400/45 hover:bg-[rgba(56,189,248,0.14)] hover:text-sky-200"
+						class="inline-flex items-center gap-2 rounded-xl border border-fuchsia-400/20 bg-[rgba(20,8,40,0.75)] px-3 py-2 text-slate-200 transition-colors hover:border-fuchsia-400/45 hover:bg-[rgba(217,70,239,0.14)] hover:text-fuchsia-200"
 						type="button"
 					>
 						<Upload size={16} /> Restore
@@ -197,9 +197,9 @@
 	</div>
 
 	<footer
-		class="mt-8 w-full border-t border-white/5 bg-[rgba(7,15,32,0.85)] py-4 text-center text-sm text-slate-400 backdrop-blur-xl"
+		class="mt-8 w-full border-t border-white/5 bg-[rgba(12,5,32,0.88)] py-4 text-center text-sm text-slate-400 backdrop-blur-xl"
 	>
-		<p>Powered by gudgusguz </p>
+		<p>Powered by gudgusguz</p>
 	</footer>
 
 	<input

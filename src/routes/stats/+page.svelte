@@ -239,7 +239,9 @@
 		<section
 			class="grid gap-3 rounded-3xl border border-slate-700/30 bg-slate-900/60 p-5 shadow-lg backdrop-blur"
 		>
-			<div class="flex items-center gap-2 text-sm font-medium tracking-wide text-sky-300 uppercase">
+			<div
+				class="flex items-center gap-2 text-sm font-medium tracking-wide text-indigo-300 uppercase"
+			>
 				<Sparkles class="h-4 w-4" /> Signal Boost
 			</div>
 			<div class="grid gap-4 sm:grid-cols-3">
@@ -280,11 +282,11 @@
 	{#if uniqueDays.length}
 		<section class="glass-surface date-selector">
 			<div class="date-selector__header">
-				<Activity size={18} class="text-sky-400" />
+				<Activity size={18} class="text-indigo-400" />
 				<span>Pulse by Day</span>
 			</div>
 			<div class="date-selector__chips">
-				{#each uniqueDays.slice(0, 6) as day}
+				{#each uniqueDays.slice(0, 6) as day (day)}
 					<button
 						type="button"
 						class:active={day === selectedDate}
@@ -319,7 +321,7 @@
 
 	{#if timelineEvents.length === 0}
 		<div
-			class="glass-surface border border-dashed border-sky-400/25 p-10 text-center text-slate-300"
+			class="glass-surface border border-dashed border-indigo-400/25 p-10 text-center text-slate-300"
 		>
 			No events captured yet. Update statuses or add notes from the dashboard to populate this view.
 		</div>
@@ -461,7 +463,7 @@
 {#if focusedEvent}
 	<section class="glass-surface focus-panel space-y-4 rounded-3xl p-6">
 		<header class="flex items-center gap-3">
-			<NotebookPen size={24} class="text-emerald-400" />
+			<NotebookPen size={24} class="text-violet-400" />
 			<div>
 				<h3 class="text-xl font-semibold text-slate-100">
 					{focusedEvent.labName}
@@ -487,18 +489,18 @@
 		overflow: hidden;
 		border-radius: 2rem;
 		padding: clamp(1.75rem, 4vw, 3rem);
-		border: 1px solid rgba(56, 189, 248, 0.25);
-		background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(2, 132, 199, 0.25));
-		box-shadow: 0 25px 55px rgba(8, 47, 73, 0.65);
+		border: 1px solid rgba(217, 70, 239, 0.35);
+		background: linear-gradient(135deg, rgba(32, 12, 58, 0.95), rgba(126, 34, 206, 0.35));
+		box-shadow: 0 25px 55px rgba(74, 23, 116, 0.6);
 	}
 
 	.hero-backdrop {
 		position: absolute;
 		inset: -20% -10%;
 		background:
-			radial-gradient(circle at 20% 15%, rgba(56, 189, 248, 0.3), transparent 55%),
-			radial-gradient(circle at 75% 40%, rgba(129, 140, 248, 0.25), transparent 60%),
-			radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.35), transparent 65%);
+			radial-gradient(circle at 20% 15%, rgba(217, 70, 239, 0.35), transparent 55%),
+			radial-gradient(circle at 75% 40%, rgba(129, 140, 248, 0.3), transparent 60%),
+			radial-gradient(circle at 50% 90%, rgba(236, 72, 153, 0.32), transparent 65%);
 		filter: blur(20px);
 		opacity: 0.8;
 	}
@@ -527,17 +529,17 @@
 		width: 3.25rem;
 		height: 3.25rem;
 		border-radius: 1rem;
-		background: rgba(14, 165, 233, 0.2);
-		border: 1px solid rgba(56, 189, 248, 0.45);
-		color: rgb(224, 242, 254);
-		box-shadow: 0 10px 30px rgba(14, 165, 233, 0.35);
+		background: rgba(168, 85, 247, 0.22);
+		border: 1px solid rgba(217, 70, 239, 0.45);
+		color: rgb(250, 245, 255);
+		box-shadow: 0 10px 30px rgba(168, 85, 247, 0.35);
 	}
 
 	.hero-eyebrow {
 		font-size: 0.8rem;
 		letter-spacing: 0.25em;
 		text-transform: uppercase;
-		color: rgba(165, 243, 252, 0.85);
+		color: rgba(244, 114, 182, 0.85);
 		margin-bottom: 0.45rem;
 	}
 
@@ -566,10 +568,10 @@
 		align-items: center;
 		gap: 0.5rem;
 		border-radius: 9999px;
-		border: 1px solid rgba(16, 185, 129, 0.5);
-		background: linear-gradient(120deg, rgba(16, 185, 129, 0.28), rgba(14, 165, 233, 0.18));
+		border: 1px solid rgba(217, 70, 239, 0.5);
+		background: linear-gradient(120deg, rgba(217, 70, 239, 0.32), rgba(168, 85, 247, 0.25));
 		padding: 0.35rem 0.9rem;
-		color: rgb(209, 250, 229);
+		color: rgb(250, 245, 255);
 		font-size: 0.8rem;
 		letter-spacing: 0.05em;
 	}
@@ -577,17 +579,17 @@
 	.metric-tile {
 		position: relative;
 		border-radius: 1rem;
-		border: 1px solid rgba(45, 212, 191, 0.2);
-		background: linear-gradient(180deg, rgba(13, 148, 136, 0.18), rgba(2, 6, 23, 0.65));
+		border: 1px solid rgba(192, 132, 252, 0.25);
+		background: linear-gradient(180deg, rgba(126, 34, 206, 0.2), rgba(12, 5, 32, 0.7));
 		padding: 1.15rem;
-		box-shadow: inset 0 1px 0 rgba(45, 212, 191, 0.25);
+		box-shadow: inset 0 1px 0 rgba(192, 132, 252, 0.25);
 	}
 
 	.metric-label {
 		font-size: 0.75rem;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		color: rgba(204, 251, 241, 0.8);
+		color: rgba(221, 214, 254, 0.85);
 	}
 
 	.metric-value {
@@ -596,7 +598,7 @@
 		font-size: 1.875rem;
 		font-weight: 600;
 		color: rgb(226, 232, 240);
-		text-shadow: 0 8px 20px rgba(13, 148, 136, 0.35);
+		text-shadow: 0 8px 20px rgba(126, 34, 206, 0.35);
 	}
 
 	.legend-item {
@@ -605,22 +607,22 @@
 		gap: 0.5rem;
 		border-radius: 9999px;
 		border: 1px solid rgba(51, 65, 85, 0.4);
-		background: rgba(2, 6, 23, 0.6);
+		background: rgba(12, 5, 32, 0.65);
 		padding: 0.25rem 0.75rem;
-		box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+		box-shadow: 0 8px 18px rgba(32, 12, 58, 0.4);
 	}
 
 	.legend-dot {
 		width: 0.5rem;
 		height: 0.5rem;
 		border-radius: 9999px;
-		background: var(--color, #38bdf8);
-		box-shadow: 0 0 14px rgba(56, 189, 248, 0.55);
+		background: var(--color, #d946ef);
+		box-shadow: 0 0 14px rgba(217, 70, 239, 0.55);
 	}
 
 	.legend-dot.note {
-		background: linear-gradient(135deg, #38bdf8, #60a5fa);
-		box-shadow: 0 0 14px rgba(96, 165, 250, 0.8);
+		background: linear-gradient(135deg, #d946ef, #c084fc);
+		box-shadow: 0 0 14px rgba(192, 132, 252, 0.75);
 	}
 
 	.date-selector {
@@ -639,7 +641,7 @@
 		font-size: 0.85rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: rgba(125, 211, 252, 0.85);
+		color: rgba(244, 114, 182, 0.85);
 	}
 
 	.date-selector__chips {
@@ -659,15 +661,15 @@
 	}
 
 	.date-selector button:hover {
-		border-color: rgba(56, 189, 248, 0.55);
-		color: rgb(224, 242, 254);
+		border-color: rgba(217, 70, 239, 0.55);
+		color: rgb(250, 245, 255);
 	}
 
 	.date-selector button.active {
-		border-color: rgba(16, 185, 129, 0.8);
-		background: rgba(16, 185, 129, 0.2);
-		color: rgb(209, 250, 229);
-		box-shadow: 0 8px 22px rgba(16, 185, 129, 0.35);
+		border-color: rgba(217, 70, 239, 0.8);
+		background: rgba(217, 70, 239, 0.2);
+		color: rgb(250, 245, 255);
+		box-shadow: 0 8px 22px rgba(217, 70, 239, 0.35);
 	}
 
 	.date-selector__more {
@@ -689,10 +691,10 @@
 		width: 100%;
 		overflow-x: auto;
 		border-radius: 1.75rem;
-		border: 1px solid rgba(56, 189, 248, 0.25);
-		background: rgba(2, 6, 23, 0.7);
+		border: 1px solid rgba(217, 70, 239, 0.35);
+		background: rgba(12, 5, 32, 0.75);
 		padding: 1.25rem;
-		box-shadow: 0 28px 60px rgba(8, 47, 73, 0.65);
+		box-shadow: 0 28px 60px rgba(74, 23, 116, 0.55);
 		backdrop-filter: blur(18px);
 	}
 
@@ -701,9 +703,9 @@
 		inset: 0;
 		border-radius: 1.75rem;
 		background:
-			radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.35), transparent 55%),
-			radial-gradient(circle at 80% 30%, rgba(96, 165, 250, 0.25), transparent 50%),
-			radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.25), transparent 55%);
+			radial-gradient(circle at 15% 20%, rgba(217, 70, 239, 0.32), transparent 55%),
+			radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.25), transparent 50%),
+			radial-gradient(circle at 50% 90%, rgba(236, 72, 153, 0.25), transparent 55%);
 		pointer-events: none;
 	}
 
@@ -735,13 +737,13 @@
 	}
 
 	.event-icon-wrapper img.focused {
-		outline: 2px solid rgba(52, 211, 153, 0.8);
+		outline: 2px solid rgba(217, 70, 239, 0.8);
 	}
 
 	.focus-panel {
-		border: 1px solid rgba(52, 211, 153, 0.25);
-		background: linear-gradient(160deg, rgba(15, 118, 110, 0.22), rgba(15, 23, 42, 0.75));
-		box-shadow: 0 25px 55px rgba(6, 95, 70, 0.45);
+		border: 1px solid rgba(217, 70, 239, 0.28);
+		background: linear-gradient(160deg, rgba(126, 34, 206, 0.22), rgba(15, 23, 42, 0.75));
+		box-shadow: 0 25px 55px rgba(74, 23, 116, 0.45);
 	}
 
 	@media (max-width: 720px) {

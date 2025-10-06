@@ -32,8 +32,8 @@
 	const STATUS_META = {
 		owned: {
 			label: 'Owned',
-			badge: 'border border-emerald-400/60 bg-emerald-500/15 text-emerald-200',
-			pill: 'border border-emerald-400/70 bg-emerald-500/20 text-emerald-100',
+			badge: 'border border-violet-400/60 bg-violet-500/15 text-violet-200',
+			pill: 'border border-violet-400/70 bg-violet-500/20 text-violet-100',
 			icon: '✅'
 		},
 		in_progress: {
@@ -56,7 +56,7 @@
 	);
 
 	const initialData = { htb: htbData, pg: pgPracticeData, oscp: oscpData };
-        const osOptions = ['Linux', 'Windows'];
+	const osOptions = ['Linux', 'Windows'];
 
 	let activeListKey = 'htb';
 	let activeCategoryName = '';
@@ -507,7 +507,7 @@
 </script>
 
 <svelte:head>
-    <title>Hack Ascent HQ Dashboard</title>
+	<title>Hack Ascent HQ Dashboard</title>
 </svelte:head>
 
 <section class="space-y-6">
@@ -563,7 +563,7 @@
 					<h2 class="text-lg font-bold text-slate-100">Categories</h2>
 					<button
 						on:click={() => (showAddForm = !showAddForm)}
-						class="rounded-full border border-emerald-500/30 bg-emerald-500/10 p-2 text-emerald-300 transition-all hover:border-emerald-400/60 hover:bg-emerald-500/20 hover:text-emerald-200"
+						class="rounded-full border border-violet-500/30 bg-violet-500/10 p-2 text-violet-300 transition-all hover:border-violet-400/60 hover:bg-violet-500/20 hover:text-violet-200"
 						aria-label="Add lab"
 					>
 						<PlusCircle size={22} />
@@ -684,7 +684,7 @@
 							</div>
 							<button
 								type="submit"
-								class="w-full rounded-lg border border-emerald-500/50 bg-emerald-500/20 py-2 font-bold text-emerald-100 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-colors hover:border-emerald-400/60 hover:bg-emerald-500/30"
+								class="w-full rounded-lg border border-violet-500/50 bg-violet-500/20 py-2 font-bold text-violet-100 shadow-[0_12px_30px_rgba(168,85,247,0.35)] transition-colors hover:border-violet-400/60 hover:bg-violet-500/30"
 							>
 								Add Lab
 							</button>
@@ -699,8 +699,8 @@
 							class={clsx(
 								'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-colors',
 								activeCategoryName === category.name
-									? 'border border-emerald-400/60 bg-[rgba(16,185,129,0.18)] text-emerald-200 shadow-[0_18px_45px_rgba(16,185,129,0.4)]'
-									: 'border border-transparent text-slate-300 hover:border-emerald-400/30 hover:bg-[rgba(8,19,38,0.6)]'
+									? 'border border-violet-400/60 bg-[rgba(168,85,247,0.18)] text-violet-200 shadow-[0_18px_45px_rgba(168,85,247,0.4)]'
+									: 'border border-transparent text-slate-300 hover:border-violet-400/30 hover:bg-[rgba(19,8,48,0.6)]'
 							)}
 						>
 							<span>{category.name}</span>
@@ -718,20 +718,17 @@
 				<h2 class="flex items-center gap-2 text-lg font-bold text-slate-100">
 					<ShieldCheck size={18} /> Scoreboard
 				</h2>
-                                <div class="grid grid-cols-3 gap-3 text-center">
-                                        {#each Object.entries(overallStatus) as [status, count] (status)}
-                                                <div class="glass-surface rounded-xl p-3">
-                                                        <p
-                                                                class="mb-1 text-xl"
-                                                                aria-hidden="true"
-                                                        >
-                                                                {STATUS_META[status].icon}
-                                                        </p>
-                                                        <span class="sr-only">{STATUS_META[status].label}</span>
-                                                        <p class="text-2xl font-bold text-slate-100">{count}</p>
-                                                </div>
-                                        {/each}
-                                </div>
+				<div class="grid grid-cols-3 gap-3 text-center">
+					{#each Object.entries(overallStatus) as [status, count] (status)}
+						<div class="glass-surface rounded-xl p-3">
+							<p class="mb-1 text-xl" aria-hidden="true">
+								{STATUS_META[status].icon}
+							</p>
+							<span class="sr-only">{STATUS_META[status].label}</span>
+							<p class="text-2xl font-bold text-slate-100">{count}</p>
+						</div>
+					{/each}
+				</div>
 				<div class="space-y-3">
 					<h3 class="text-sm font-semibold tracking-[0.3em] text-slate-400 uppercase">
 						Owned by Category
@@ -747,17 +744,17 @@
 									class="h-2 overflow-hidden rounded-full border border-white/10 bg-[rgba(9,19,38,0.72)]"
 								>
 									<div
-										class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400 transition-all"
+										class="h-full bg-gradient-to-r from-fuchsia-400 via-violet-500 to-indigo-400 transition-all"
 										style={`width: ${category.total === 0 ? 0 : Math.min(100, (category.owned / category.total) * 100)}%;`}
 									></div>
 								</div>
-                                                                <p class="sr-only">
-                                                                        In progress: {category.inProgress}. Not started: {category.notStarted}.
-                                                                </p>
-                                                        </div>
-                                                {/each}
-                                        </div>
-                                </div>
+								<p class="sr-only">
+									In progress: {category.inProgress}. Not started: {category.notStarted}.
+								</p>
+							</div>
+						{/each}
+					</div>
+				</div>
 			</div>
 		</aside>
 
@@ -768,7 +765,7 @@
 						{#if currentlyPlayingLabs.length > 0}
 							<h3
 								id="currentlyPlayingHeading"
-								class="text-sm font-semibold tracking-wide text-emerald-500 uppercase"
+								class="text-sm font-semibold tracking-wide text-violet-500 uppercase"
 							>
 								Currently Playing
 							</h3>
@@ -776,7 +773,7 @@
 						{#if lastPlayedLab}
 							<h3
 								id="lastPlayedHeading"
-								class="text-sm font-semibold tracking-wide text-sky-500 uppercase md:text-right"
+								class="text-sm font-semibold tracking-wide text-indigo-500 uppercase md:text-right"
 							>
 								Last Played
 							</h3>
@@ -790,11 +787,11 @@
 						{#if currentlyPlayingLabs.length > 0}
 							{#each currentlyPlayingLabs as lab (lab.id)}
 								<article
-									class="flex flex-col gap-4 rounded-2xl border border-emerald-400/60 bg-gradient-to-br from-emerald-500/15 via-slate-900/70 to-slate-950/80 p-5 shadow-[0_35px_80px_rgba(16,185,129,0.35)] transition-shadow hover:shadow-[0_45px_100px_rgba(16,185,129,0.45)]"
+									class="flex flex-col gap-4 rounded-2xl border border-violet-400/60 bg-gradient-to-br from-violet-500/15 via-slate-900/70 to-slate-950/80 p-5 shadow-[0_35px_80px_rgba(168,85,247,0.35)] transition-shadow hover:shadow-[0_45px_100px_rgba(168,85,247,0.45)]"
 								>
 									<div class="flex items-start justify-between gap-4">
 										<div class="space-y-1">
-											<p class="text-xs font-semibold tracking-wide text-emerald-500 uppercase">
+											<p class="text-xs font-semibold tracking-wide text-violet-500 uppercase">
 												In Progress Spotlight
 											</p>
 											<h3 class="text-xl font-bold text-slate-100">
@@ -814,21 +811,21 @@
 									<div class="flex flex-wrap gap-2 text-xs text-slate-300/80">
 										{#if lab.difficulty}
 											<span
-												class="rounded-full border border-emerald-400/60 bg-emerald-500/10 px-2 py-0.5 font-semibold text-emerald-200"
+												class="rounded-full border border-violet-400/60 bg-violet-500/10 px-2 py-0.5 font-semibold text-violet-200"
 											>
 												{lab.difficulty}
 											</span>
 										{/if}
 										{#each lab.services || [] as service (service)}
 											<span
-												class="rounded-full border border-white/15 bg-[rgba(8,19,38,0.68)] px-2 py-0.5"
+												class="rounded-full border border-white/15 bg-[rgba(19,8,48,0.68)] px-2 py-0.5"
 											>
 												{service}
 											</span>
 										{/each}
 										{#each lab.cves || [] as cve (cve)}
 											<span
-												class="rounded-full border border-emerald-400/50 bg-emerald-500/10 px-2 py-0.5 text-emerald-200"
+												class="rounded-full border border-violet-400/50 bg-violet-500/10 px-2 py-0.5 text-violet-200"
 											>
 												{cve}
 											</span>
@@ -841,7 +838,7 @@
 										<div class="flex items-center gap-2">
 											<button
 												on:click={() => openNoteModal(lab)}
-												class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-200 transition-colors hover:bg-emerald-500/20"
+												class="inline-flex items-center gap-2 rounded-lg border border-violet-400/60 bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-200 transition-colors hover:bg-violet-500/20"
 											>
 												Notes
 											</button>
@@ -851,7 +848,7 @@
 														'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
 														lab.status === statusKey
 															? `${meta.pill} border-transparent`
-															: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.15)] hover:text-emerald-200'
+															: 'border-white/15 bg-[rgba(19,8,48,0.6)] text-slate-300 hover:border-violet-400/55 hover:bg-[rgba(168,85,247,0.15)] hover:text-violet-200'
 													)}
 													on:click={() => setLabStatus(lab, statusKey)}
 													type="button"
@@ -868,11 +865,11 @@
 						{#if lastPlayedLab}
 							<article
 								aria-labelledby="lastPlayedHeading"
-								class="flex flex-col gap-4 rounded-2xl border border-sky-400/60 bg-gradient-to-br from-sky-500/15 via-slate-900/70 to-slate-950/80 p-5 shadow-[0_35px_80px_rgba(56,189,248,0.35)] transition-shadow hover:shadow-[0_45px_100px_rgba(56,189,248,0.45)]"
+								class="flex flex-col gap-4 rounded-2xl border border-indigo-400/60 bg-gradient-to-br from-indigo-500/15 via-slate-900/70 to-slate-950/80 p-5 shadow-[0_35px_80px_rgba(192,132,252,0.35)] transition-shadow hover:shadow-[0_45px_100px_rgba(192,132,252,0.45)]"
 							>
 								<div class="flex items-start justify-between gap-4">
 									<div class="space-y-1">
-										<p class="text-xs font-semibold tracking-wide text-sky-500 uppercase">
+										<p class="text-xs font-semibold tracking-wide text-indigo-500 uppercase">
 											Highlight
 										</p>
 										<h3 class="text-xl font-bold text-slate-100">
@@ -892,20 +889,20 @@
 								<div class="flex flex-wrap gap-2 text-xs text-slate-300/80">
 									{#if lastPlayedLab.difficulty}
 										<span
-											class="rounded-full border border-sky-400/60 bg-sky-500/10 px-2 py-0.5 font-semibold text-sky-200"
+											class="rounded-full border border-indigo-400/60 bg-indigo-500/10 px-2 py-0.5 font-semibold text-indigo-200"
 										>
 											{lastPlayedLab.difficulty}
 										</span>
 									{/if}
 									{#each lastPlayedLab.services || [] as service (service)}
 										<span
-											class="rounded-full border border-white/15 bg-[rgba(8,19,38,0.68)] px-2 py-0.5"
+											class="rounded-full border border-white/15 bg-[rgba(19,8,48,0.68)] px-2 py-0.5"
 											>{service}</span
 										>
 									{/each}
 									{#each lastPlayedLab.cves || [] as cve (cve)}
 										<span
-											class="rounded-full border border-sky-400/50 bg-sky-500/10 px-2 py-0.5 text-sky-200"
+											class="rounded-full border border-indigo-400/50 bg-indigo-500/10 px-2 py-0.5 text-indigo-200"
 										>
 											{cve}
 										</span>
@@ -920,13 +917,13 @@
 											href={buildLabUrl(lastPlayedLab)}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 bg-[rgba(8,19,38,0.65)] px-3 py-1 text-xs font-semibold text-sky-200 transition-colors hover:bg-[rgba(56,189,248,0.18)]"
+											class="inline-flex items-center gap-2 rounded-lg border border-indigo-400/60 bg-[rgba(19,8,48,0.65)] px-3 py-1 text-xs font-semibold text-indigo-200 transition-colors hover:bg-[rgba(192,132,252,0.18)]"
 										>
 											Open Lab
 										</a>
 										<button
 											on:click={() => openNoteModal(lastPlayedLab)}
-											class="inline-flex items-center gap-2 rounded-lg border border-sky-400/60 bg-[rgba(8,19,38,0.65)] px-3 py-1 text-xs font-semibold text-sky-200 transition-colors hover:bg-[rgba(56,189,248,0.18)]"
+											class="inline-flex items-center gap-2 rounded-lg border border-indigo-400/60 bg-[rgba(19,8,48,0.65)] px-3 py-1 text-xs font-semibold text-indigo-200 transition-colors hover:bg-[rgba(192,132,252,0.18)]"
 										>
 											Notes
 										</button>
@@ -936,7 +933,7 @@
 													'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
 													lastPlayedLab.status === statusKey
 														? `${meta.pill} border-transparent`
-														: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-sky-400/55 hover:bg-[rgba(56,189,248,0.16)] hover:text-sky-200'
+														: 'border-white/15 bg-[rgba(19,8,48,0.6)] text-slate-300 hover:border-indigo-400/55 hover:bg-[rgba(192,132,252,0.16)] hover:text-indigo-200'
 												)}
 												on:click={() => setLabStatus(lastPlayedLab, statusKey)}
 												type="button"
@@ -967,7 +964,7 @@
 
 			{#if labsToShow.length === 0}
 				<div
-					class="glass-surface border border-dashed border-cyan-400/25 p-6 text-center text-slate-300"
+					class="glass-surface border border-dashed border-fuchsia-400/25 p-6 text-center text-slate-300"
 				>
 					No labs matched your search.
 				</div>
@@ -976,9 +973,9 @@
 					{#each labsToShow as lab (lab.id)}
 						<article
 							class={clsx(
-								'group glass-surface flex flex-col overflow-hidden rounded-2xl transition-all hover:-translate-y-1 hover:shadow-[0_35px_100px_rgba(56,189,248,0.38)]',
+								'group glass-surface flex flex-col overflow-hidden rounded-2xl transition-all hover:-translate-y-1 hover:shadow-[0_35px_100px_rgba(192,132,252,0.38)]',
 								lab.status === 'owned'
-									? 'border-emerald-400/60 shadow-[0_35px_100px_rgba(16,185,129,0.38)]'
+									? 'border-violet-400/60 shadow-[0_35px_100px_rgba(168,85,247,0.38)]'
 									: ''
 							)}
 						>
@@ -987,9 +984,9 @@
 									class="glass-surface flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl shadow-[0_18px_40px_rgba(7,16,38,0.5)]"
 								>
 									{#if labAvatar(lab) === 'linux'}
-										<Bird size={42} class="text-emerald-400/70" />
+										<Bird size={42} class="text-violet-400/70" />
 									{:else if labAvatar(lab) === 'windows'}
-										<Computer size={42} class="text-sky-400/70" />
+										<Computer size={42} class="text-indigo-400/70" />
 									{:else if labAvatar(lab) === 'ad'}
 										<Bot size={42} class="text-violet-400/70" />
 									{:else if lab.avatar}
@@ -1011,7 +1008,7 @@
 											class={clsx(
 												'rounded-full border px-2 py-1 text-xs font-bold',
 												lab.difficulty?.toLowerCase().includes('easy')
-													? 'border-emerald-400/60 bg-emerald-500/10 text-emerald-200'
+													? 'border-violet-400/60 bg-violet-500/10 text-violet-200'
 													: lab.difficulty?.toLowerCase().includes('hard')
 														? 'border-rose-400/60 bg-rose-500/10 text-rose-200'
 														: 'border-amber-400/60 bg-amber-500/10 text-amber-200'
@@ -1026,7 +1023,7 @@
 									<div class="mt-2 flex flex-wrap gap-2 text-xs text-slate-300/70">
 										{#each lab.services || [] as service (service)}
 											<span
-												class="rounded-full border border-white/15 bg-[rgba(8,19,38,0.68)] px-2 py-0.5"
+												class="rounded-full border border-white/15 bg-[rgba(19,8,48,0.68)] px-2 py-0.5"
 												>{service}</span
 											>
 										{/each}
@@ -1059,7 +1056,7 @@
 											href={buildLabUrl(lab)}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="rounded-full border border-sky-400/30 bg-[rgba(8,19,38,0.65)] p-2 text-slate-200 transition-colors hover:border-sky-400/55 hover:bg-[rgba(56,189,248,0.18)] hover:text-sky-200"
+											class="rounded-full border border-indigo-400/30 bg-[rgba(19,8,48,0.65)] p-2 text-slate-200 transition-colors hover:border-indigo-400/55 hover:bg-[rgba(192,132,252,0.18)] hover:text-indigo-200"
 											title="Open lab portal"
 										>
 											<ExternalLink size={18} />
@@ -1069,8 +1066,8 @@
 											class={clsx(
 												'rounded-full border p-2 transition-colors',
 												(lab.notes || []).length > 0
-													? 'border-emerald-400/60 bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20'
-													: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.14)] hover:text-emerald-200'
+													? 'border-violet-400/60 bg-violet-500/10 text-violet-200 hover:bg-violet-500/20'
+													: 'border-white/15 bg-[rgba(19,8,48,0.6)] text-slate-300 hover:border-violet-400/55 hover:bg-[rgba(168,85,247,0.14)] hover:text-violet-200'
 											)}
 											title={(lab.notes || []).length > 0 ? 'Manage notes' : 'Add notes'}
 										>
@@ -1078,7 +1075,7 @@
 										</button>
 										<a
 											href={`/writeups/${lab.id}`}
-											class="rounded-full border border-emerald-400/30 bg-[rgba(8,19,38,0.65)] p-2 text-slate-200 transition-colors hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
+											class="rounded-full border border-violet-400/30 bg-[rgba(19,8,48,0.65)] p-2 text-slate-200 transition-colors hover:border-violet-400/55 hover:bg-[rgba(168,85,247,0.16)] hover:text-violet-200"
 											title="Open blog mode"
 										>
 											<ShieldCheck size={18} />
@@ -1091,7 +1088,7 @@
 													'rounded-lg border px-2 py-1 text-xs font-semibold transition-colors',
 													lab.status === statusKey
 														? `${meta.pill} border-transparent`
-														: 'border-white/15 bg-[rgba(8,19,38,0.6)] text-slate-300 hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.15)] hover:text-emerald-200'
+														: 'border-white/15 bg-[rgba(19,8,48,0.6)] text-slate-300 hover:border-violet-400/55 hover:bg-[rgba(168,85,247,0.15)] hover:text-violet-200'
 												)}
 												on:click={() => setLabStatus(lab, statusKey)}
 												type="button"
@@ -1144,7 +1141,7 @@
 								<div class="flex items-center gap-2">
 									<button
 										on:click={() => startEditIndividualNote(note)}
-										class="rounded-full border border-emerald-400/60 bg-emerald-500/10 p-2 text-emerald-200 transition-colors hover:bg-emerald-500/20"
+										class="rounded-full border border-violet-400/60 bg-violet-500/10 p-2 text-violet-200 transition-colors hover:bg-violet-500/20"
 										title="Edit note"
 									>
 										<Edit2 size={16} />
@@ -1170,20 +1167,20 @@
 								<div class="flex justify-end gap-2">
 									<button
 										on:click={saveIndividualNote}
-										class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 bg-emerald-500/20 px-3 py-2 text-sm font-semibold text-emerald-100 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-colors hover:bg-emerald-500/30"
+										class="inline-flex items-center gap-2 rounded-lg border border-violet-400/60 bg-violet-500/20 px-3 py-2 text-sm font-semibold text-violet-100 shadow-[0_12px_30px_rgba(168,85,247,0.35)] transition-colors hover:bg-violet-500/30"
 									>
 										<Save size={16} /> Save
 									</button>
 									<button
 										on:click={cancelEditIndividualNote}
-										class="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:border-slate-400/50 hover:bg-[rgba(15,23,42,0.75)]"
+										class="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-[rgba(19,8,48,0.65)] px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:border-slate-400/50 hover:bg-[rgba(15,23,42,0.75)]"
 									>
 										<X size={16} /> Cancel
 									</button>
 								</div>
 							{:else}
 								<div
-									class="prose prose-sm dark:prose-invert prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-code:text-emerald-500 max-w-none"
+									class="prose prose-sm dark:prose-invert prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-code:text-violet-500 max-w-none"
 								>
 									<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 									{@html renderNote(note)}
@@ -1219,7 +1216,7 @@
 					</span>
 					<button
 						on:click={addIndividualNote}
-						class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/60 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 shadow-[0_12px_30px_rgba(16,185,129,0.35)] transition-colors hover:bg-emerald-500/30"
+						class="inline-flex items-center gap-2 rounded-lg border border-violet-400/60 bg-violet-500/20 px-4 py-2 text-sm font-semibold text-violet-100 shadow-[0_12px_30px_rgba(168,85,247,0.35)] transition-colors hover:bg-violet-500/30"
 					>
 						<Plus size={16} /> Add Note
 					</button>
