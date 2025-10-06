@@ -33,7 +33,7 @@
 </script>
 
 <svelte:head>
-     <title>Hack Ascent HQ — Blog Mode</title>
+	<title>Hack Ascent HQ — Blog Mode</title>
 </svelte:head>
 
 <section class="space-y-6">
@@ -66,7 +66,7 @@
 	<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
 		{#each $labs.filter(matches) as lab (lab.id)}
 			<article
-				class="glass-surface space-y-3 rounded-2xl p-5 transition-all hover:-translate-y-1 hover:border-emerald-400/60 hover:shadow-[0_30px_90px_rgba(16,185,129,0.4)]"
+				class="glass-surface space-y-3 rounded-2xl p-5 transition-all hover:-translate-y-1 hover:border-violet-400/60 hover:shadow-[0_30px_90px_rgba(168,85,247,0.4)]"
 			>
 				<header class="flex items-start justify-between gap-4">
 					<div>
@@ -74,7 +74,7 @@
 						<p class="text-sm text-slate-300/80">{lab.category} • {lab.os}</p>
 					</div>
 					<span
-						class="inline-flex items-center gap-2 rounded-full border border-emerald-400/60 bg-emerald-500/10 px-2 py-1 text-xs font-semibold text-emerald-200"
+						class="inline-flex items-center gap-2 rounded-full border border-violet-400/60 bg-violet-500/10 px-2 py-1 text-xs font-semibold text-violet-200"
 					>
 						<PenLine size={14} />
 						{(lab.notes || []).length} notes
@@ -82,7 +82,7 @@
 				</header>
 				{#if lab.notes?.length}
 					<div
-						class="prose prose-sm prose-invert prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-code:text-emerald-400 max-h-32 max-w-none overflow-hidden"
+						class="prose prose-sm prose-invert prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-code:text-violet-400 max-h-32 max-w-none overflow-hidden"
 					>
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						{@html notePreview(lab)}
@@ -94,7 +94,7 @@
 				{/if}
 				<footer class="flex justify-end">
 					<a
-						class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/60 bg-emerald-500/10 px-3 py-2 text-sm font-semibold text-emerald-200 transition-colors hover:bg-emerald-500/20"
+						class="inline-flex items-center gap-2 rounded-xl border border-violet-400/60 bg-violet-500/10 px-3 py-2 text-sm font-semibold text-violet-200 transition-colors hover:bg-violet-500/20"
 						href={`/writeups/${lab.id}`}
 					>
 						Open writeup <ArrowUpRight size={16} />

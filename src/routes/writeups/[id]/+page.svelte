@@ -103,7 +103,7 @@
 		if (!markdownWriteup) return;
 		const content =
 			format === 'html'
-                            ? `<!doctype html><html><head><meta charset="utf-8"><title>${lab.name} — Hack Ascent HQ Writeup</title></head><body>${htmlWriteup}</body></html>`
+				? `<!doctype html><html><head><meta charset="utf-8"><title>${lab.name} — Hack Ascent HQ Writeup</title></head><body>${htmlWriteup}</body></html>`
 				: markdownWriteup;
 		const blob = new Blob([content], { type: format === 'html' ? 'text/html' : 'text/markdown' });
 		const url = URL.createObjectURL(blob);
@@ -123,7 +123,7 @@
 </script>
 
 <svelte:head>
-    <title>{lab ? `${lab.name} — Hack Ascent HQ Blog Mode` : 'Writeup not found'}</title>
+	<title>{lab ? `${lab.name} — Hack Ascent HQ Blog Mode` : 'Writeup not found'}</title>
 </svelte:head>
 
 {#if !lab}
@@ -135,7 +135,7 @@
 		<header class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
 			<div>
 				<button
-					class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-200 transition-colors hover:text-emerald-100"
+					class="inline-flex items-center gap-2 text-sm font-semibold text-violet-200 transition-colors hover:text-violet-100"
 					on:click={() => goto('/writeups')}
 				>
 					<ArrowLeft size={16} /> Back to list
@@ -147,7 +147,7 @@
 			</div>
 			<div class="flex flex-wrap gap-2">
 				<button
-					class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
+					class="inline-flex items-center gap-2 rounded-xl border border-violet-400/30 bg-[rgba(19,8,48,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-violet-400/55 hover:bg-[rgba(168,85,247,0.16)] hover:text-violet-200"
 					on:click={copyMarkdown}
 				>
 					{#if copied}
@@ -157,13 +157,13 @@
 					{/if}
 				</button>
 				<button
-					class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-emerald-400/55 hover:bg-[rgba(16,185,129,0.16)] hover:text-emerald-200"
+					class="inline-flex items-center gap-2 rounded-xl border border-violet-400/30 bg-[rgba(19,8,48,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-violet-400/55 hover:bg-[rgba(168,85,247,0.16)] hover:text-violet-200"
 					on:click={() => exportWriteup('markdown')}
 				>
 					<Download size={16} /> Export .md
 				</button>
 				<button
-					class="inline-flex items-center gap-2 rounded-xl border border-sky-400/30 bg-[rgba(8,19,38,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-sky-400/55 hover:bg-[rgba(56,189,248,0.18)] hover:text-sky-200"
+					class="inline-flex items-center gap-2 rounded-xl border border-indigo-400/30 bg-[rgba(19,8,48,0.65)] px-3 py-2 text-slate-200 transition-colors hover:border-indigo-400/55 hover:bg-[rgba(192,132,252,0.18)] hover:text-indigo-200"
 					on:click={() => exportWriteup('html')}
 				>
 					<Download size={16} /> Export .html
@@ -213,7 +213,7 @@
 				>
 				<h2 class="text-lg font-semibold text-slate-100">Preview</h2>
 				<div
-					class="prose prose-base prose-invert prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-code:text-emerald-400 max-w-none"
+					class="prose prose-base prose-invert prose-pre:bg-slate-950 prose-pre:text-slate-100 prose-code:text-violet-400 max-w-none"
 				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					{@html renderMarkdown(markdownWriteup)}
