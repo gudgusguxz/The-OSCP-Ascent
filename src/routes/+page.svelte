@@ -60,9 +60,21 @@
 
 	let activeListKey = 'htb';
 	let activeCategoryName = '';
-	let searchTerm = '';
+	let searchInput = '';
+	let committedSearchTerm = '';
 
-	$: normalizedSearchTerm = searchTerm.trim().toLowerCase();
+	const applySearch = () => {
+		committedSearchTerm = searchInput.trim();
+	};
+
+	const handleSearchKeydown = (event) => {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			applySearch();
+		}
+	};
+
+	$: normalizedSearchTerm = committedSearchTerm.trim().toLowerCase();
 
 	let showAddForm = false;
 	let newLabName = '';
@@ -553,9 +565,17 @@
 					id="search"
 					type="search"
 					placeholder="e.g. Active Directory, CVE-2021-42278, WinRM"
-					bind:value={searchTerm}
-					class="input-elevated w-full py-2 pr-4 pl-11"
+					bind:value={searchInput}
+					on:keydown={handleSearchKeydown}
+					class="input-elevated w-full py-2 pr-28 pl-11"
 				/>
+				<button
+					type="button"
+					class="absolute top-1/2 right-2 -translate-y-1/2 rounded-lg bg-violet-500 px-4 py-1.5 text-sm font-semibold text-white shadow transition hover:bg-violet-400 focus:ring-2 focus:ring-violet-300 focus:ring-offset-0 focus:outline-none"
+					on:click={applySearch}
+				>
+					Search
+				</button>
 			</div>
 		</div>
 	</div>
