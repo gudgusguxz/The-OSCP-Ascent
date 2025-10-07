@@ -145,8 +145,10 @@
 
 	const statusRank = (status) => STATUS_ORDER.indexOf(status ?? 'not_started');
 
-	const matchesSearch = (lab) => {
-		if (!normalizedSearchTerm) return true;
+	const matchesSearch = (lab, searchTerm) => {
+		const normalizedTerm = searchTerm?.trim().toLowerCase();
+
+		if (!normalizedTerm) return true;
 
 		const fields = [
 			lab.name,
@@ -161,10 +163,10 @@
 				.join(' ')
 		].filter(Boolean);
 
-		return fields.some((field) => field.toLowerCase().includes(normalizedSearchTerm));
+		return fields.some((field) => field.toLowerCase().includes(normalizedTerm));
 	};
 
-	$: labsMatchingSearch = $labsStore.filter(matchesSearch);
+	$: labsMatchingSearch = $labsStore.filter((lab) => matchesSearch(lab, normalizedSearchTerm));
 
 	const toMillis = (timestamp) => {
 		if (!timestamp) return 0;
