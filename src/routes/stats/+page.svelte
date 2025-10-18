@@ -72,6 +72,15 @@
 		not_started: '#94a3b8'
 	};
 
+	const fallbackLabel = (value, fallback = 'Unknown') =>
+		(value && String(value).trim()) || fallback;
+
+	const completionDateFormatter = new Intl.DateTimeFormat(undefined, {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric'
+	});
+
 	const eventColor = (event) => {
 		if (event.type === 'status') {
 			return STATUS_COLORS[event.status] || '#94a3b8';
@@ -137,6 +146,49 @@
 	$: timeSpan = Math.max(maxTime - minTime, 1);
 
 	$: rowHeight = (TIMELINE_HEIGHT - PADDING_Y * 2) / categoriesForTimeline.length;
+
+	$: ownedLabs = $labs.filter(
+		(lab) => (lab.status || '').toLowerCase() === 'owned' || lab.completed
+	);
+	$: ownedLabsDetailed = ownedLabs.map((lab) => {
+		const completedAtDate = lab.completedAt ? new Date(lab.completedAt) : null;
+		return {
+			id: lab.id,
+			name: fallbackLabel(lab.name, 'Unnamed Lab'),
+			difficulty: fallbackLabel(lab.difficulty, 'Unknown difficulty'),
+			os: fallbackLabel(lab.os, 'Unknown OS'),
+			source: fallbackLabel(lab.source, 'Independent'),
+			category: fallbackLabel(lab.category, 'General'),
+			completedAt: completedAtDate,
+			completedLabel: completedAtDate ? completionDateFormatter.format(completedAtDate) : ''
+		};
+	});
+
+	$: ownedLabsOrdered = ownedLabsDetailed.slice().sort((a, b) => {
+		const aTime = a.completedAt ? a.completedAt.getTime() : 0;
+		const bTime = b.completedAt ? b.completedAt.getTime() : 0;
+		return bTime - aTime;
+	});
+
+	$: ownedBySource = ownedLabsOrdered.reduce((map, lab) => {
+		const key = lab.source;
+		if (!map.has(key)) {
+			map.set(key, { source: key, labs: [] });
+		}
+		map.get(key).labs.push(lab);
+		return map;
+	}, new Map());
+
+	$: ownedSourceGroups = Array.from(ownedBySource.values())
+		.map((group) => ({
+			...group,
+			count: group.labs.length
+		}))
+		.sort((a, b) => b.count - a.count || a.source.localeCompare(b.source));
+
+	$: totalOwnedLabs = ownedLabsOrdered.length;
+	$: ownedProvidersCount = ownedSourceGroups.length;
+	$: ownedOsCoverage = new Set(ownedLabsOrdered.map((lab) => lab.os)).size;
 
 	const normalizeToTime = (timestamp) =>
 		timestamp instanceof Date ? timestamp.getTime() : new Date(timestamp).getTime();
@@ -244,7 +296,11 @@
 			>
 				<Sparkles class="h-4 w-4" /> Signal Boost
 			</div>
-			<div class="grid gap-4 sm:grid-cols-3">
+			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				<div class="metric-tile">
+					<span class="metric-label">Labs Owned</span>
+					<span class="metric-value">{totalOwnedLabs}</span>
+				</div>
 				<div class="metric-tile">
 					<span class="metric-label">Active Labs Tracked</span>
 					<span class="metric-value">{totalLabsTracked}</span>
@@ -258,6 +314,19 @@
 					<span class="metric-value">{totalNotesLogged}</span>
 				</div>
 			</div>
+
+			{#if totalOwnedLabs}
+				<div class="owned-metrics">
+					<div class="owned-metric">
+						<span class="owned-metric__label">Providers Engaged</span>
+						<span class="owned-metric__value">{ownedProvidersCount}</span>
+					</div>
+					<div class="owned-metric">
+						<span class="owned-metric__label">OS Coverage</span>
+						<span class="owned-metric__value">{ownedOsCoverage}</span>
+					</div>
+				</div>
+			{/if}
 
 			<div class="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-300/70">
 				<div class="legend-item">
@@ -316,6 +385,52 @@
 					Clear focus
 				</button>
 			{/if}
+		</section>
+	{/if}
+
+	{#if totalOwnedLabs}
+		<section class="glass-surface owned-overview">
+			<header class="owned-overview__header">
+				<div class="owned-overview__icon">
+					<NotebookPen size={18} strokeWidth={2.4} />
+				</div>
+				<div>
+					<p class="owned-overview__eyebrow">Owned Fleet Overview</p>
+					<h3 class="owned-overview__title">Snapshot of Completed Labs</h3>
+				</div>
+			</header>
+
+			<div class="owned-groups">
+				{#each ownedSourceGroups as group (group.source)}
+					<article class="owned-group-card">
+						<header class="owned-group-card__header">
+							<div>
+								<h4>{group.source}</h4>
+								<span>{group.count} owned</span>
+							</div>
+							<Computer size={18} class="owned-group-card__icon" />
+						</header>
+						<ul class="owned-group-list">
+							{#each group.labs.slice(0, 6) as lab (lab.id)}
+								<li>
+									<div>
+										<span class="owned-lab__name">{lab.name}</span>
+										<span class="owned-lab__meta">{lab.difficulty} · {lab.os}</span>
+									</div>
+									{#if lab.completedLabel}
+										<span class="owned-lab__date">{lab.completedLabel}</span>
+									{/if}
+								</li>
+							{/each}
+							{#if group.labs.length > 6}
+								<li class="owned-group-list__more">
+									+{group.labs.length - 6} more cleared in this provider
+								</li>
+							{/if}
+						</ul>
+					</article>
+				{/each}
+			</div>
 		</section>
 	{/if}
 
@@ -601,6 +716,36 @@
 		text-shadow: 0 8px 20px rgba(126, 34, 206, 0.35);
 	}
 
+	.owned-metrics {
+		display: grid;
+		gap: 0.75rem;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	}
+
+	.owned-metric {
+		border-radius: 0.85rem;
+		border: 1px solid rgba(79, 70, 229, 0.35);
+		background: rgba(15, 23, 42, 0.6);
+		padding: 0.85rem 1rem;
+		box-shadow: inset 0 1px 0 rgba(129, 140, 248, 0.25);
+	}
+
+	.owned-metric__label {
+		display: block;
+		font-size: 0.7rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: rgba(191, 219, 254, 0.75);
+	}
+
+	.owned-metric__value {
+		margin-top: 0.35rem;
+		display: block;
+		font-size: 1.45rem;
+		font-weight: 600;
+		color: rgb(224, 231, 255);
+	}
+
 	.legend-item {
 		display: flex;
 		align-items: center;
@@ -686,6 +831,125 @@
 		color: rgba(203, 213, 225, 0.85);
 	}
 
+	.owned-overview {
+		display: grid;
+		gap: 1.75rem;
+		border: 1px solid rgba(56, 189, 248, 0.25);
+		background: linear-gradient(160deg, rgba(14, 165, 233, 0.15), rgba(15, 23, 42, 0.75));
+	}
+
+	.owned-overview__header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.owned-overview__icon {
+		display: grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 0.85rem;
+		background: rgba(56, 189, 248, 0.2);
+		color: rgb(191, 219, 254);
+		border: 1px solid rgba(56, 189, 248, 0.45);
+	}
+
+	.owned-overview__eyebrow {
+		font-size: 0.78rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: rgba(165, 243, 252, 0.75);
+	}
+
+	.owned-overview__title {
+		font-size: clamp(1.4rem, 3vw, 1.8rem);
+		font-weight: 600;
+		color: rgb(224, 231, 255);
+		margin-top: 0.25rem;
+	}
+
+	.owned-groups {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	}
+
+	.owned-group-card {
+		display: grid;
+		gap: 0.75rem;
+		border-radius: 1.1rem;
+		border: 1px solid rgba(59, 130, 246, 0.3);
+		background: rgba(15, 23, 42, 0.65);
+		padding: 1rem;
+		box-shadow: 0 16px 36px rgba(30, 64, 175, 0.35);
+	}
+
+	.owned-group-card__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+	}
+
+	.owned-group-card__header h4 {
+		font-size: 1rem;
+		font-weight: 600;
+		color: rgb(224, 231, 255);
+	}
+
+	.owned-group-card__header span {
+		display: block;
+		font-size: 0.8rem;
+		color: rgba(148, 163, 184, 0.8);
+	}
+
+	.owned-group-card__icon {
+		color: rgba(191, 219, 254, 0.75);
+	}
+
+	.owned-group-list {
+		display: grid;
+		gap: 0.65rem;
+	}
+
+	.owned-group-list li {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		border-radius: 0.75rem;
+		border: 1px solid rgba(148, 163, 184, 0.2);
+		background: rgba(15, 23, 42, 0.55);
+		padding: 0.65rem 0.75rem;
+	}
+
+	.owned-group-list__more {
+		justify-content: center;
+		font-size: 0.78rem;
+		font-style: italic;
+		color: rgba(148, 163, 184, 0.75);
+	}
+
+	.owned-lab__name {
+		display: block;
+		font-size: 0.92rem;
+		font-weight: 600;
+		color: rgb(226, 232, 240);
+	}
+
+	.owned-lab__meta {
+		display: block;
+		font-size: 0.78rem;
+		color: rgba(148, 163, 184, 0.85);
+	}
+
+	.owned-lab__date {
+		align-self: center;
+		font-size: 0.75rem;
+		color: rgba(129, 140, 248, 0.85);
+		white-space: nowrap;
+	}
+
 	.timeline-shell {
 		position: relative;
 		width: 100%;
@@ -767,6 +1031,10 @@
 
 		.date-selector__clear {
 			margin-left: 0;
+		}
+
+		.owned-groups {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>
