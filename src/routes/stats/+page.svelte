@@ -76,6 +76,55 @@
 	const fallbackLabel = (value, fallback = 'Unknown') =>
 		(value && String(value).trim()) || fallback;
 
+	const titleizeWords = (value) => {
+		const cleaned = value.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+
+		if (!cleaned) return '';
+
+		return cleaned
+			.split(' ')
+			.filter(Boolean)
+			.map((word) => {
+				if (/^[A-Z0-9]+$/.test(word) && word.length <= 5) {
+					return word.toUpperCase();
+				}
+
+				return `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`;
+			})
+			.join(' ');
+	};
+
+	const prettifyLabel = (value, fallback = 'Unknown') => {
+		const base = fallbackLabel(value, fallback);
+		return titleizeWords(base) || fallback;
+	};
+
+	const prettifyLabName = (value) => {
+		const base = fallbackLabel(value, 'Unnamed Lab');
+		if (!base.trim()) return 'Unnamed Lab';
+		if (base.trim().length <= 3) return base.toUpperCase();
+		return titleizeWords(base);
+	};
+
+	const labInitials = (value) => {
+		const base = fallbackLabel(value, '');
+		if (!base) return '?';
+
+		const parts = base.replace(/[_-]+/g, ' ').split(/\s+/).filter(Boolean);
+
+		if (parts.length === 0) return '?';
+		if (parts.length === 1) {
+			const word = parts[0].replace(/[^A-Za-z0-9]/g, '');
+			if (!word) return parts[0].charAt(0).toUpperCase();
+			return word.slice(0, 2).toUpperCase();
+		}
+
+		return parts
+			.slice(0, 2)
+			.map((word) => word.charAt(0).toUpperCase())
+			.join('');
+	};
+
 	const shareFormatter = (value) => {
 		if (!Number.isFinite(value)) return '0%';
 		if (value >= 10 || value === 0) return `${Math.round(value)}%`;
@@ -119,7 +168,7 @@
 			description: 'Compare completions across lab vendors.',
 			icon: Computer,
 			getKey: (lab) => fallbackLabel(lab.source, 'Independent'),
-			formatLabel: (value) => fallbackLabel(value, 'Independent Provider'),
+			formatLabel: (value) => prettifyLabel(value, 'Independent Provider'),
 			resolveAccent: () => 'rgb(59 130 246)',
 			resolveIcon: () => Computer,
 			formatSummary: (group, share) =>
@@ -135,7 +184,7 @@
 			description: 'See which platforms you have the most experience with.',
 			icon: Compass,
 			getKey: (lab) => fallbackLabel(lab.os, 'Unknown OS'),
-			formatLabel: (value) => fallbackLabel(value, 'Unknown OS'),
+			formatLabel: (value) => prettifyLabel(value, 'Unknown OS'),
 			resolveAccent: (group) => {
 				const osKey = deriveOsKey(group.key);
 				if (osKey === 'linux') return 'rgb(34 197 94)';
@@ -174,7 +223,7 @@
 			description: 'Balance your clears across easier practice and serious challenges.',
 			icon: Sparkles,
 			getKey: (lab) => fallbackLabel(lab.difficulty, 'Unknown difficulty'),
-			formatLabel: (value) => fallbackLabel(value, 'Unknown difficulty'),
+			formatLabel: (value) => prettifyLabel(value, 'Unknown difficulty'),
 			resolveAccent: (group) => difficultyAccent(group.key),
 			resolveIcon: () => Sparkles,
 			formatSummary: (group, share) =>
@@ -233,7 +282,14 @@
 						: latest?.completedLabel
 							? `Latest: ${latest.completedLabel}`
 							: '',
-					labsPreview: group.labs.slice(0, previewLimit),
+					labsPreview: group.labs.slice(0, previewLimit).map((lab) => ({
+						...lab,
+						displayName: prettifyLabName(lab.name),
+						prettyDifficulty: prettifyLabel(lab.difficulty, 'Unknown difficulty'),
+						prettyOs: prettifyLabel(lab.os, 'Unknown OS'),
+						initials: labInitials(lab.name),
+						avatar: lab.avatar || ''
+					})),
 					remainder: Math.max(count - previewLimit, 0)
 				};
 			})
@@ -319,13 +375,15 @@
 		const completedAtDate = lab.completedAt ? new Date(lab.completedAt) : null;
 		return {
 			id: lab.id,
-			name: fallbackLabel(lab.name, 'Unnamed Lab'),
-			difficulty: fallbackLabel(lab.difficulty, 'Unknown difficulty'),
-			os: fallbackLabel(lab.os, 'Unknown OS'),
-			source: fallbackLabel(lab.source, 'Independent'),
+			name: prettifyLabName(lab.name),
+			difficulty: prettifyLabel(lab.difficulty, 'Unknown difficulty'),
+			os: prettifyLabel(lab.os, 'Unknown OS'),
+			source: prettifyLabel(lab.source, 'Independent'),
 			category: fallbackLabel(lab.category, 'General'),
 			completedAt: completedAtDate,
-			completedLabel: completedAtDate ? completionDateFormatter.format(completedAtDate) : ''
+			completedLabel: completedAtDate ? completionDateFormatter.format(completedAtDate) : '',
+			avatar: lab.avatar || '',
+			initials: labInitials(lab.name)
 		};
 	});
 
@@ -545,12 +603,15 @@
 	{#if totalOwnedLabs}
 		<section class="glass-surface owned-overview">
 			<header class="owned-overview__header">
-				<div class="owned-overview__icon">
-					<NotebookPen size={18} strokeWidth={2.4} />
+				<div class="owned-overview__icon" aria-hidden="true">
+					<Wand2 size={20} strokeWidth={2.6} />
 				</div>
-				<div>
+				<div class="owned-overview__copy">
 					<p class="owned-overview__eyebrow">Owned Fleet Overview</p>
-					<h3 class="owned-overview__title">Snapshot of Completed Labs</h3>
+					<h3 class="owned-overview__title">Completed Lab Highlights</h3>
+					<p class="owned-overview__subtitle">
+						A polished digest of the labs you've conquered, grouped by the lens you care about most.
+					</p>
 				</div>
 			</header>
 
@@ -582,15 +643,20 @@
 				<div class="owned-groups">
 					{#each ownedActiveGroups as group (group.label)}
 						<article class="owned-group-card" style={`--accent:${group.accent}`}>
+							<div class="owned-group-card__glow" aria-hidden="true"></div>
 							<header class="owned-group-card__header">
-								<div class="owned-group-card__title">
-									<span class="owned-group-card__badge">
+								<div class="owned-group-card__identity">
+									<span class="owned-group-card__icon">
 										{#if group.icon}
-											<svelte:component this={group.icon} size={16} strokeWidth={2.6} />
+											<svelte:component this={group.icon} size={18} strokeWidth={2.6} />
+										{:else}
+											<NotebookPen size={18} strokeWidth={2.6} />
 										{/if}
-										{group.label}
 									</span>
-									<p>{group.summary}</p>
+									<div class="owned-group-card__title">
+										<h4 class="owned-group-card__label">{group.label}</h4>
+										<p>{group.summary}</p>
+									</div>
 								</div>
 								<div class="owned-group-card__stat">
 									<span class="owned-group-card__count">{group.count}</span>
@@ -607,9 +673,16 @@
 							<ul class="owned-group-list">
 								{#each group.labsPreview as lab (lab.id)}
 									<li>
+										<div class="owned-lab__avatar" style={`--avatar-accent:${group.accent}`}>
+											{#if lab.avatar}
+												<img src={lab.avatar} alt="" loading="lazy" />
+											{:else}
+												<span>{lab.initials}</span>
+											{/if}
+										</div>
 										<div class="owned-lab__info">
-											<span class="owned-lab__name">{lab.name}</span>
-											<span class="owned-lab__meta">{lab.difficulty} · {lab.os}</span>
+											<span class="owned-lab__name">{lab.displayName}</span>
+											<span class="owned-lab__meta">{lab.prettyDifficulty} · {lab.prettyOs}</span>
 										</div>
 										{#if lab.completedLabel}
 											<span class="owned-lab__date">{lab.completedLabel}</span>
@@ -1036,19 +1109,29 @@
 
 	.owned-overview__header {
 		display: flex;
-		align-items: center;
-		gap: 1rem;
+		align-items: flex-start;
+		gap: 1.1rem;
 	}
 
 	.owned-overview__icon {
 		display: grid;
 		place-items: center;
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: 0.85rem;
-		background: rgba(56, 189, 248, 0.2);
-		color: rgb(191, 219, 254);
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 0.9rem;
+		background: radial-gradient(
+			circle at 30% 30%,
+			rgba(129, 140, 248, 0.4),
+			rgba(14, 116, 144, 0.25)
+		);
+		color: rgb(226, 232, 240);
 		border: 1px solid rgba(56, 189, 248, 0.45);
+		box-shadow: 0 16px 36px rgba(14, 116, 144, 0.32);
+	}
+
+	.owned-overview__copy {
+		display: grid;
+		gap: 0.4rem;
 	}
 
 	.owned-overview__eyebrow {
@@ -1063,6 +1146,13 @@
 		font-weight: 600;
 		color: rgb(224, 231, 255);
 		margin-top: 0.25rem;
+	}
+
+	.owned-overview__subtitle {
+		font-size: 0.85rem;
+		color: rgba(191, 219, 254, 0.78);
+		line-height: 1.6;
+		max-width: 34rem;
 	}
 
 	.owned-overview__controls {
@@ -1158,50 +1248,82 @@
 	}
 
 	.owned-group-card {
+		position: relative;
 		display: grid;
-		gap: 0.9rem;
-		border-radius: 1.1rem;
-		border: 1px solid rgba(148, 163, 184, 0.35);
-		background: linear-gradient(165deg, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.55));
-		padding: 1.1rem;
-		box-shadow: 0 18px 38px rgba(14, 116, 144, 0.28);
+		gap: 1.1rem;
+		border-radius: 1.2rem;
+		border: 1px solid rgba(148, 163, 184, 0.3);
+		background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.55));
+		padding: 1.25rem;
+		overflow: hidden;
+		box-shadow: 0 24px 48px rgba(14, 116, 144, 0.32);
+	}
+
+	.owned-group-card__glow {
+		position: absolute;
+		inset: -60% -50% auto;
+		height: 200%;
+		background: radial-gradient(
+			circle at 20% 20%,
+			var(--accent, rgba(59, 130, 246, 0.6)),
+			transparent 65%
+		);
+		opacity: 0.65;
+		filter: blur(35px);
+		pointer-events: none;
 	}
 
 	.owned-group-card__header {
+		position: relative;
 		display: flex;
 		align-items: flex-start;
 		justify-content: space-between;
 		gap: 1rem;
+		z-index: 1;
+	}
+
+	.owned-group-card__identity {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.85rem;
+	}
+
+	.owned-group-card__icon {
+		display: grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 0.95rem;
+		background: linear-gradient(
+			140deg,
+			rgba(15, 23, 42, 0.92),
+			var(--accent, rgba(59, 130, 246, 0.75))
+		);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		box-shadow: 0 14px 34px rgba(14, 116, 144, 0.28);
+		color: rgb(224, 231, 255);
+	}
+
+	.owned-group-card__icon :global(svg) {
+		width: 1.15rem;
+		height: 1.15rem;
 	}
 
 	.owned-group-card__title {
 		display: grid;
-		gap: 0.45rem;
+		gap: 0.35rem;
 	}
 
-	.owned-group-card__badge {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		border-radius: 9999px;
-		padding: 0.35rem 0.85rem;
-		font-size: 0.85rem;
+	.owned-group-card__label {
+		font-size: 1.05rem;
 		font-weight: 600;
-		color: rgb(224, 231, 255);
-		background: rgba(15, 23, 42, 0.6);
-		border: 1px solid rgba(148, 163, 184, 0.3);
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-	}
-
-	.owned-group-card__badge :global(svg) {
-		width: 1rem;
-		height: 1rem;
-		color: var(--accent, rgba(59, 130, 246, 0.85));
+		color: rgb(226, 232, 240);
 	}
 
 	.owned-group-card__title p {
-		font-size: 0.85rem;
-		color: rgba(191, 219, 254, 0.75);
+		font-size: 0.82rem;
+		color: rgba(191, 219, 254, 0.78);
+		line-height: 1.5;
 	}
 
 	.owned-group-card__stat {
@@ -1211,10 +1333,10 @@
 	}
 
 	.owned-group-card__count {
-		font-size: 1.75rem;
+		font-size: 1.85rem;
 		font-weight: 600;
 		color: rgb(224, 231, 255);
-		text-shadow: 0 12px 25px rgba(59, 130, 246, 0.35);
+		text-shadow: 0 16px 32px rgba(59, 130, 246, 0.35);
 	}
 
 	.owned-group-card__share {
@@ -1226,9 +1348,10 @@
 		position: relative;
 		height: 0.45rem;
 		border-radius: 9999px;
-		background: rgba(30, 41, 59, 0.85);
+		background: rgba(30, 41, 59, 0.65);
 		overflow: hidden;
-		border: 1px solid rgba(148, 163, 184, 0.18);
+		border: 1px solid rgba(148, 163, 184, 0.22);
+		z-index: 1;
 	}
 
 	.owned-group-card__meter::after {
@@ -1236,46 +1359,86 @@
 		position: absolute;
 		inset: 0;
 		width: calc(var(--owned-share) * 1%);
-		background: linear-gradient(120deg, rgba(56, 189, 248, 0.4), var(--owned-accent));
-		box-shadow: 0 12px 28px rgba(56, 189, 248, 0.35);
+		background: linear-gradient(120deg, var(--owned-accent), rgba(56, 189, 248, 0.45));
+		box-shadow: 0 12px 32px rgba(56, 189, 248, 0.35);
 	}
 
 	.owned-group-card__highlight {
+		position: relative;
+		z-index: 1;
 		font-size: 0.8rem;
-		color: rgba(165, 243, 252, 0.85);
+		color: rgba(165, 243, 252, 0.9);
+		background: linear-gradient(120deg, rgba(14, 165, 233, 0.18), rgba(14, 116, 144, 0.12));
+		border: 1px solid rgba(56, 189, 248, 0.25);
+		padding: 0.6rem 0.85rem;
+		border-radius: 0.75rem;
 	}
 
 	.owned-group-list {
 		display: grid;
-		gap: 0.65rem;
+		gap: 0.75rem;
+		position: relative;
+		z-index: 1;
 	}
 
 	.owned-group-list li {
-		display: flex;
-		justify-content: space-between;
-		gap: 0.75rem;
-		border-radius: 0.75rem;
-		border: 1px solid rgba(148, 163, 184, 0.2);
-		background: rgba(15, 23, 42, 0.55);
-		padding: 0.7rem 0.85rem;
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 0.85rem;
+		border-radius: 0.85rem;
+		border: 1px solid rgba(148, 163, 184, 0.25);
+		background: rgba(15, 23, 42, 0.6);
+		padding: 0.75rem 1rem;
 	}
 
 	.owned-group-list__more {
-		justify-content: center;
+		grid-template-columns: 1fr;
+		justify-items: center;
+		text-align: center;
 		font-size: 0.78rem;
 		font-style: italic;
-		color: rgba(148, 163, 184, 0.75);
+		color: rgba(148, 163, 184, 0.78);
+	}
+
+	.owned-lab__avatar {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 9999px;
+		background: linear-gradient(
+			135deg,
+			rgba(15, 23, 42, 0.95),
+			var(--avatar-accent, rgba(59, 130, 246, 0.85))
+		);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		box-shadow: 0 12px 28px rgba(14, 116, 144, 0.28);
+		color: rgb(224, 231, 255);
+		overflow: hidden;
+	}
+
+	.owned-lab__avatar img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.owned-lab__avatar span {
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.05em;
 	}
 
 	.owned-lab__info {
 		display: grid;
-		gap: 0.2rem;
+		gap: 0.25rem;
 		min-width: 0;
 	}
 
 	.owned-lab__name {
 		display: block;
-		font-size: 0.92rem;
+		font-size: 0.95rem;
 		font-weight: 600;
 		color: rgb(226, 232, 240);
 	}
@@ -1283,13 +1446,13 @@
 	.owned-lab__meta {
 		display: block;
 		font-size: 0.78rem;
-		color: rgba(148, 163, 184, 0.85);
+		color: rgba(191, 219, 254, 0.72);
 	}
 
 	.owned-lab__date {
 		align-self: center;
-		font-size: 0.75rem;
-		color: rgba(129, 140, 248, 0.85);
+		font-size: 0.76rem;
+		color: rgba(129, 140, 248, 0.9);
 		white-space: nowrap;
 	}
 
