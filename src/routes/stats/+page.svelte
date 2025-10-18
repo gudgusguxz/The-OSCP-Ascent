@@ -27,6 +27,7 @@
 	let timelineWidth = MIN_TIMELINE_WIDTH;
 	let timelineShell;
 	let resizeObserver;
+	let ownedGroupMode = 'source';
 
 	onMount(() => {
 		if (!timelineShell) return;
@@ -74,6 +75,170 @@
 
 	const fallbackLabel = (value, fallback = 'Unknown') =>
 		(value && String(value).trim()) || fallback;
+
+	const shareFormatter = (value) => {
+		if (!Number.isFinite(value)) return '0%';
+		if (value >= 10 || value === 0) return `${Math.round(value)}%`;
+		return `${Math.round(value * 10) / 10}%`;
+	};
+
+	const previewLimit = 4;
+
+	const difficultyRanks = new Map([
+		['very easy', 0],
+		['easy', 1],
+		['beginner', 1],
+		['medium', 2],
+		['intermediate', 2],
+		['hard', 3],
+		['insane', 4],
+		['expert', 4]
+	]);
+
+	const difficultyAccent = (value) => {
+		const normalized = (value || '').toLowerCase();
+		if (normalized.includes('very easy')) return 'rgb(52 211 153)';
+		if (normalized.includes('easy')) return 'rgb(96 165 250)';
+		if (normalized.includes('medium') || normalized.includes('intermediate'))
+			return 'rgb(129 140 248)';
+		if (normalized.includes('hard')) return 'rgb(248 113 113)';
+		if (normalized.includes('insane') || normalized.includes('expert')) return 'rgb(249 115 22)';
+		return 'rgb(192 132 252)';
+	};
+
+	const difficultyOrder = (value) => {
+		const normalized = (value || '').toLowerCase();
+		return difficultyRanks.get(normalized) ?? difficultyRanks.get(normalized.split(' ')[0]) ?? 5;
+	};
+
+	const ownedGroupingOptions = [
+		{
+			id: 'source',
+			chipLabel: 'Provider',
+			headline: 'Providers',
+			description: 'Compare completions across lab vendors.',
+			icon: Computer,
+			getKey: (lab) => fallbackLabel(lab.source, 'Independent'),
+			formatLabel: (value) => fallbackLabel(value, 'Independent Provider'),
+			resolveAccent: () => 'rgb(59 130 246)',
+			resolveIcon: () => Computer,
+			formatSummary: (group, share) =>
+				`${group.count} cleared • ${shareFormatter(share)} of owned fleet`,
+			formatHighlight: (group, latest) =>
+				latest?.completedLabel ? `Latest: ${latest.completedLabel}` : '',
+			moreSuffix: 'more cleared in this provider'
+		},
+		{
+			id: 'os',
+			chipLabel: 'Operating System',
+			headline: 'Operating systems',
+			description: 'See which platforms you have the most experience with.',
+			icon: Compass,
+			getKey: (lab) => fallbackLabel(lab.os, 'Unknown OS'),
+			formatLabel: (value) => fallbackLabel(value, 'Unknown OS'),
+			resolveAccent: (group) => {
+				const osKey = deriveOsKey(group.key);
+				if (osKey === 'linux') return 'rgb(34 197 94)';
+				if (osKey === 'windows') return 'rgb(96 165 250)';
+				if (osKey === 'ad') return 'rgb(250 204 21)';
+				return 'rgb(192 132 252)';
+			},
+			resolveIcon: (group) => {
+				const osKey = deriveOsKey(group.key);
+				if (osKey === 'linux') return Bird;
+				if (osKey === 'windows') return Computer;
+				if (osKey === 'ad') return Bot;
+				return CircleIcon;
+			},
+			formatSummary: (group, share) =>
+				`${group.count} cleared • ${shareFormatter(share)} of owned fleet`,
+			formatHighlight: (group, latest) =>
+				latest?.completedLabel ? `Latest: ${latest.completedLabel}` : '',
+			sorter: (a, b) => {
+				const order = ['windows', 'linux', 'ad'];
+				const indexOf = (value) => {
+					const key = deriveOsKey(value);
+					const idx = order.indexOf(key);
+					return idx === -1 ? 99 : idx;
+				};
+				const orderDelta = indexOf(a.key) - indexOf(b.key);
+				if (orderDelta !== 0) return orderDelta;
+				return b.count - a.count || a.label.localeCompare(b.label);
+			},
+			moreSuffix: 'more labs on this platform'
+		},
+		{
+			id: 'difficulty',
+			chipLabel: 'Difficulty',
+			headline: 'Difficulty bands',
+			description: 'Balance your clears across easier practice and serious challenges.',
+			icon: Sparkles,
+			getKey: (lab) => fallbackLabel(lab.difficulty, 'Unknown difficulty'),
+			formatLabel: (value) => fallbackLabel(value, 'Unknown difficulty'),
+			resolveAccent: (group) => difficultyAccent(group.key),
+			resolveIcon: () => Sparkles,
+			formatSummary: (group, share) =>
+				`${group.count} cleared • ${shareFormatter(share)} of owned fleet`,
+			formatHighlight: (group, latest) =>
+				latest?.completedLabel ? `Last cleared ${latest.completedLabel}` : '',
+			sorter: (a, b) => {
+				const orderDelta = difficultyOrder(a.key) - difficultyOrder(b.key);
+				if (orderDelta !== 0) return orderDelta;
+				return b.count - a.count || a.label.localeCompare(b.label);
+			},
+			moreSuffix: 'more runs at this difficulty'
+		}
+	];
+
+	const ownedGroupingLookup = Object.fromEntries(
+		ownedGroupingOptions.map((option) => [option.id, option])
+	);
+
+	const buildGrouping = (labs, option) => {
+		const groups = new Map();
+		const total = labs.length || 1;
+
+		for (const lab of labs) {
+			const rawKey = option.getKey(lab);
+			const key = rawKey || 'Unknown';
+			if (!groups.has(key)) {
+				groups.set(key, {
+					key,
+					labs: []
+				});
+			}
+			groups.get(key).labs.push(lab);
+		}
+
+		return Array.from(groups.values())
+			.map((group) => {
+				const count = group.labs.length;
+				const share = (count / total) * 100;
+				const latest = group.labs.find((lab) => lab.completedLabel);
+				const accent = option.resolveAccent ? option.resolveAccent(group) : 'rgb(129 140 248)';
+				const icon = option.resolveIcon ? option.resolveIcon(group) : null;
+				return {
+					...group,
+					label: option.formatLabel ? option.formatLabel(group.key, group) : group.key,
+					count,
+					share,
+					shareLabel: `${shareFormatter(share)} of owned fleet`,
+					accent,
+					icon,
+					summary: option.formatSummary
+						? option.formatSummary({ ...group, count }, share)
+						: `${count} cleared`,
+					highlight: option.formatHighlight
+						? option.formatHighlight({ ...group, count }, latest)
+						: latest?.completedLabel
+							? `Latest: ${latest.completedLabel}`
+							: '',
+					labsPreview: group.labs.slice(0, previewLimit),
+					remainder: Math.max(count - previewLimit, 0)
+				};
+			})
+			.sort(option.sorter ?? ((a, b) => b.count - a.count || a.label.localeCompare(b.label)));
+	};
 
 	const completionDateFormatter = new Intl.DateTimeFormat(undefined, {
 		year: 'numeric',
@@ -170,24 +335,13 @@
 		return bTime - aTime;
 	});
 
-	$: ownedBySource = ownedLabsOrdered.reduce((map, lab) => {
-		const key = lab.source;
-		if (!map.has(key)) {
-			map.set(key, { source: key, labs: [] });
-		}
-		map.get(key).labs.push(lab);
-		return map;
-	}, new Map());
-
-	$: ownedSourceGroups = Array.from(ownedBySource.values())
-		.map((group) => ({
-			...group,
-			count: group.labs.length
-		}))
-		.sort((a, b) => b.count - a.count || a.source.localeCompare(b.source));
-
 	$: totalOwnedLabs = ownedLabsOrdered.length;
-	$: ownedProvidersCount = ownedSourceGroups.length;
+	$: ownedGroupings = Object.fromEntries(
+		ownedGroupingOptions.map((option) => [option.id, buildGrouping(ownedLabsOrdered, option)])
+	);
+	$: ownedActiveGroups = ownedGroupings[ownedGroupMode] ?? [];
+	$: activeGroupingOption = ownedGroupingLookup[ownedGroupMode] ?? ownedGroupingOptions[0];
+	$: ownedProvidersCount = ownedGroupings.source?.length ?? 0;
 	$: ownedOsCoverage = new Set(ownedLabsOrdered.map((lab) => lab.os)).size;
 
 	const normalizeToTime = (timestamp) =>
@@ -400,37 +554,79 @@
 				</div>
 			</header>
 
-			<div class="owned-groups">
-				{#each ownedSourceGroups as group (group.source)}
-					<article class="owned-group-card">
-						<header class="owned-group-card__header">
-							<div>
-								<h4>{group.source}</h4>
-								<span>{group.count} owned</span>
-							</div>
-							<Computer size={18} class="owned-group-card__icon" />
-						</header>
-						<ul class="owned-group-list">
-							{#each group.labs.slice(0, 6) as lab (lab.id)}
-								<li>
-									<div>
-										<span class="owned-lab__name">{lab.name}</span>
-										<span class="owned-lab__meta">{lab.difficulty} · {lab.os}</span>
-									</div>
-									{#if lab.completedLabel}
-										<span class="owned-lab__date">{lab.completedLabel}</span>
-									{/if}
-								</li>
-							{/each}
-							{#if group.labs.length > 6}
-								<li class="owned-group-list__more">
-									+{group.labs.length - 6} more cleared in this provider
-								</li>
-							{/if}
-						</ul>
-					</article>
-				{/each}
+			<div class="owned-overview__controls">
+				<div class="owned-overview__descriptor">
+					<span class="owned-overview__viewing">Viewing by</span>
+					<h4>{activeGroupingOption?.headline}</h4>
+					<p>{activeGroupingOption?.description}</p>
+				</div>
+				<div class="owned-group-toggle" role="group" aria-label="Change snapshot view">
+					{#each ownedGroupingOptions as option (option.id)}
+						<button
+							type="button"
+							class:active={ownedGroupMode === option.id}
+							on:click={() => {
+								ownedGroupMode = option.id;
+							}}
+						>
+							<svelte:component this={option.icon} size={16} strokeWidth={2.6} />
+							<span>{option.chipLabel}</span>
+						</button>
+					{/each}
+				</div>
 			</div>
+
+			{#if ownedActiveGroups.length === 0}
+				<p class="owned-groups__empty">Log a few completions to populate this snapshot.</p>
+			{:else}
+				<div class="owned-groups">
+					{#each ownedActiveGroups as group (group.label)}
+						<article class="owned-group-card" style={`--accent:${group.accent}`}>
+							<header class="owned-group-card__header">
+								<div class="owned-group-card__title">
+									<span class="owned-group-card__badge">
+										{#if group.icon}
+											<svelte:component this={group.icon} size={16} strokeWidth={2.6} />
+										{/if}
+										{group.label}
+									</span>
+									<p>{group.summary}</p>
+								</div>
+								<div class="owned-group-card__stat">
+									<span class="owned-group-card__count">{group.count}</span>
+									<span class="owned-group-card__share">{group.shareLabel}</span>
+								</div>
+							</header>
+							<div
+								class="owned-group-card__meter"
+								style={`--owned-share:${group.share}; --owned-accent:${group.accent}`}
+							></div>
+							{#if group.highlight}
+								<p class="owned-group-card__highlight">{group.highlight}</p>
+							{/if}
+							<ul class="owned-group-list">
+								{#each group.labsPreview as lab (lab.id)}
+									<li>
+										<div class="owned-lab__info">
+											<span class="owned-lab__name">{lab.name}</span>
+											<span class="owned-lab__meta">{lab.difficulty} · {lab.os}</span>
+										</div>
+										{#if lab.completedLabel}
+											<span class="owned-lab__date">{lab.completedLabel}</span>
+										{/if}
+									</li>
+								{/each}
+								{#if group.remainder}
+									<li class="owned-group-list__more">
+										+{group.remainder}
+										{activeGroupingOption?.moreSuffix || 'more labs in this view'}
+									</li>
+								{/if}
+							</ul>
+						</article>
+					{/each}
+				</div>
+			{/if}
 		</section>
 	{/if}
 
@@ -869,43 +1065,184 @@
 		margin-top: 0.25rem;
 	}
 
-	.owned-groups {
-		display: grid;
-		gap: 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-	}
-
-	.owned-group-card {
-		display: grid;
-		gap: 0.75rem;
-		border-radius: 1.1rem;
-		border: 1px solid rgba(59, 130, 246, 0.3);
-		background: rgba(15, 23, 42, 0.65);
-		padding: 1rem;
-		box-shadow: 0 16px 36px rgba(30, 64, 175, 0.35);
-	}
-
-	.owned-group-card__header {
+	.owned-overview__controls {
 		display: flex;
-		align-items: center;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		align-items: stretch;
 		justify-content: space-between;
-		gap: 0.75rem;
+		margin-top: 1.5rem;
 	}
 
-	.owned-group-card__header h4 {
-		font-size: 1rem;
+	.owned-overview__descriptor {
+		display: grid;
+		gap: 0.35rem;
+		max-width: 30rem;
+	}
+
+	.owned-overview__descriptor h4 {
+		font-size: clamp(1.05rem, 2.4vw, 1.35rem);
 		font-weight: 600;
 		color: rgb(224, 231, 255);
 	}
 
-	.owned-group-card__header span {
-		display: block;
-		font-size: 0.8rem;
-		color: rgba(148, 163, 184, 0.8);
+	.owned-overview__descriptor p {
+		font-size: 0.9rem;
+		color: rgba(191, 219, 254, 0.78);
+		line-height: 1.5;
 	}
 
-	.owned-group-card__icon {
+	.owned-overview__viewing {
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.24em;
+		color: rgba(165, 243, 252, 0.65);
+	}
+
+	.owned-group-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.4rem;
+		border-radius: 9999px;
+		border: 1px solid rgba(59, 130, 246, 0.35);
+		background: rgba(15, 23, 42, 0.6);
+		box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.15);
+	}
+
+	.owned-group-toggle button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		border-radius: 9999px;
+		padding: 0.45rem 0.95rem;
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: rgba(191, 219, 254, 0.85);
+		transition: all 0.2s ease;
+		background: transparent;
+		border: none;
+	}
+
+	.owned-group-toggle button:hover {
+		color: rgb(224, 231, 255);
+	}
+
+	.owned-group-toggle button.active {
+		color: rgb(15, 23, 42);
+		background: linear-gradient(120deg, rgba(59, 130, 246, 0.95), rgba(14, 116, 144, 0.95));
+		box-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
+	}
+
+	.owned-group-toggle button.active :global(svg) {
+		color: rgb(224, 242, 254);
+	}
+
+	.owned-group-toggle button :global(svg) {
+		width: 1rem;
+		height: 1rem;
+		color: rgba(191, 219, 254, 0.8);
+	}
+
+	.owned-groups {
+		display: grid;
+		gap: 1.25rem;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		margin-top: 1.5rem;
+	}
+
+	.owned-groups__empty {
+		margin-top: 1rem;
+		font-size: 0.9rem;
+		color: rgba(148, 163, 184, 0.85);
+	}
+
+	.owned-group-card {
+		display: grid;
+		gap: 0.9rem;
+		border-radius: 1.1rem;
+		border: 1px solid rgba(148, 163, 184, 0.35);
+		background: linear-gradient(165deg, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.55));
+		padding: 1.1rem;
+		box-shadow: 0 18px 38px rgba(14, 116, 144, 0.28);
+	}
+
+	.owned-group-card__header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.owned-group-card__title {
+		display: grid;
+		gap: 0.45rem;
+	}
+
+	.owned-group-card__badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		border-radius: 9999px;
+		padding: 0.35rem 0.85rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: rgb(224, 231, 255);
+		background: rgba(15, 23, 42, 0.6);
+		border: 1px solid rgba(148, 163, 184, 0.3);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+	}
+
+	.owned-group-card__badge :global(svg) {
+		width: 1rem;
+		height: 1rem;
+		color: var(--accent, rgba(59, 130, 246, 0.85));
+	}
+
+	.owned-group-card__title p {
+		font-size: 0.85rem;
 		color: rgba(191, 219, 254, 0.75);
+	}
+
+	.owned-group-card__stat {
+		display: grid;
+		justify-items: end;
+		gap: 0.15rem;
+	}
+
+	.owned-group-card__count {
+		font-size: 1.75rem;
+		font-weight: 600;
+		color: rgb(224, 231, 255);
+		text-shadow: 0 12px 25px rgba(59, 130, 246, 0.35);
+	}
+
+	.owned-group-card__share {
+		font-size: 0.75rem;
+		color: rgba(148, 163, 184, 0.85);
+	}
+
+	.owned-group-card__meter {
+		position: relative;
+		height: 0.45rem;
+		border-radius: 9999px;
+		background: rgba(30, 41, 59, 0.85);
+		overflow: hidden;
+		border: 1px solid rgba(148, 163, 184, 0.18);
+	}
+
+	.owned-group-card__meter::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		width: calc(var(--owned-share) * 1%);
+		background: linear-gradient(120deg, rgba(56, 189, 248, 0.4), var(--owned-accent));
+		box-shadow: 0 12px 28px rgba(56, 189, 248, 0.35);
+	}
+
+	.owned-group-card__highlight {
+		font-size: 0.8rem;
+		color: rgba(165, 243, 252, 0.85);
 	}
 
 	.owned-group-list {
@@ -920,7 +1257,7 @@
 		border-radius: 0.75rem;
 		border: 1px solid rgba(148, 163, 184, 0.2);
 		background: rgba(15, 23, 42, 0.55);
-		padding: 0.65rem 0.75rem;
+		padding: 0.7rem 0.85rem;
 	}
 
 	.owned-group-list__more {
@@ -928,6 +1265,12 @@
 		font-size: 0.78rem;
 		font-style: italic;
 		color: rgba(148, 163, 184, 0.75);
+	}
+
+	.owned-lab__info {
+		display: grid;
+		gap: 0.2rem;
+		min-width: 0;
 	}
 
 	.owned-lab__name {
